@@ -1,5 +1,7 @@
 firmware-linux-nonfree
 
+sudo debootstrap --arch=arm64 testing testing http://ftp.fau.de/debian
+
 root@air:/# cat /etc/apt/sources.list
 deb http://deb.debian.org/debian testing main contrib non-free
 deb-src http://deb.debian.org/debian testing main contrib non-free
