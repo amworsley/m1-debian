@@ -1,0 +1,23 @@
+firmware-linux-nonfree
+
+root@air:/# cat /etc/apt/sources.list
+deb http://deb.debian.org/debian testing main contrib non-free
+deb-src http://deb.debian.org/debian testing main contrib non-free
+
+Add the following packages:
+
+        ntpdate <wifi> firmware vim tcpdump vlan bridge-utils tmux parted kernel
+
+Add the following boot options:
+
+        net.ifnames=0
+
+Fix the root password
+
+Automate the build of u-boot, m1n1, kernel, debootstrap, grub
+
+Write a README with the installation steps
+
+ln -s lib/systemd/systemd init
+
+find . | cpio --quiet -H newc -o | pigz > /boot/initrd.gz
