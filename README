@@ -21,3 +21,5 @@ Write a README with the installation steps
 ln -s lib/systemd/systemd init
 
 find . | cpio --quiet -H newc -o | pigz > /boot/initrd.gz
+
+> etc/motd
