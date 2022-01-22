@@ -1,5 +1,7 @@
 firmware-linux-nonfree
 
+sudo debootstrap --arch=arm64 testing testing http://ftp.fau.de/debian
+
 root@air:/# cat /etc/apt/sources.list
 deb http://deb.debian.org/debian testing main contrib non-free
 deb-src http://deb.debian.org/debian testing main contrib non-free
@@ -21,6 +23,8 @@ Write a README with the installation steps
 ln -s lib/systemd/systemd init
 
 find . | cpio --quiet -H newc -o | pigz > /boot/initrd.gz
+
+> etc/motd
 
 cp /boot/efi/EFI/BOOT/BOOTAA64.EFI efi/boot/
 cp /boot/vmlinuz-5.16.0-asahi-next-20220118-14779-ga4d177b3ad21-dirty vmlinuz
