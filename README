@@ -21,3 +21,6 @@ Write a README with the installation steps
 ln -s lib/systemd/systemd init
 
 find . | cpio --quiet -H newc -o | pigz > /boot/initrd.gz
+
+cp /boot/efi/EFI/BOOT/BOOTAA64.EFI efi/boot/
+cp /boot/vmlinuz-5.16.0-asahi-next-20220118-14779-ga4d177b3ad21-dirty vmlinuz
