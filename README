@@ -1,6 +1,12 @@
+Todo:
+
+        - set the hostname to live
+
+        - Install all the packages and probably more
+
 firmware-linux-nonfree
 
-sudo debootstrap --arch=arm64 testing testing http://ftp.fau.de/debian
+sudo debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan testing testing http://ftp.fau.de/debian
 
 root@air:/# cat /etc/apt/sources.list
 deb http://deb.debian.org/debian testing main contrib non-free
@@ -8,7 +14,7 @@ deb-src http://deb.debian.org/debian testing main contrib non-free
 
 Add the following packages:
 
-        ntpdate <wifi> firmware vim tcpdump vlan bridge-utils tmux parted kernel
+        ntpdate <wifi> firmware vim tcpdump vlan bridge-utils tmux parted kernel curl wget
 
 Add the following boot options:
 
