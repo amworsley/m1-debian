@@ -8,6 +8,9 @@
 
         curl -L https://mrcn.st/alxsh | sh
 
+        Use the newest version (12.0.1 at the time of this writing) as the stub
+        os version.
+
 - Once you run the install, boot into the 'Options' menu again and install u-boot:
 
         curl -LO https://tg.st/u/u-boot.macho
