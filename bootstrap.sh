@@ -52,7 +52,7 @@ build_rootfs()
 {
 (
         sudo rm -rf testing
-        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny testing testing http://ftp.fau.de/debian
+        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus testing testing http://ftp.fau.de/debian
 
         cd testing
 
@@ -75,6 +75,7 @@ build_rootfs()
         sudo chroot . dpkg -i linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
 
         sudo rm linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
+        sudo bash -c 'apt-get clean'
 )
 }
 
@@ -82,12 +83,12 @@ build_stick()
 {
 (
         rm -rf stick
-        mkdir -p stick/efi/boot
+        mkdir -p stick/efi/boot stick/boot
         sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../stick/initrd.gz'
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* stick/vmlinuz
 
-        cat > stick/efi/boot/grub.cfg <<EOF
+        cat > stick/boot/grub.cfg <<EOF
 echo Loading Kernel...
 linux (hd0,msdos1)/vmlinuz net.ifnames=0
 echo Loading initrd... Please wait
