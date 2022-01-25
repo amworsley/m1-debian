@@ -63,6 +63,7 @@ build_rootfs()
         sudo cp ../files/sources.list etc/apt/sources.list
         sudo cp ../files/hosts etc/hosts
         sudo cp ../files/quickstart.txt root/
+        sudo cp ../files/eth0 etc/network/interfaces.d/
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'
