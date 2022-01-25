@@ -116,9 +116,9 @@ build_fs()
 mkdir -p build
 cd build
 
-build_m1n1
-build_uboot
-build_linux
-build_rootfs
+# build_m1n1
+# build_uboot
+# build_linux
+# build_rootfs
 build_stick
 build_fs

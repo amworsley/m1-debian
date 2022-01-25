@@ -1,0 +1,38 @@
+curl -LO https://github.com/AsahiLinux/asahi-installer/archive/refs/heads/main.zip
+unzip main.zip
+cd asahi-installer/src
+# set paths
+/tmp/asahi-install/Frameworks/Python.framework/Versions/3.9/bin/python3 -m firmware.wifi /usr/share/firmware/wifi /Volumes/Linux/linux-firmware.zip
+
+curl -LO https://tg.st/u/u-boot.macho
+kmutil configure-boot -c u-boot.macho -v /Volumes/Linux
+
+diskutl list
+diskutil addPartition <identifier before free space> %EFI% LB 512MB
+diskutl list
+newfs_msdos /dev/<identifier of efi>
+mkdir -p /Volumes/efi
+mount -t msdos /dev/<identifier of efi> /Volumes/efi
+cd /Volumes/efi
+mkdir -p /Volumes/efi/efi/boot
+curl -Lo /Volumes/efi/efi/boot/bootaa64.efi https://tg.st/u/grubaa64.efi
+cp /Volumes/Linux/linux-firmware.tar /Volumes/Linux
+
+diskutl list
+diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
+diskutl list
+curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem>
+
+update-initramfs -k all -c
+update-grub
+
+resize2fs <device of root filesystem>
+
+cd /etc/network/interfaces.d
+ip l s
+mv eth0 <interface>
+vim <interface>
+ifup <interface>
+
+vi /etc/passwd
+passwd root
