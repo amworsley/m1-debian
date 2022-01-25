@@ -52,7 +52,7 @@ build_rootfs()
 {
 (
         sudo rm -rf testing
-        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus testing testing http://ftp.fau.de/debian
+        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
         cd testing
 
@@ -60,8 +60,9 @@ build_rootfs()
 
         sudo bash -c 'echo > etc/motd'
 
-        sudo bash -c 'echo "deb http://deb.debian.org/debian testing main contrib non-free" > etc/apt/sources.list'
-        sudo bash -c 'echo "deb-src http://deb.debian.org/debian testing main contrib non-free" >> etc/apt/sources.list'
+        sudo cp ../files/sources.list etc/apt/sources.list
+        sudo cp ../files/hosts etc/hosts
+        sudo cp ../files/quickstart.txt root/
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'
@@ -83,24 +84,16 @@ build_stick()
 {
 (
         rm -rf stick
-        mkdir -p stick/efi/boot stick/boot
+        mkdir -p stick/efi/boot stick/efi/debian/grub.cfg
         sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../stick/initrd.gz'
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* stick/vmlinuz
-
-        cat > stick/boot/grub.cfg <<EOF
-echo Loading Kernel...
-linux (hd0,msdos1)/vmlinuz net.ifnames=0
-echo Loading initrd... Please wait
-initrd (hd0,msdos1)/initrd.gz
-boot
-EOF
-
+        cp files/grub.cfg stick/efi/debian/grub.cfg
 )
 }
 
 # build_m1n1
 # build_uboot
 # build_linux
-# build_rootfs
+build_rootfs
 build_stick
