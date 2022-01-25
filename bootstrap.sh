@@ -52,7 +52,7 @@ build_rootfs()
 {
 (
         sudo rm -rf testing
-        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
+        sudo eatmydata debootstrap --arch=arm64 --include initramfs-tools,iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
 
