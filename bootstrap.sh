@@ -48,8 +48,46 @@ build_linux()
 )
 }
 
+build_initrd()
+{
+(
 
+        rm -rf testing
+        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,firmware-linux,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64 testing testing http://ftp.fau.de/debian
+
+        cd testing
+
+        sudo -c 'echo live > etc/hostname'
+
+        sudo -c 'echo > etc/motd'
+
+        sudo -c 'echo "deb http://deb.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list'
+        sudo -c 'echo "deb-src http://deb.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list'
+
+        sudo -- perl -p -i -e 's/root:x:/root::/' etc/passwd
+
+        sudo ln -s lib/systemd/systemd init
+
+        sudo cp ../linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb .
+
+        sudo chroot . dpkg -i linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
+
+        sudo rm linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
+
+)
+}
+
+# build_stick()
+# {
+# (
+#         # find . | cpio --quiet -H newc -o | pigz > ../stick/initrd.gz
+#         # cp /boot/efi/EFI/BOOT/BOOTAA64.EFI efi/boot/
+#         # cp /boot/vmlinuz-5.16.0-asahi-next-20220118-14779-ga4d177b3ad21-dirty vmlinuz
+# )
+# }
 
 # build_m1n1
 # build_uboot
-build_linux
+# build_linux
+build_initrd
+# build_stick
