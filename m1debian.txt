@@ -1,8 +1,17 @@
+Video: https://tg.st/u/m1debian.mp4
+# Boot into macos
+diskutil apfs resizeContainer disk0s2 200GB
+
+curl -L https://mrcn.st/alxsh | sh
+
 curl -LO https://github.com/AsahiLinux/asahi-installer/archive/refs/heads/main.zip
 unzip main.zip
-cd asahi-installer/src
+cd asahi-installer-main/src
+cd /tmp/asahi-install
 # set paths
-/tmp/asahi-install/Frameworks/Python.framework/Versions/3.9/bin/python3 -m firmware.wifi /usr/share/firmware/wifi /Volumes/Linux/linux-firmware.zip
+/tmp/asahi-install/Frameworks/Python.framework/Versions/3.9/bin/python3 -m firmware.wifi /usr/share/firmware/wifi /Volumes/Linux/linux-firmware.tar
+
+- do not forget step2.sh
 
 curl -LO https://tg.st/u/u-boot.macho
 kmutil configure-boot -c u-boot.macho -v /Volumes/Linux
@@ -22,6 +31,11 @@ diskutl list
 diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
 diskutl list
 curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem>
+
+vi /etc/fstab
+
+grub-install --removable /dev/nvme0n1p4
+dpkg-reconfigure grub-efi-arm64
 
 update-initramfs -k all -c
 update-grub
