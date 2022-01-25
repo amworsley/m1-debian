@@ -1,4 +1,5 @@
 .*.swp
+*.tar
 *.deb
 *.buildinfo
 *.changes
