@@ -51,17 +51,17 @@ build_linux()
 build_rootfs()
 {
 (
-        # sudo rm -rf testing
-        # sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
+        sudo rm -rf testing
+        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
         cd testing
 
-        # sudo bash -c 'echo live > etc/hostname'
+        sudo bash -c 'echo live > etc/hostname'
 
-        # sudo bash -c 'echo > etc/motd'
+        sudo bash -c 'echo > etc/motd'
 
-        # sudo cp ../files/sources.list etc/apt/sources.list
-        # sudo cp ../files/hosts etc/hosts
+        sudo cp ../files/sources.list etc/apt/sources.list
+        sudo cp ../files/hosts etc/hosts
         sudo cp ../files/quickstart.txt root/
 
         sudo bash -c 'chroot . apt update'
@@ -95,5 +95,5 @@ build_stick()
 # build_m1n1
 # build_uboot
 # build_linux
-build_rootfs
+# build_rootfs
 build_stick
