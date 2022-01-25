@@ -54,16 +54,18 @@ build_rootfs()
         sudo rm -rf testing
         sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
+        export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
+
         cd testing
 
         sudo bash -c 'echo live > etc/hostname'
 
         sudo bash -c 'echo > etc/motd'
 
-        sudo cp ../files/sources.list etc/apt/sources.list
-        sudo cp ../files/hosts etc/hosts
-        sudo cp ../files/quickstart.txt root/
-        sudo cp ../files/eth0 etc/network/interfaces.d/
+        sudo cp ../../files/sources.list etc/apt/sources.list
+        sudo cp ../../files/hosts etc/hosts
+        sudo cp ../../files/quickstart.txt root/
+        sudo cp ../../files/eth0 etc/network/interfaces.d/
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'
@@ -72,11 +74,10 @@ build_rootfs()
 
         sudo -- ln -s lib/systemd/systemd init
 
-        sudo cp ../linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb .
+        sudo cp ../${KERNEL} .
+        sudo chroot . dpkg -i ${KERNEL}
+        sudo rm ${KERNEL}
 
-        sudo chroot . dpkg -i linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
-
-        sudo rm linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
         sudo bash -c 'apt-get clean'
 )
 }
@@ -89,10 +90,13 @@ build_stick()
         sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../stick/initrd.gz'
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* stick/vmlinuz
-        cp files/grub.cfg stick/efi/debian/grub.cfg
+        cp ../files/grub.cfg stick/efi/debian/grub.cfg
         (cd stick; tar cf ../asahi-debian-live-`date "+%Y-%m-%d"`.tar .)
 )
 }
+
+mkdir -p build
+cd build
 
 # build_m1n1
 # build_uboot

@@ -1,2 +1,2 @@
-deb http://deb.debian.org/debian testing main contrib non-free
-deb-src http://deb.debian.org/debian testing main contrib non-free
+deb http://ftp.fau.de/debian testing main contrib non-free
+deb-src http://ftp.fau.de/debian testing main contrib non-free
