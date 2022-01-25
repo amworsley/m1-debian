@@ -89,6 +89,7 @@ build_stick()
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* stick/vmlinuz
         cp files/grub.cfg stick/efi/debian/grub.cfg
+        (cd stick; tar cf ../asahi-debian-live-`date "+%Y-%m-%d"`.tar .)
 )
 }
 

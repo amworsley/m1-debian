@@ -1,38 +1,61 @@
-Todo:
+- Boot into macos
 
-        - set the hostname to live
+- make space - the last number is the space that macos will occupy
 
-        - Install all the packages and probably more
+        diskutil apfs resizeContainer disk0s2 200GB
 
-firmware-linux-nonfree
+- run the installer, do not forget step2.sh
 
-sudo debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan testing testing http://ftp.fau.de/debian
+        curl -L https://mrcn.st/alxsh | sh
 
-root@air:/# cat /etc/apt/sources.list
-deb http://deb.debian.org/debian testing main contrib non-free
-deb-src http://deb.debian.org/debian testing main contrib non-free
+- Once you run the install, boot into the 'Options' menu again and install u-boot:
 
-Add the following packages:
+        curl -LO https://tg.st/u/u-boot.macho
+        kmutil configure-boot -c u-boot.macho -V /Volumes/Linux
 
-        ntpdate <wifi> firmware vim tcpdump vlan bridge-utils tmux parted kernel curl wget
+- Format a usb stick with a vfat partition on it, mount the partition and
+  extract the following:
 
-Add the following boot options:
+        cd /mnt
+        curl -L https://tg.st/u/asahi-debian-live-2022-01-25.tar | tar -xf -
 
-        net.ifnames=0
+- In u-boot interrupt the boot loop by pressing return when prompted to. Use
+  the following command to boot from the usb-stick. Loading the 256 MB initrd
+  takes a while.
 
-Fix the root password
+        run bootcmd_usb0
 
-Automate the build of u-boot, m1n1, kernel, debootstrap, grub
+- Login with username 'root'. There is no password.
 
-Write a README with the installation steps
+- If you have an ethernet card (mini or usb dongle), than get an IP:
 
-ln -s lib/systemd/systemd init
+        dhclient eth0
 
-find . | cpio --quiet -H newc -o | pigz > /boot/initrd.gz
+- Set the time:
 
-> etc/motd
+        ntpdate pool.ntp.org
 
-cp /boot/efi/EFI/BOOT/BOOTAA64.EFI efi/boot/
-cp /boot/vmlinuz-5.16.0-asahi-next-20220118-14779-ga4d177b3ad21-dirty vmlinuz
+- Install any software you like, for example gnome:
 
-./scripts/kconfig/merge_config.sh .config .config-fragment
+        apt-get install gnome
+        useradd -m -c 'user' user
+        passwd user
+        /etc/init.d/gdm3 start
+
+- You can also use the live system to install Debian on the m1, the rough outline is:
+
+        - Create two paritions:
+
+                - One 1 GB vfat
+                - Rest with ext4
+
+        - Use debootstrap to bootstrap debian
+
+        - Install grub
+
+        - reboot
+
+The exact steps follow once I find a little bit of time.
+
+Kernel deb is here: https://tg.st/u/linux-image-5.16.0-asahi-next-20220118-gdcd14bb2ec40_5.16.0-asahi-next-20220118-gdcd14bb2ec40-1_arm64.deb
+
