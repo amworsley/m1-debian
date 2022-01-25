@@ -1,11 +1,2 @@
 .*.swp
-*.tar
-*.deb
-*.buildinfo
-*.changes
-linux/
-m1n1/
-stick/
-testing/
-u-boot.macho
-u-boot/
+build
