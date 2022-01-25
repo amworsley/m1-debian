@@ -44,7 +44,7 @@ build_linux()
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/asahi-config-2022-01-19 > .config
         make olddefconfig
-        make bindeb-pkg
+        make -j 16 bindeb-pkg
 )
 }
 
