@@ -51,17 +51,17 @@ build_linux()
 build_rootfs()
 {
 (
-        sudo rm -rf testing
-        sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
+        # sudo rm -rf testing
+        # sudo eatmydata debootstrap --arch=arm64 --include iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
         cd testing
 
-        sudo bash -c 'echo live > etc/hostname'
+        # sudo bash -c 'echo live > etc/hostname'
 
-        sudo bash -c 'echo > etc/motd'
+        # sudo bash -c 'echo > etc/motd'
 
-        sudo cp ../files/sources.list etc/apt/sources.list
-        sudo cp ../files/hosts etc/hosts
+        # sudo cp ../files/sources.list etc/apt/sources.list
+        # sudo cp ../files/hosts etc/hosts
         sudo cp ../files/quickstart.txt root/
 
         sudo bash -c 'chroot . apt update'
@@ -84,7 +84,7 @@ build_stick()
 {
 (
         rm -rf stick
-        mkdir -p stick/efi/boot stick/efi/debian/grub.cfg
+        mkdir -p stick/efi/boot stick/efi/debian/
         sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../stick/initrd.gz'
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* stick/vmlinuz
