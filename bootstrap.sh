@@ -95,11 +95,28 @@ build_stick()
 )
 }
 
+build_fs()
+{
+(
+        rm -f media
+        dd if=/dev/zero of=media bs=1 count=0 seek=1G
+        mkdir -p mnt
+        mkfs.ext4 media
+        tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 media
+        sudo mount -o loop media mnt
+        sudo cp -a testing/* mnt/
+        sudo rm mnt/init
+        sudo umount mnt
+        tar cf - media | pigz > m1.tgz
+)
+}
+
 mkdir -p build
 cd build
 
-# build_m1n1
-# build_uboot
-# build_linux
-# build_rootfs
+build_m1n1
+build_uboot
+build_linux
+build_rootfs
 build_stick
+build_fs
