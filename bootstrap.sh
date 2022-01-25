@@ -70,7 +70,7 @@ build_rootfs()
         sudo cp ../../files/eth0 etc/network/interfaces.d/
 
         sudo bash -c 'chroot . apt update'
-        sudo bash -c 'chroot . apt install -y firmware-linux'
+        sudo bash -c 'chroot . apt install -y firmware-linux-free'
 
         sudo -- perl -p -i -e 's/root:x:/root::/' etc/passwd
 
@@ -116,9 +116,9 @@ build_fs()
 mkdir -p build
 cd build
 
-# build_m1n1
-# build_uboot
-# build_linux
-# build_rootfs
+build_m1n1
+build_uboot
+build_linux
+build_rootfs
 build_stick
 build_fs
