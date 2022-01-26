@@ -84,16 +84,16 @@ build_rootfs()
 )
 }
 
-build_stick()
+build_live_stick()
 {
 (
-        rm -rf stick
-        mkdir -p stick/efi/boot stick/efi/debian/
-        sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../stick/initrd.gz'
-        cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi stick/efi/boot/bootaa64.efi
-        cp testing/boot/vmlinuz* stick/vmlinuz
-        cp ../files/grub.cfg stick/efi/debian/grub.cfg
-        (cd stick; tar cf ../asahi-debian-live-`date "+%Y-%m-%d"`.tar .)
+        rm -rf live-stick
+        mkdir -p live-stick/efi/boot live-stick/efi/debian/
+        sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../live-stick/initrd.gz'
+        cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi live-stick/efi/boot/bootaa64.efi
+        cp testing/boot/vmlinuz* live-stick/vmlinuz
+        cp ../files/grub.cfg live-stick/efi/debian/grub.cfg
+        (cd live-stick; tar cf ../asahi-debian-live-`date "+%Y-%m-%d"`.tar .)
 )
 }
 
@@ -120,5 +120,5 @@ cd build
 # build_uboot
 # build_linux
 # build_rootfs
-# build_stick
+# build_live_stick
 # build_fs
