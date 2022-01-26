@@ -113,6 +113,21 @@ build_fs()
 )
 }
 
+build_di_stick()
+{
+        rm -rf di-stick
+        mkdir -p live-stick/efi/boot live-stick/efi/debian/
+        wget https://d-i.debian.org/daily-images/arm64/daily/netboot/debian-installer/arm64/initrd.gz
+        mkdir initrd; cd initrd; gzip -cd ../initrd.gz | sudo cpio -imd --quiet
+        rm -rf initrd/lib/modules/*
+        cp -a ../testing/lib/modules/* initrd/lib/modules/
+        (cd initrd; find . | cpio --quiet -H newc -o | pigz > ../initrd.gz)
+        cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi live-stick/efi/boot/bootaa64.efi
+        cp testing/boot/vmlinuz* live-stick/vmlinuz
+        cp ../files/grub.cfg live-stick/efi/debian/grub.cfg
+        (cd live-stick; tar cf ../m1-d-i-`date "+%Y-%m-%d"`.tar .)
+}
+
 mkdir -p build
 cd build
 
@@ -121,4 +136,5 @@ cd build
 # build_linux
 # build_rootfs
 # build_live_stick
+build_di_stick
 # build_fs
