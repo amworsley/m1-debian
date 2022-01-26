@@ -30,7 +30,7 @@ build_uboot()
         make -j 16 || true
 )
 
-        cat m1n1/build/m1n1.macho `find u-boot -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.macho
+        cat m1n1/build/m1n1.bin `find u-boot -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
 }
 
 build_linux()
@@ -116,9 +116,9 @@ build_fs()
 mkdir -p build
 cd build
 
-build_m1n1
-build_uboot
-build_linux
-build_rootfs
-build_stick
-build_fs
+# build_m1n1
+# build_uboot
+# build_linux
+# build_rootfs
+# build_stick
+# build_fs
