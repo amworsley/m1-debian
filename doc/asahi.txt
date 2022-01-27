@@ -1,6 +1,7 @@
 # Boot into macos
 
-# Extract the firmware and save it somewhere you have access to
+# Extract the firmware and save it somewhere you have access to.
+# This firmware needs to be extracted later in /lib/firmware
 curl -sL tg.st/u/fwx.sh | sh
 
 # Make space the last number is the size that MacOS instatllation should consume
