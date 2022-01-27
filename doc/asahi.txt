@@ -35,6 +35,9 @@ curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux File
 # Relax the boot policy for the stub os and uplaod install m1n1
 /Volumes/Linux/step2.sh
 
+# Build dependencies
+sudo apt install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick build-essential bc kmod flex cpio libncurses5-dev libelf-dev:native bison libssl-dev
+
 # Compile the kernel
 git clone --depth 1 https://github.com/AsahiLinux/linux
 cd linux
