@@ -5,7 +5,7 @@ mount /dev/sda1 /mnt
 tar -C /lib/firmware/ -xf /mnt/linux-firmware.tar
 umount /mnt
 modprobe brcmfmac
-vim /etc/wpa.conf
+vim /etc/wpa_supplicant/wpa_supplicant.conf
 wpa_supplicant -i <interface> -c /etc/wpa_supplicant/wpa_supplicant.conf
 dhclient wlan0
 
