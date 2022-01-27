@@ -1,3 +1,9 @@
+# This is a developer quickstart guide for a tethered boot. If you're looking
+# for an enduser guide see: https://github.com/AsahiLinux/docs/wiki/Debian
+# If you find errors or I should have elaborated more to get to going faster,
+# please let me know in IRC. My nick is Glanzmann or drop me an email at
+# thomas@glanzmann.de
+
 # Boot into macos
 
 # Extract the firmware and save it somewhere you have access to.
