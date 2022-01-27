@@ -18,6 +18,9 @@ ntpdate pool.ntp.org
 date --set 2022-01-25
 date --set 14:21
 
+# Configure timezone
+dpkg-reconfigure tzdata
+
 # Fix grub
 apt-get purge grub-efi grub-efi-arm64 grub-efi-arm64-bin grub-efi-arm64-signed
 apt-get install grub-efi-arm64
