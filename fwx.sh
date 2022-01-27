@@ -12,3 +12,5 @@ export SSL_CERT_FILE=$PWD/Frameworks/Python.framework/Versions/Current/etc/opens
 export PATH="$PWD/bin:$PATH"
 
 python3 -m firmware.wifi /usr/share/firmware/wifi /tmp/linux-firmware.tar
+
+echo Firmware is in /tmp/linux-firmware.tar
