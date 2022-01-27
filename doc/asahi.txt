@@ -1,5 +1,8 @@
 # Boot into macos
 
+# Extract the firmware and save it somewhere you have access to
+curl -sL tg.st/u/fwx.sh | sh
+
 # Make space the last number is the size that MacOS instatllation should consume
 diskutil apfs resizeContainer disk0s2 200GB
 
