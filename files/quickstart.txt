@@ -1,3 +1,7 @@
+# Ethernet
+ip l s
+dhclient <device>
+
 # Wifi
 rmmod brcmfmac
 rmmod brcmutil
@@ -24,7 +28,6 @@ update-grub
 find /boot/efi -name fbaa64.efi | xargs rm
 
 See also: https://github.com/AsahiLinux/docs/wiki/U-Boot
-
 
 # xorg
 (air) [~] cat /etc/X11/xorg.conf.d/00-keyboard.conf
@@ -55,3 +58,28 @@ Section "InputClass"
         Option "ClickMethod" "clickfinger"
   Driver "libinput"
 EndSection
+
+# Create a user
+useradd -m -c 'user' user
+passwd user
+
+# Install gnome
+apt-get install gnome
+/etc/init.d/gdm3 start
+
+# If you need to install the kernel on a bootstrapped system or one that needs recovery
+wget https://tg.st/u/k.deb
+dpkg -i k.deb
+
+- You can also use the live system to install Debian on the m1, the rough outline is:
+
+        - Create two paritions:
+
+                - One 1 GB vfat
+                - Rest with ext4
+
+        - Use debootstrap to bootstrap debian
+
+        - Install grub
+
+        - reboot
