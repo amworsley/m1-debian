@@ -5,14 +5,53 @@ mount /dev/sda1 /mnt
 tar -C /lib/firmware/ -xf /mnt/linux-firmware.tar
 umount /mnt
 modprobe brcmfmac
-/etc/init.d/iwd start
-ip link set up dev wlan0
+vim /etc/wpa.conf
+wpa_supplicant -i <interface> -c /etc/wpa_supplicant/wpa_supplicant.conf
 dhclient wlan0
-
-iwctl
-station wlan0 connect
 
 # Time
 ntpdate pool.ntp.org
 date --set 2022-01-25
 date --set 14:21
+
+# Fix grub
+apt-get purge grub-efi grub-efi-arm64 grub-efi-arm64-bin grub-efi-arm64-signed
+apt-get install grub-efi-arm64
+grub-install --removable /dev/nvme0n1p4
+# Set removable media to yes and nvram to no
+dpkg-reconfigure dpkg-reconfigure grub-efi-arm64
+update-grub
+find /boot/efi -name fbaa64.efi | xargs rm
+
+See also: https://github.com/AsahiLinux/docs/wiki/U-Boot
+
+
+# xorg
+(air) [~] cat /etc/X11/xorg.conf.d/00-keyboard.conf
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "us"
+        Option "XkbModel" "pc105"
+        Option "XkbVariant" "de_se_fi"
+        Option "XkbOptions" "ctrl:nocaps"
+EndSection
+(air) [~] cat /etc/X11/xorg.conf.d/30-input.conf
+Section "InputClass"
+  Identifier "libinput touchpad catchall"
+  MatchIsTouchpad "on"
+  MatchDevicePath "/dev/input/event*"
+  Option "Tapping" "False"
+  Option "TappingDrag" "False"
+  Option "DisableWhileTyping" "True"
+  Option "AccelProfile" "adaptive"
+  Option "AccelSpeed" "0.3"
+  Option "AccelerationNumerator" "2"
+  Option "AccelerationDenominator" "1"
+  Option "AccelerationThreshold" "4"
+  Option "AdaptiveDeceleration" "2"
+  Option "NaturalScrolling" "0"
+        Option "TappingButtonMap" "lmr"
+        Option "ClickMethod" "clickfinger"
+  Driver "libinput"
+EndSection

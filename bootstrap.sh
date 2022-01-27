@@ -52,7 +52,7 @@ build_rootfs()
 {
 (
         sudo rm -rf testing
-        sudo eatmydata debootstrap --arch=arm64 --include initramfs-tools,iwd,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
+        sudo eatmydata debootstrap --arch=arm64 --include initramfs-tools,wpasupplicant,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
 
@@ -68,6 +68,8 @@ build_rootfs()
         sudo cp ../../files/fstab etc/fstab
         sudo cp ../../files/quickstart.txt root/
         sudo cp ../../files/eth0 etc/network/interfaces.d/
+        sudo cp ../../files/wlp1s0f0 etc/network/interfaces.d/
+        sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux-free'
@@ -93,7 +95,7 @@ build_live_stick()
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi live-stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* live-stick/vmlinuz
         cp ../files/grub.cfg live-stick/efi/debian/grub.cfg
-        (cd live-stick; tar cf ../asahi-debian-live-`date "+%Y-%m-%d"`.tar .)
+        (cd live-stick; tar cf ../asahi-debian-live.tar .)
 )
 }
 
@@ -127,16 +129,18 @@ build_di_stick()
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi di-stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* di-stick/vmlinuz
         cp ../files/grub.cfg di-stick/efi/debian/grub.cfg
-        (cd di-stick; tar cf ../m1-d-i-`date "+%Y-%m-%d"`.tar .)
+        export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
+        cp ${KERNEL} di-stick/
+        (cd di-stick; tar cf ../m1-d-i.tar .)
 }
 
 mkdir -p build
 cd build
 
-build_m1n1
-build_uboot
-build_linux
-build_rootfs
-build_live_stick
+# build_m1n1
+# build_uboot
+# build_linux
+# build_rootfs
+# build_live_stick
 build_di_stick
-build_fs
+# build_fs
