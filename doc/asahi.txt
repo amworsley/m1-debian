@@ -1,0 +1,82 @@
+# This is a developer quickstart guide for a tethered boot. If you're looking
+# for an enduser guide see: https://github.com/AsahiLinux/docs/wiki/Debian
+# If you find errors or I should have elaborated more to get to going faster,
+# please let me know in IRC. My nick is Glanzmann or drop me an email at
+# thomas@glanzmann.de
+
+# Boot into macos
+
+# Extract the firmware and save it somewhere you have access to.
+# This firmware needs to be extracted later in /lib/firmware
+curl -sL tg.st/u/fwx.sh | sh
+
+# Make space the last number is the size that MacOS instatllation should consume
+diskutil apfs resizeContainer disk0s2 200GB
+
+# Run the installer, select as stub OS 12.1, in the boot picker you supposed to
+# click Restart than return to the shell and wait until the installer is
+# finished and press Return to shutdown your system.
+curl -L https://mrcn.st/alxsh | sh
+
+# 1. Press and hold down the power button to power on the system.
+#    * It is important that the system be fully powered off before this step,
+#      and that you press and hold down the button once, not multiple times.
+#      This is required to put the machine into the right mode.
+# 2. Release it once 'Entering startup options' is displayed.
+# 3. Choose Options.
+# 4. You will briefly see a 'macOS Recovery' dialog.
+#    * If you are asked to 'Select a volume to recover',
+#      then choose your normal macOS volume and click Next.
+# 5. Click on the Utilities menu and select Terminal.
+# 6. Type the following command and follow the prompts:
+
+# Create an EFI parition because the final layout will have that
+diskutil list
+diskutil addPartition <identifier before free space> %EFI% LB 512MB
+
+# Create partition to hold a rootfs (minimum 1GB if you want to use the rootfs below)
+diskutil list
+diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
+
+# dd a Debian Testing rootfs on it (minimum size 1 GB)
+# Find the scripts to create that rootfs here: https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian
+curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem>
+
+# Relax the boot policy for the stub os and uplaod install m1n1
+/Volumes/Linux/step2.sh
+
+# Build dependencies
+sudo apt install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick build-essential bc kmod flex cpio libncurses5-dev libelf-dev:native bison libssl-dev
+
+# Compile the kernel
+git clone --depth 1 https://github.com/AsahiLinux/linux
+cd linux
+curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
+curl -s https://tg.st/u/5nly | git am -
+curl -s https://tg.st/u/m1-config-2022-01-27 > .config
+
+# Crosscompile the kernel
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j32 Image.gz dtbs
+
+cd ..
+
+# build m1n1
+git clone --recursive https://github.com/AsahiLinux/m1n1.git
+cd m1n1
+make
+
+# Export the control device for the proxyclient and friends
+export M1N1DEVICE=/dev/ttyACM0
+
+# chainload m1n1 so that you have the latest features available
+./proxyclient/tools/chainload.py build/m1n1.macho
+
+# Enable PCIe for wifi
+python3 ./proxyclient/experiments/pcie_enable_devices.py
+
+# Pick the dtb for your device: https://github.com/AsahiLinux/docs/wiki/Devices
+proxyclient/tools/linux.py --bootargs="net.ifnames=0 rw root=/dev/nvme0n1p5 rootwait rootfstype=ext4" ../linux/arch/arm64/boot/Image.gz ../linux/arch/arm64/boot/dts/apple/t8103-j293.dtb
+
+# Set timezone
+dpkg-reconfigure tzdata
