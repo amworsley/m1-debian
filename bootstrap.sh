@@ -42,7 +42,8 @@ build_linux()
         git reset --hard origin/asahi; git clean -f -x -d
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
         curl -s https://tg.st/u/5nly | git am -
-        curl -s https://tg.st/u/m1-config-2022-01-27 > .config
+        curl -s https://tg.st/u/0wM8 | git am -
+        curl -s https://tg.st/u/config-2022-01-28 > .config
         make olddefconfig
         make -j 16 bindeb-pkg
 )
