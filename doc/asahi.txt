@@ -45,17 +45,14 @@ curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux File
 # Build dependencies
 sudo apt install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick build-essential bc kmod flex cpio libncurses5-dev libelf-dev:native bison libssl-dev
 
-# Compile the kernel
+# Crosscompile the kernel
 git clone --depth 1 https://github.com/AsahiLinux/linux
 cd linux
 curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
 curl -s https://tg.st/u/5nly | git am -
 curl -s https://tg.st/u/m1-config-2022-01-27 > .config
-
-# Crosscompile the kernel
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j32 Image.gz dtbs
-
 cd ..
 
 # build m1n1
