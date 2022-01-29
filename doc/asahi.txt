@@ -40,7 +40,7 @@ diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
 
 # dd a Debian Testing rootfs on it (minimum size 1 GB)
 # Find the scripts to create that rootfs here: https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian
-curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem>
+curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem> bs=8m
 
 # Relax the boot policy for the stub os and uplaod install m1n1
 /Volumes/Linux/step2.sh
