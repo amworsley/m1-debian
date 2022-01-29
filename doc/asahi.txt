@@ -18,17 +18,14 @@ diskutil apfs resizeContainer disk0s2 200GB
 # finished and press Return to shutdown your system.
 curl -L https://mrcn.st/alxsh | sh
 
-# 1. Press and hold down the power button to power on the system.
-#    * It is important that the system be fully powered off before this step,
-#      and that you press and hold down the button once, not multiple times.
-#      This is required to put the machine into the right mode.
-# 2. Release it once 'Entering startup options' is displayed.
-# 3. Choose Options.
-# 4. You will briefly see a 'macOS Recovery' dialog.
-#    * If you are asked to 'Select a volume to recover',
-#      then choose your normal macOS volume and click Next.
-# 5. Click on the Utilities menu and select Terminal.
-# 6. Type the following command and follow the prompts:
+# Wait for the system to shutdown and the LEDs turn off. Than wait another 5
+# seconds. Now press and do _not_ let go of the power button for 15 seconds.
+# In the boot picker, select 'Options' and select Utilities > Terminal. In this
+# terminal execute. If you screw the power button holding, turn the System off by
+# pressing the power button until it is off and start from the beginning of this
+# paragraph.
+
+/Volumes/Linux/step2.sh
 
 # Create an EFI parition because the final layout will have that
 diskutil list
@@ -48,17 +45,14 @@ curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux File
 # Build dependencies
 sudo apt install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick build-essential bc kmod flex cpio libncurses5-dev libelf-dev:native bison libssl-dev
 
-# Compile the kernel
+# Crosscompile the kernel
 git clone --depth 1 https://github.com/AsahiLinux/linux
 cd linux
 curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
 curl -s https://tg.st/u/5nly | git am -
 curl -s https://tg.st/u/m1-config-2022-01-27 > .config
-
-# Crosscompile the kernel
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j32 Image.gz dtbs
-
 cd ..
 
 # build m1n1
