@@ -27,6 +27,9 @@ dpkg-reconfigure tzdata
 apt-get install grub-efi grub-efi-arm64-signed-
 grub-install --target=arm64-efi --efi-directory=/boot/efi --removable
 update-grub
+# Set removable media to yes and nvram to no to make later grub updates work
+dpkg-reconfigure grub-efi-arm64
+
 See also: https://github.com/AsahiLinux/docs/wiki/U-Boot
 
 # xorg
