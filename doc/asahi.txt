@@ -1,6 +1,6 @@
 # This is a developer quickstart guide for a tethered boot. If you're looking
 # for an enduser guide see: https://github.com/AsahiLinux/docs/wiki/Debian
-# If you find errors or I should have elaborated more to get to going faster,
+# If you find errors or I should have elaborated more to get you going faster,
 # please let me know in IRC. My nick is Glanzmann or drop me an email at
 # thomas@glanzmann.de
 
@@ -8,39 +8,44 @@
 
 # Extract the firmware and save it somewhere you have access to.
 # This firmware needs to be extracted later in /lib/firmware
+
 curl -sL tg.st/u/fwx.sh | sh
 
-# Make space the last number is the size that MacOS instatllation should consume
+# Make space the last number is the size that MacOS instatllation should
+# consume. The minimum recommended is 100 GB to be able to apply updates later
+# on easily.
+
 diskutil apfs resizeContainer disk0s2 200GB
 
-# Run the installer, select as stub OS 12.1, in the boot picker you supposed to
-# click Restart than return to the shell and wait until the installer is
+# Run the installer, select as stub OS 12.1, in the boot picker you're supposed
+# to click Restart than return to the shell and wait until the installer is
 # finished and press Return to shutdown your system.
+
 curl -L https://mrcn.st/alxsh | sh
 
 # Wait for the system to shutdown and the LEDs turn off. Than wait another 5
 # seconds. Now press and do _not_ let go of the power button for 15 seconds.
+# If you screw up the power button holding, turn the System off by pressing the
+# power button until it is off and start from the beginning of this paragraph.
 # In the boot picker, select 'Options' and select Utilities > Terminal. In this
-# terminal execute. If you screw the power button holding, turn the System off by
-# pressing the power button until it is off and start from the beginning of this
-# paragraph.
+# terminal execute:
 
 /Volumes/Linux/step2.sh
 
 # Create an EFI parition because the final layout will have that
+
 diskutil list
 diskutil addPartition <identifier before free space> %EFI% LB 512MB
 
 # Create partition to hold a rootfs (minimum 1GB if you want to use the rootfs below)
+
 diskutil list
 diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
 
 # dd a Debian Testing rootfs on it (minimum size 1 GB)
 # Find the scripts to create that rootfs here: https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian
-curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem> bs=8m
 
-# Relax the boot policy for the stub os and uplaod install m1n1
-/Volumes/Linux/step2.sh
+curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem> bs=8m
 
 # Build dependencies
 sudo apt install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick build-essential bc kmod flex cpio libncurses5-dev libelf-dev:native bison libssl-dev
