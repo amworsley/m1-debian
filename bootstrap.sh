@@ -100,7 +100,7 @@ build_live_stick()
 )
 }
 
-build_fs()
+build_dd()
 {
 (
         rm -f media
@@ -161,5 +161,5 @@ build_linux
 build_rootfs
 build_live_stick
 build_di_stick
-build_fs
+build_dd
 upload_artefacts
