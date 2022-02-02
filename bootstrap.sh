@@ -68,7 +68,7 @@ build_rootfs()
         sudo cp ../../files/resolv.conf etc/resolv.conf
         sudo cp ../../files/fstab etc/fstab
         sudo cp ../../files/quickstart.txt root/
-        sudo cp ../../files/eth0 etc/network/interfaces.d/
+        sudo cp ../../files/interfaces etc/network/interfaces
         sudo cp ../../files/wlp1s0f0 etc/network/interfaces.d/
         sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
 

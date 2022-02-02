@@ -10,7 +10,7 @@ tar -C /lib/firmware/ -xf /mnt/linux-firmware.tar
 umount /mnt
 modprobe brcmfmac
 vim /etc/wpa_supplicant/wpa_supplicant.conf
-wpa_supplicant -i <interface> -c /etc/wpa_supplicant/wpa_supplicant.conf
+wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
 dhclient wlan0
 
 # Time
