@@ -76,6 +76,3 @@ python3 ./proxyclient/experiments/pcie_enable_devices.py
 
 # Pick the dtb for your device: https://github.com/AsahiLinux/docs/wiki/Devices
 proxyclient/tools/linux.py --bootargs="net.ifnames=0 rw root=/dev/nvme0n1p5 rootwait rootfstype=ext4" ../linux/arch/arm64/boot/Image.gz ../linux/arch/arm64/boot/dts/apple/t8103-j293.dtb
-
-# Set timezone
-dpkg-reconfigure tzdata
