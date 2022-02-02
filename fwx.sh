@@ -7,9 +7,8 @@ export LANG=C
 
 export DYLD_LIBRARY_PATH=$PWD/Frameworks/Python.framework/Versions/Current/lib
 export DYLD_FRAMEWORK_PATH=$PWD/Frameworks
-python=Frameworks/Python.framework/Versions/3.9/bin/python3.9
 export SSL_CERT_FILE=$PWD/Frameworks/Python.framework/Versions/Current/etc/openssl/cert.pem
-export PATH="$PWD/bin:$PATH"
+export PATH="$PWD/Frameworks/Python.framework/Versions/3.9/bin:$PATH"
 
 python3 -m firmware.wifi /usr/share/firmware/wifi /tmp/linux-firmware.tar
 
