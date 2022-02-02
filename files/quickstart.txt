@@ -33,7 +33,7 @@ dpkg-reconfigure grub-efi-arm64
 See also: https://github.com/AsahiLinux/docs/wiki/U-Boot
 
 # xorg
-(air) [~] cat /etc/X11/xorg.conf.d/00-keyboard.conf
+cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<'EOF'
 Section "InputClass"
         Identifier "system-keyboard"
         MatchIsKeyboard "on"
@@ -42,7 +42,9 @@ Section "InputClass"
         Option "XkbVariant" "de_se_fi"
         Option "XkbOptions" "ctrl:nocaps"
 EndSection
-(air) [~] cat /etc/X11/xorg.conf.d/30-input.conf
+EOF
+
+cat > /etc/X11/xorg.conf.d/30-input.conf <<'EOF'
 Section "InputClass"
   Identifier "libinput touchpad catchall"
   MatchIsTouchpad "on"
@@ -61,6 +63,7 @@ Section "InputClass"
         Option "ClickMethod" "clickfinger"
   Driver "libinput"
 EndSection
+EOF
 
 # Create a user
 useradd -m -c 'user' user
