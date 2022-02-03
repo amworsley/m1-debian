@@ -45,6 +45,7 @@ diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
 # dd a Debian Testing rootfs on it (minimum size 1GB)
 # Find the scripts to create that rootfs here: https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian
 
+diskutil list
 curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem> bs=8m
 
 # Build dependencies
