@@ -69,7 +69,6 @@ build_rootfs()
         sudo cp ../../files/fstab etc/fstab
         sudo cp ../../files/quickstart.txt root/
         sudo cp ../../files/interfaces etc/network/interfaces
-        sudo cp ../../files/wlp1s0f0 etc/network/interfaces.d/
         sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
 
         sudo bash -c 'chroot . apt update'
@@ -155,9 +154,9 @@ upload_artefacts()
 mkdir -p build
 cd build
 
+build_linux
 build_m1n1
 build_uboot
-build_linux
 build_rootfs
 build_live_stick
 build_di_stick

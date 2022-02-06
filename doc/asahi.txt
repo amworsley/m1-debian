@@ -11,19 +11,19 @@
 
 curl -sL tg.st/u/fwx.sh | sh
 
-# Make space the last number is the size that MacOS instatllation should
+# Make space. The last number is the size that MacOS instatllation should
 # consume. The minimum recommended is 100 GB to be able to apply updates later
 # on easily.
 
-diskutil apfs resizeContainer disk0s2 200GB
+diskutil apfs resizeContainer disk0s2 100GB
 
-# Run the installer, select as stub OS 12.1, in the boot picker you're supposed
-# to click Restart than return to the shell and wait until the installer is
-# finished and press Return to shutdown your system.
+# Run the installer, select MacOS 12.1 as stub OS version, in the boot picker
+# you're supposed to click Restart than return to the shell and wait until the
+# installer is finished and press Return to shutdown your system.
 
 curl -L https://mrcn.st/alxsh | sh
 
-# Wait for the system to shutdown and the LEDs turn off. Than wait another 5
+# Wait for the system to shutdown and the LEDs turn off. Than wait another 10
 # seconds. Now press and do _not_ let go of the power button for 15 seconds.
 # If you screw up the power button holding, turn the System off by pressing the
 # power button until it is off and start from the beginning of this paragraph.
@@ -42,9 +42,10 @@ diskutil addPartition <identifier before free space> %EFI% LB 512MB
 diskutil list
 diskutil addPartition <identifier before free space> %Linux% %noformat% <size>
 
-# dd a Debian Testing rootfs on it (minimum size 1 GB)
+# dd a Debian Testing rootfs on it (minimum size 1GB)
 # Find the scripts to create that rootfs here: https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian
 
+diskutil list
 curl -L https://tg.st/u/m1.tgz | tar -xOz | dd of=/dev/<identifier of Linux Filesystem> bs=8m
 
 # Build dependencies
