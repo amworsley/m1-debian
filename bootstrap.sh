@@ -43,10 +43,6 @@ build_linux()
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/0wM8 | git am -
-        curl -s https://tg.st/u/114e7b2c8bcbbdd2aade6711169d65fc1cbaafb5.patch | git am -
-        curl -s https://tg.st/u/1e286fea8f626d571aed6e620f4e166a694317c2.patch | git am -
-        curl -s https://tg.st/u/888add910ab5dd1b7500fd2583d8ba5aa73538f3.patch | git am -
-        curl -s https://tg.st/u/d0801e9a20532025b82c06342da068da9aa12967.patch | git am -
         curl -s https://tg.st/u/config-2022-01-28 > .config
         make olddefconfig
         make -j 16 bindeb-pkg
