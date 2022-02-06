@@ -149,7 +149,7 @@ upload_artefacts()
 {
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
-        upload m1-d-i.tar m1.tgz asahi-debian-live.tar u-boot.bin di-stick/vmlinuz k.deb
+        upload m1-d-i.tar m1.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb
 }
 
 mkdir -p build
