@@ -10,3 +10,6 @@ CONFIG_RTC_DRV_APPLE_PMU_SERA=y
 01:52 < jeffmiw> Glanzmann: rtc support over spmi is here : https://github.com/jfbortolotti/linux/tree/spmi_rtc  , you need the following flags in your kernel config: CONFIG_SPMI_APPLE=y CONFIG_MFD_APPLE_SPMI_SERA_PMU=y CONFIG_RTC_DRV_APPLE_PMU_SERA=y
 01:53 < jeffmiw> tested on mba for now, branch only have the changes for t8103
 01:58 < jeffmiw> this enables to boot with current time set in rtc, and rtc is updated is system date/time is changed
+
+18:08 < jeffmiw> mps: do you have the RTC enables in your kernel config ? CONFIG_RTC_CLASS=y CONFIG_RTC_HCTOSYS=y CONFIG_RTC_HCTOSYS_DEVICE="rtc0" CONFIG_RTC_SYSTOHC=y CONFIG_RTC_SYSTOHC_DEVICE="rtc0" CONFIG_RTC_INTF_SYSFS=y CONFIG_RTC_INTF_PROC=y
+                 CONFIG_RTC_INTF_DEV=y
