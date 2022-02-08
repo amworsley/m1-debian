@@ -1,5 +1,12 @@
 #!/usr/bin/perl
 
+# Todo:
+# Create an exclude identifier list of all Apple volumes and build a safetey check
+# Detect if the paritions already exist and offer to reinstall system
+# Let the use pick between u-boot and untethered m1n1
+# Check that there is at least 1.5 GB space
+# Make sure that there is only one free region
+
 use strict;
 
 my ($identifier, $size);
