@@ -25,6 +25,8 @@ build_uboot()
         cd u-boot
         git fetch
         git reset --hard origin/apple-m1-m1n1-nvme; git clean -f -x -d
+        cp ../linux/arch/arm64/boot/dts/apple/t8103.dtsi arch/arm/dts/t8103.dtsi
+        cp ../linux/arch/arm64/boot/dts/apple/t8103-jxxx.dtsi arch/arm/dts/t8103-jxxx.dtsi
         make apple_m1_defconfig
         # it is normal that it runs on an error at the end
         make -j 16 || true
@@ -37,14 +39,14 @@ build_uboot()
 build_linux()
 {
 (
-        test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux
+        test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
         cd linux
         git fetch
-        git reset --hard origin/asahi; git clean -f -x -d
+        git reset --hard smc/work; git clean -f -x -d
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/0wM8 | git am -
-        curl -s https://tg.st/u/config-2022-01-28 > .config
+        curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
         make olddefconfig
         make -j 16 bindeb-pkg
 )
@@ -155,9 +157,9 @@ upload_artefacts()
 mkdir -p build
 cd build
 
+build_linux
 build_m1n1
 build_uboot
-build_linux
 build_rootfs
 build_live_stick
 build_di_stick
