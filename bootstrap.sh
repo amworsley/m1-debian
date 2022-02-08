@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPDX-License-Identifier: MIT
+
 set -x
 set -e
 
