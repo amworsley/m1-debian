@@ -23,19 +23,16 @@ build_uboot()
 {
 (
         # Build u-boot
-        test -d u-boot || git clone https://github.com/kettenis/u-boot
+        test -d u-boot || git clone --depth 1 https://github.com/jannau/u-boot
         cd u-boot
         git fetch
-        git reset --hard origin/apple-m1-m1n1-nvme; git clean -f -x -d
-        cp ../linux/arch/arm64/boot/dts/apple/t8103.dtsi arch/arm/dts/t8103.dtsi
-        cp ../linux/arch/arm64/boot/dts/apple/t8103-jxxx.dtsi arch/arm/dts/t8103-jxxx.dtsi
+        git reset --hard origin/x2r10g10b10; git clean -f -x -d
         make apple_m1_defconfig
-        # it is normal that it runs on an error at the end
-        make -j 16 || true
+        make -j 16
 )
 
-        cat m1n1/build/m1n1.bin `find u-boot -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
-        cat m1n1/build/m1n1.macho `find u-boot -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.macho
+        cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
+        cat m1n1/build/m1n1.macho `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.macho
 }
 
 build_linux()
@@ -49,6 +46,9 @@ build_linux()
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/0wM8 | git am -
         curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
+        curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
+        curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
+
         make olddefconfig
         make -j 16 bindeb-pkg
 )
