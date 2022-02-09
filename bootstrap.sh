@@ -23,7 +23,7 @@ build_uboot()
 {
 (
         # Build u-boot
-        test -d u-boot || git clone --depth 1 https://github.com/jannau/u-boot
+        test -d u-boot || git clone --depth 1 https://github.com/jannau/u-boot -b x2r10g10b10
         cd u-boot
         git fetch
         git reset --hard origin/x2r10g10b10; git clean -f -x -d
