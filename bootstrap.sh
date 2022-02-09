@@ -41,7 +41,7 @@ build_linux()
         test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
         cd linux
         git fetch
-        git reset --hard smc/work; git clean -f -x -d
+        git reset --hard origin/smc/work; git clean -f -x -d
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/0wM8 | git am -
