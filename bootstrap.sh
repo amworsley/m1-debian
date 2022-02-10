@@ -27,6 +27,7 @@ build_uboot()
         cd u-boot
         git fetch
         git reset --hard origin/x2r10g10b10; git clean -f -x -d
+        curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
         make apple_m1_defconfig
         make -j 16
 )
