@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# SPDX-License-Identifier: MIT
+
 # Todo:
 # Create an exclude identifier list of all Apple volumes and build a safetey check
 # Detect if the paritions already exist and offer to reinstall system
