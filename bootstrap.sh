@@ -15,7 +15,7 @@ build_m1n1()
         cd m1n1
         git fetch
         git reset --hard origin/main; git clean -f -x -d
-        make -j 16
+        make -j $(( 2* `nproc`))
 )
 }
 
@@ -29,7 +29,7 @@ build_uboot()
         git reset --hard origin/x2r10g10b10; git clean -f -x -d
         curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
         make apple_m1_defconfig
-        make -j 16
+        make -j $(( 2* `nproc`))
 )
 
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
@@ -51,7 +51,7 @@ build_linux()
         curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
 
         make olddefconfig
-        make -j 16 bindeb-pkg
+        make -j $(( 2* `nproc`)) bindeb-pkg
 )
 }
 
