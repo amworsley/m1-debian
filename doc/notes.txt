@@ -1,3 +1,7 @@
 09:10 < j`ey> Glanzmann: `git rev-list 6f59bc24287..smc/work` that might work, not sure how it deals with merges. git rebase is the better way. but if you do that youre on your own!
 09:19 < _jannau_> Glanzmann: git rebase --onto 5.17-rc3 6f59bc24287
 09:23 < j`ey> if you add -p it can also preserve the merges
+
+19:13 < j`ey> but there's also CONFIG_OF_DMA_DEFAULT_COHERENT, which makes of_dma_is_coherent always return true
+
+21:02 < jannau> mps: you need https://lore.kernel.org/u-boot/20220208210215.8612-1-j@jannau.net/ for extlinux
