@@ -5,3 +5,5 @@
 19:13 < j`ey> but there's also CONFIG_OF_DMA_DEFAULT_COHERENT, which makes of_dma_is_coherent always return true
 
 21:02 < jannau> mps: you need https://lore.kernel.org/u-boot/20220208210215.8612-1-j@jannau.net/ for extlinux
+
+ARCH: 23:29 < ah-[m]> yep, exactly. I had to grub-mkconfig -o /boot/grub/grub.cfg, and move my Image.gz to /boot, otherwise it was just what was on the wiki page
