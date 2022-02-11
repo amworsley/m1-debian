@@ -8,6 +8,25 @@ set -e
 unset LC_CTYPE
 unset LANG
 
+build_linux()
+{
+(
+        test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
+        cd linux
+        git fetch
+        git reset --hard origin/smc/work; git clean -f -x -d
+        curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
+        curl -s https://tg.st/u/5nly | git am -
+        curl -s https://tg.st/u/0wM8 | git am -
+        curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
+        curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
+        curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
+
+        make olddefconfig
+        make -j $(( 2* `nproc`)) bindeb-pkg
+)
+}
+
 build_m1n1()
 {
 (
@@ -22,7 +41,6 @@ build_m1n1()
 build_uboot()
 {
 (
-        # Build u-boot
         test -d u-boot || git clone --depth 1 https://github.com/jannau/u-boot -b x2r10g10b10
         cd u-boot
         git fetch
@@ -34,25 +52,6 @@ build_uboot()
 
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
         cat m1n1/build/m1n1.macho `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.macho
-}
-
-build_linux()
-{
-(
-        test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
-        cd linux
-        git fetch
-        git reset --hard origin/smc/work; git clean -f -x -d
-        curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
-        curl -s https://tg.st/u/5nly | git am -
-        curl -s https://tg.st/u/0wM8 | git am -
-        curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
-        curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
-        curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
-
-        make olddefconfig
-        make -j $(( 2* `nproc`)) bindeb-pkg
-)
 }
 
 build_rootfs()
@@ -148,7 +147,6 @@ upload()
         done;
         curl -n -D - $MYCURLARGS https://upload.glanzmann.de/ | grep ^x-location | awk '{print $2}'
 }
-
 
 upload_artefacts()
 {
