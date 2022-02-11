@@ -26,7 +26,7 @@ build_linux()
         test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
         cd linux
         git fetch
-        git reset --hard origin/smc/work; git clean -f -x -d
+        git reset --hard origin/smc/work; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/0wM8 | git am -
@@ -35,7 +35,7 @@ build_linux()
         curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
 
         make olddefconfig
-        make -j $(( 2* `nproc`)) bindeb-pkg
+        make -j $(( 2* `nproc`)) V=0 bindeb-pkg &> /dev/null
 )
 }
 
@@ -45,7 +45,7 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1.git
         cd m1n1
         git fetch
-        git reset --hard origin/main; git clean -f -x -d
+        git reset --hard origin/main; git clean -f -x -d &> /dev/null
         make -j $(( 2* `nproc`))
 )
 }
@@ -57,7 +57,7 @@ build_uboot()
         test -d u-boot || git clone --depth 1 https://github.com/jannau/u-boot -b x2r10g10b10
         cd u-boot
         git fetch
-        git reset --hard origin/x2r10g10b10; git clean -f -x -d
+        git reset --hard origin/x2r10g10b10; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
         make apple_m1_defconfig
         make -j $(( 2* `nproc`))
