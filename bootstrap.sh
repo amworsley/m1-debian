@@ -8,9 +8,21 @@ set -e
 unset LC_CTYPE
 unset LANG
 
+export DEBOOTSTRAP=debootstrap
+
+handle_crosscompile()
+{
+        if [ "`uname -m`" != 'aarch64' ]; then
+                export ARCH=arm64
+                export CROSS_COMPILE=aarch64-linux-gnu-
+                export DEBOOTSTRAP=qemu-debootstrap
+        fi
+}
+
 build_linux()
 {
 (
+        handle_crosscompile
         test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
         cd linux
         git fetch
@@ -41,6 +53,7 @@ build_m1n1()
 build_uboot()
 {
 (
+        handle_crosscompile
         test -d u-boot || git clone --depth 1 https://github.com/jannau/u-boot -b x2r10g10b10
         cd u-boot
         git fetch
@@ -57,8 +70,9 @@ build_uboot()
 build_rootfs()
 {
 (
+        handle_crosscompile
         sudo rm -rf testing
-        sudo eatmydata debootstrap --arch=arm64 --include initramfs-tools,wpasupplicant,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
+        sudo eatmydata ${DEBOOTSTRAP} --arch=arm64 --include initramfs-tools,wpasupplicant,tcpdump,vim,tmux,vlan,ntpdate,bridge-utils,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client testing testing http://ftp.fau.de/debian
 
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
 
@@ -77,7 +91,7 @@ build_rootfs()
         sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
 
         sudo bash -c 'chroot . apt update'
-        sudo bash -c 'chroot . apt install -y firmware-linux-free'
+        sudo bash -c 'chroot . apt install -y firmware-linux'
 
         sudo -- perl -p -i -e 's/root:x:/root::/' etc/passwd
 
@@ -157,6 +171,8 @@ upload_artefacts()
 
 mkdir -p build
 cd build
+
+sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support
 
 build_linux
 build_m1n1
