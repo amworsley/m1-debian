@@ -32,6 +32,7 @@ build_linux()
         curl -s https://tg.st/u/0wM8 | git am -
         curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
         curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
+        curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
         curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
         make olddefconfig
         make -j $(( 2* `nproc`)) V=0 bindeb-pkg &> /dev/null
