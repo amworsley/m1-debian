@@ -32,6 +32,18 @@ build_linux()
         curl -s https://tg.st/u/0wM8 | git am -
         curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
         curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
+
+        # CPUFREQ patches
+        curl -s https://tg.st/u/0001-MAINTAINERS-apple-Add-apple-mcc-and-clk-apple-cluste.patch | git am -
+        curl -s https://tg.st/u/0002-dt-bindings-memory-controller-Add-apple-mcc-binding.patch | git am -
+        curl -s https://tg.st/u/0003-dt-bindings-clock-Add-apple-cluster-clk-binding.patch | git am -
+        curl -s https://tg.st/u/0004-opp-core-Don-t-warn-if-required-OPP-device-does-not-.patch | git am -
+        curl -s https://tg.st/u/0005-PM-domains-Add-of_genpd_add_provider_simple_noclk.patch | git am -
+        curl -s https://tg.st/u/0006-memory-apple-Add-apple-mcc-driver-to-manage-MCC-perf.patch | git am -
+        curl -s https://tg.st/u/0007-clk-apple-Add-clk-apple-cluster-driver-to-manage-CPU.patch | git am -
+        curl -s https://tg.st/u/0008-arm64-apple-Select-MEMORY-and-APPLE_MCC.patch | git am -
+        curl -s https://tg.st/u/0009-arm64-apple-Add-CPU-frequency-scaling-support-for-t8.patch | git am -
+
         curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
 
         make olddefconfig
