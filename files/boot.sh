@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo 'grub-efi-arm64 grub2/update_nvram boolean false' | chroot /target debconf-set-selections
-echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean false' | chroot /target debconf-set-selections
+echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean true' | chroot /target debconf-set-selections
 chroot /target apt-get remove -y grub-efi-arm64-signed
 chroot /target apt-get install -y ntpdate
 chroot /target grub-install --removable /boot/efi
