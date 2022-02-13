@@ -44,6 +44,9 @@ build_linux()
         curl -s https://tg.st/u/0008-arm64-apple-Select-MEMORY-and-APPLE_MCC.patch | git am -
         curl -s https://tg.st/u/0009-arm64-apple-Add-CPU-frequency-scaling-support-for-t8.patch | git am -
 
+        # Remove power-domains = mcc
+        curl -s https://tg.st/u/0001-arch-arm64-apple-t8103-Remove-invalid-clk_pcluster-p.patch | git am -
+
         curl -s https://tg.st/u/m1-config-smc-2022-02-06 > .config
 
         make olddefconfig
@@ -58,7 +61,7 @@ build_m1n1()
         cd m1n1
         git fetch
         git reset --hard origin/main; git clean -f -x -d &> /dev/null
-        make -j $(( 2* `nproc`))
+        make -j $(( 2* `nproc`)) &> /dev/null
 )
 }
 
@@ -72,7 +75,7 @@ build_uboot()
         git reset --hard origin/x2r10g10b10; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
         make apple_m1_defconfig
-        make -j $(( 2* `nproc`))
+        make -j $(( 2* `nproc`)) &> /dev/null
 )
 
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
