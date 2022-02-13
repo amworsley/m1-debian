@@ -17,3 +17,5 @@ https://lore.kernel.org/linux-arm-kernel/20211011165707.138157-1-marcan@marcan.s
 23:46 < kov> yep, just upgrading to testing's libinput makes it work heh thanks Glanzmann!
 
 Chromium 16KB patch: https://tg.st/u/Set-kernal-page-size-to-16K-on-loongson-MIPS-archtec.patch
+10:10 < jannau> see the commit message for 64k on ppc64 https://chromium.googlesource.com/chromium/src.git/+/445c099c6486b8e5ff8dafaefcd812a7ea4bdfff%5E%21/
+
