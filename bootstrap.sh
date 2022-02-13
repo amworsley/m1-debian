@@ -142,7 +142,9 @@ build_di_stick()
         sudo rm -rf initrd; mkdir initrd; (cd initrd; gzip -cd ../initrd.gz | sudo cpio -imd --quiet)
         sudo rm -rf initrd/lib/modules/*
         sudo cp -a testing/lib/modules/* initrd/lib/modules/
-        sudo cp ../files/preseed.cfg initrd/
+        sudo cp ../files/options.sh initrd/usr/lib/base-installer.d/
+        sudo cp ../files/wifi.sh initrd/usr/lib/debian-installer-startup.d/
+        sudo cp ../files/boot.sh initrd/usr/lib/finish-install.d/
         sudo cp ../files/wpa.conf initrd/etc/
         (cd initrd; find . | cpio --quiet -H newc -o | pigz > ../di-stick/initrd.gz)
         sudo rm -rf initrd
@@ -175,11 +177,11 @@ cd build
 
 sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support
 
-build_linux
-build_m1n1
-build_uboot
-build_rootfs
-build_live_stick
+# build_linux
+# build_m1n1
+# build_uboot
+# build_rootfs
+# build_live_stick
 build_di_stick
-build_dd
-upload_artefacts
+# build_dd
+# upload_artefacts
