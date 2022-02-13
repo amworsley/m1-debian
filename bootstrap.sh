@@ -160,7 +160,7 @@ upload()
         for FILE in "$@"; do
                 MYCURLARGS="$MYCURLARGS -F file=@${FILE}";
         done;
-        curl -n -D - $MYCURLARGS https://upload.glanzmann.de/ | grep ^x-location | awk '{print $2}'
+        curl -4 -n -D - $MYCURLARGS https://upload.glanzmann.de/ | grep ^x-location | awk '{print $2}'
 }
 
 upload_artefacts()
