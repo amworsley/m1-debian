@@ -15,3 +15,5 @@ https://lore.kernel.org/linux-arm-kernel/20211011165707.138157-1-marcan@marcan.s
 23:42 < kov> it's weird because I remember the trackpad working a while ago
 23:45 -!- mtjzh (~mtjzh@2a02:8388:1742:9b80:658f:93d3:ec68:d60e) has joined #asahi
 23:46 < kov> yep, just upgrading to testing's libinput makes it work heh thanks Glanzmann!
+
+Chromium 16KB patch: https://tg.st/u/Set-kernal-page-size-to-16K-on-loongson-MIPS-archtec.patch
