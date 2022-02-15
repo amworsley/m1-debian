@@ -21,3 +21,5 @@ Chromium 16KB patch: https://tg.st/u/Set-kernal-page-size-to-16K-on-loongson-MIP
 15:26 < tpw_rules> Glanzmann: https://pastebin.com/NzJEQJDW - https://tg.st/u/NzJEQJDW
 15:26 < tpw_rules> last i checked the built chromium only worked with the flags --in-process-gpu --no-sandbox --no-zygote but that may have been a kernel config problem
 Upstream BUG: https://bugs.webkit.org/show_bug.cgi?id=236564
+
+22:39 < jannau> `dtc -I fs -O dts -o - /proc/device-tree` will output the device-tree as seen by linux
