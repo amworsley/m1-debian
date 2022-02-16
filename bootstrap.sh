@@ -155,20 +155,11 @@ build_di_stick()
         (cd di-stick; tar cf ../m1-d-i.tar .)
 }
 
-upload()
-{
-        unset MYCURLARGS;
-        for FILE in "$@"; do
-                MYCURLARGS="$MYCURLARGS -F file=@${FILE}";
-        done;
-        curl -4 -n -D - $MYCURLARGS https://upload.glanzmann.de/ | grep ^x-location | awk '{print $2}'
-}
-
 upload_artefacts()
 {
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
-        upload m1-d-i.tar m1.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb
+        scp m1-d-i.tar m1.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb root@tg.st:/u/
 }
 
 mkdir -p build
