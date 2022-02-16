@@ -179,8 +179,8 @@ sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu l
 build_linux
 build_m1n1
 build_uboot
-# build_rootfs
-# build_live_stick
-# build_di_stick
-# build_dd
-# upload_artefacts
+build_rootfs
+build_live_stick
+build_di_stick
+build_dd
+upload_artefacts
