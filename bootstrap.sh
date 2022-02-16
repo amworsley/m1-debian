@@ -23,16 +23,17 @@ build_linux()
 {
 (
         handle_crosscompile
-        test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b smc/work
+        test -d linux || git clone --depth 1 https://github.com/jannau/linux -b spmi/work
         cd linux
         git fetch
-        git reset --hard origin/smc/work; git clean -f -x -d &> /dev/null
+        git reset --hard origin/spmi/work; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
         curl -s https://tg.st/u/5nly | git am -
         curl -s https://tg.st/u/0wM8 | git am -
         curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
         curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
+        curl -s https://tg.st/u/0001-21-02-axboe-grabbing-anv-lock-around-the-issue-does-.patch | git am -
         curl -s https://tg.st/u/config-2022-02-13 > .config
         make olddefconfig
         make -j $(( 2* `nproc`)) V=0 bindeb-pkg &> /dev/null
@@ -178,8 +179,8 @@ sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu l
 build_linux
 build_m1n1
 build_uboot
-build_rootfs
-build_live_stick
-build_di_stick
-build_dd
-upload_artefacts
+# build_rootfs
+# build_live_stick
+# build_di_stick
+# build_dd
+# upload_artefacts
