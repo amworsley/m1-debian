@@ -23,3 +23,13 @@ Chromium 16KB patch: https://tg.st/u/Set-kernal-page-size-to-16K-on-loongson-MIP
 Upstream BUG: https://bugs.webkit.org/show_bug.cgi?id=236564
 
 22:39 < jannau> `dtc -I fs -O dts -o - /proc/device-tree` will output the device-tree as seen by linux
+
+19:11 < Glanzmann> axboe: Could you explain how to mark a device as write-through? Does that mean if I issue a sync in Linux that no flush will happen. Because this would be helpful for the m1 notebook owners to improve performance.
+19:11 < axboe> I just do: `echo "write through" > /sys/block/nvme0n1/queue/write_cache"` for now...
+19:11 < axboe> Glanzmann: ^^
+19:12 < axboe> Glanzmann: and yes, that's what it means
+19:12 < Glanzmann> axboe: Thanks.
+19:12 < axboe> Glanzmann: it'll bump your test case from 56 iops to 14k or something like that :)
+19:12 < axboe> alternatively, some sort of time based hack might make sense
+19:13 < axboe> "only issue flush if X seconds has passed since last issue"
+19:13 < axboe> kinda nasty, but safer
