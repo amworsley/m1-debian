@@ -39,3 +39,5 @@ Upstream BUG: https://bugs.webkit.org/show_bug.cgi?id=236564
 15:52 < mps> i.e. libinput-1.19.901
 15:52 < axboe> mps: promising
 15:53 < mps> but still didn't got it to detect thumb
+16:07 < mps> Glanzmann: `libinput quirks list /dev/input/event1` will show you features of input device
+16:09 < mps> and `libinput quirks list /dev/input/event1` will show quirks from libinput database
