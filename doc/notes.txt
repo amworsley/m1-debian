@@ -33,3 +33,9 @@ Upstream BUG: https://bugs.webkit.org/show_bug.cgi?id=236564
 19:12 < axboe> alternatively, some sort of time based hack might make sense
 19:13 < axboe> "only issue flush if X seconds has passed since last issue"
 19:13 < axboe> kinda nasty, but safer
+
+15:50 < mps> axboe: Glanzmann: `libinput Disable While Typing Enabled (268):    1` is set in my case and it works fine
+15:51 < mps> though I built latest beta of libinput and rebuilt xf86-input-libinput with it
+15:52 < mps> i.e. libinput-1.19.901
+15:52 < axboe> mps: promising
+15:53 < mps> but still didn't got it to detect thumb
