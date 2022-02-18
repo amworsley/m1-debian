@@ -28,8 +28,8 @@ build_linux()
         git fetch
         git reset --hard origin/spmi/work; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
-        curl -s https://tg.st/u/5nly | git am -
-        curl -s https://tg.st/u/0wM8 | git am -
+        curl -s https://tg.st/u/5nly.patch | git am -
+        curl -s https://tg.st/u/0wM8.patch | git am -
         curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
         curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
