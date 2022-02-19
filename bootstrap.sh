@@ -23,21 +23,14 @@ build_linux()
 {
 (
         handle_crosscompile
-        test -d linux || git clone --depth 1 https://github.com/jannau/linux -b spmi/work
+        test -d linux || git clone --depth 1 https://github.com/AsahiLinux/linux -b asahi
         cd linux
         git fetch
-        git reset --hard origin/spmi/work; git clean -f -x -d &> /dev/null
-        curl -s https://tg.st/u/9ce9060dea91951a330feeeda3ad636bc88c642c.patch | git am -
-        curl -s https://tg.st/u/5nly.patch | git am -
-        curl -s https://tg.st/u/0wM8.patch | git am -
-        curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
-        curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
+        git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
-        curl -s https://tg.st/u/0001-apple-nvme-serialize-command-issue.patch | git am -
-        curl -s https://tg.st/u/50c69de75b60f6e47dc9f2a2ee85c6f69648e489.patch | git am -
-        curl -s https://tg.st/u/config-2022-02-16 > .config
+        curl -s https://tg.st/u/config-2022-02-19 > .config
         make olddefconfig
-        make -j $(( 2* `nproc`)) V=0 bindeb-pkg &> /dev/null
+        make -j $(( 2* `nproc`)) V=0 bindeb-pkg
 )
 }
 
@@ -48,7 +41,7 @@ build_m1n1()
         cd m1n1
         git fetch
         git reset --hard origin/main; git clean -f -x -d &> /dev/null
-        make -j $(( 2* `nproc`)) &> /dev/null
+        make -j $(( 2* `nproc`))
 )
 }
 
@@ -62,7 +55,7 @@ build_uboot()
         git reset --hard origin/x2r10g10b10; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
         make apple_m1_defconfig
-        make -j $(( 2* `nproc`)) &> /dev/null
+        make -j $(( 2* `nproc`))
 )
 
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
