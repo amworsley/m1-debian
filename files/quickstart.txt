@@ -37,6 +37,8 @@ dpkg-reconfigure grub-efi-arm64
 See also: https://github.com/AsahiLinux/docs/wiki/U-Boot
 
 # xorg
+
+# Keyboard use capslock as additional ctrl
 cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<'EOF'
 Section "InputClass"
         Identifier "system-keyboard"
@@ -48,6 +50,10 @@ Section "InputClass"
 EndSection
 EOF
 
+# Swap command and option (windows and alt like on a pc keyboard)
+setxkbmap -option altwin:swap_alt_win
+
+# Configure the touchpad
 cat > /etc/X11/xorg.conf.d/30-input.conf <<'EOF'
 Section "InputClass"
   Identifier "libinput touchpad catchall"
