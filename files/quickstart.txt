@@ -1,3 +1,7 @@
+# grow root filesystem
+lsblk
+resize2fs /dev/nvme0n1pX
+
 # Ethernet
 ip l s
 dhclient <device>
@@ -66,8 +70,11 @@ EndSection
 EOF
 
 # Create a user
-useradd -m -c 'user' user
-passwd user
+useradd -m -c 'firstname lastname' -s /bin/bash username
+passwd username
+
+# Lightweight desktop
+apt-get install lightdm blackbox xterm firefox-esr
 
 # Install gnome
 apt-get install gnome
@@ -85,6 +92,8 @@ dpkg -i k.deb
                 - Rest with ext4
 
         - Use debootstrap to bootstrap debian
+
+        - Install the kernel
 
         - Install grub
 
