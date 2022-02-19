@@ -47,3 +47,7 @@ From mps:
 echo 2 > /sys/module/hid_apple/parameters/fnmode
 echo 1 > /sys/module/hid_apple/parameters/swap_fn_leftctrl
 echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
+
+19:19 < Glanzmann> sven: Do you know why axboe set the admin queue to 2 instead of 8?
+19:19 < sven> yes
+19:19 < sven> almost all commands go through the io queue, no need to waste that space for the admin queue
