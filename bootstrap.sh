@@ -33,7 +33,7 @@ build_linux()
         curl -s https://tg.st/u/256f5efbf23ff68c489dad92f99d1cecfb021729.patch | git am -
         curl -s https://tg.st/u/8737955a0263d09ffa8550658dfcac1df3d0665c.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
-        curl -s https://tg.st/u/0001-21-02-axboe-grabbing-anv-lock-around-the-issue-does-.patch | git am -
+        curl -s https://tg.st/u/0001-apple-nvme-serialize-command-issue.patch | git am -
         curl -s https://tg.st/u/50c69de75b60f6e47dc9f2a2ee85c6f69648e489.patch | git am -
         curl -s https://tg.st/u/config-2022-02-16 > .config
         make olddefconfig
