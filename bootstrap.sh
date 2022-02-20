@@ -27,7 +27,7 @@ build_linux()
         cd linux
         git fetch
         git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
-        curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
+        # curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
         curl -s https://tg.st/u/DXyl.patch | git am -
         curl -s https://tg.st/u/0001-apple-mca-correct-prinkts.patch | git am -
         curl -s https://tg.st/u/config-2022-02-19 > .config
