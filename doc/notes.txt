@@ -51,3 +51,7 @@ echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 19:19 < Glanzmann> sven: Do you know why axboe set the admin queue to 2 instead of 8?
 19:19 < sven> yes
 19:19 < sven> almost all commands go through the io queue, no need to waste that space for the admin queue
+
+# j`ey on deleting efi and Linux partitions from the gui in macos
+20:46 < j`ey> Glanzmann: I didnt figure it out at the diskutil cli, but I managed to do it from the GUI, I think you have to erase/reformat as APFS before you can delete the volumes
+
