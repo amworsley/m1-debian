@@ -51,7 +51,7 @@ EndSection
 EOF
 
 # Swap command and option (windows and alt like on a pc keyboard)
-setxkbmap -option altwin:swap_alt_win
+echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 
 # Configure the touchpad
 cat > /etc/X11/xorg.conf.d/30-input.conf <<'EOF'
