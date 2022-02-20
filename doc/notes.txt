@@ -55,3 +55,4 @@ echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 # j`ey on deleting efi and Linux partitions from the gui in macos
 20:46 < j`ey> Glanzmann: I didnt figure it out at the diskutil cli, but I managed to do it from the GUI, I think you have to erase/reformat as APFS before you can delete the volumes
 
+21:07 < tpw_rules> you can delete a non-apfs partition with: diskutil eraseVolume free n disk0sX
