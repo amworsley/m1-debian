@@ -68,3 +68,7 @@ echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 23:24 < kettenis> looks like you could try hooking that up using gpio-keys-polled
 23:27 < Glanzmann> kettenis: So gpio-keys-polled would poll gP01 and send a key event and than I could use my window manager to do something when that key event is received?
 23:29 < kettenis> look at arch/arm/boot/dts/imx6q-novena.dts
+
+# How to subscribe to smc events
+23:45 < j`ey> Glanzmann: if youre still interested in looking: drivers/power/supply/macsmc_power.c apple_smc_register_notifier(power->smc, &power->nb);
+23:46 < j`ey> so this driver gets called, when an SMC notification happens. looks like all registered handlers would be called and its up to the callback to figure out if it needs to do something
