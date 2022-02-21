@@ -90,6 +90,9 @@ apt-get install gnome
 wget https://tg.st/u/k.deb
 dpkg -i k.deb
 
+# asahi does not handle sleep well at the moment
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
 - You can also use the live system to install Debian on the m1, the rough outline is:
 
         - Create two paritions:
