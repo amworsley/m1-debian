@@ -1,2 +1,0 @@
-17:46 < mps> Glanzmann: copied t8103.dtsi and t8103-jxxx.dtsi to u-boot and build u-boot, that's all
-https://tg.st/u/m1-config-smc-2022-02-06

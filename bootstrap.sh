@@ -31,6 +31,7 @@ build_linux()
         curl -s https://tg.st/u/DXyl.patch | git am -
         curl -s https://tg.st/u/0001-apple-mca-correct-prinkts.patch | git am -
         curl -s https://tg.st/u/0001-Hookup-gpio-backlight.patch | git am -
+        curl -s https://tg.st/u/XKVZ.patch | git am -
         curl -s https://tg.st/u/config-2022-02-19 > .config
         make olddefconfig
         make -j $(( 2* `nproc`)) V=0 bindeb-pkg
