@@ -78,6 +78,8 @@ build_rootfs()
 
         cd testing
 
+        mkdir -p boot/efi
+
         sudo bash -c 'echo live > etc/hostname'
 
         sudo bash -c 'echo > etc/motd'
@@ -138,17 +140,16 @@ build_efi()
 {
 (
         rm -rf EFI
-        mkdir -p EFI/boot
+        mkdir -p EFI/boot EFI/debian
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi EFI/boot/bootaa64.efi
 
         export INITRD=`ls -1 testing/boot/ | grep initrd`
         export VMLINUZ=`ls -1 testing/boot/ | grep vmlinuz`
         export UUID=`blkid media | awk -F\" '{print $2}'`
-        cat > EFI/boot/grub.cfg <<EOF
+        cat > EFI/debian/grub.cfg <<EOF
 search.fs_uuid ${UUID} root
-set prefix=(\$root)'/boot/'
-linux $VMLINUZ root=UUID=${UUID} ro
-inird $INITRD
+linux (\$root)/boot/${VMLINUZ} root=UUID=${UUID} rw
+initrd (\$root)/boot/${INITRD}
 boot
 EOF
         tar czf efi.tgz EFI

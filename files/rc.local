@@ -12,6 +12,7 @@
 
 my $firmware_tarball = '/boot/efi/linux-firmware.tar';
 my $firmware_manifest = '/lib/firmware/ASAHI_FIRMWARE_MANIFEST';
+my $grubcfg = '/mnt/EFI/debian/grub.cfg';
 
 sub
 find_root_device
@@ -58,8 +59,8 @@ find_efi_parition
 
         for my $dev (@candidates) {
                 system("mount -o ro $dev /mnt");
-                        if (-f '/mnt/EFI/boot/grub.cfg') {
-                                open(GRUBCFG, '<', '/mnt/EFI/boot/grub.cfg') || die ("Can't open /mnt/EFI/boot/grub.cfg: $!");
+                        if (-f $grubcfg) {
+                                open(GRUBCFG, '<', $grubcfg) || die ("Can't open $grubcfg: $!");
                                 my @lines = <GRUBCFG>;
                                 for (@lines) {
                                         if (/${uuid_in_grub_cfg}/) {
@@ -99,6 +100,7 @@ install_grub
         system("echo 'grub-efi-arm64 grub2/update_nvram boolean false' | debconf-set-selections");
         system("echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean true' | debconf-set-selections");
         system("dpkg-reconfigure -fnoninteractive grub-efi-arm64");
+        system("update-grub");
 }
 
 sub
