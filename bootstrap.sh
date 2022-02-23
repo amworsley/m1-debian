@@ -85,10 +85,10 @@ build_rootfs()
         sudo cp ../../files/sources.list etc/apt/sources.list
         sudo cp ../../files/hosts etc/hosts
         sudo cp ../../files/resolv.conf etc/resolv.conf
-        sudo cp ../../files/fstab etc/fstab
         sudo cp ../../files/quickstart.txt root/
         sudo cp ../../files/interfaces etc/network/interfaces
         sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
+        sudo cp ../../files/rc.local etc/rc.local
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'
