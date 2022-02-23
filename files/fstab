@@ -1,2 +1,0 @@
-# /dev/nvme0n1p5 /         ext4 defaults 0 0
-# /dev/nvme0n1p4 /boot/efi vfat defaults 0 0

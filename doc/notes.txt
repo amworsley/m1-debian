@@ -133,3 +133,5 @@ echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 }
 
 cloud-initramfs-growroot
+16:00 < Glanzmann> So applying a new uuid to the rootfs needs to be done in the initrd.
+tune2fs -U random /dev/whatever
