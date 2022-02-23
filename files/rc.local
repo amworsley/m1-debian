@@ -1,13 +1,17 @@
 #!/usr/bin/perl
 
 # [x] resize root filesystem
+# [x] find root fs uuid
 # [ ] find boot partition
 # [ ] generate fstab
 # [ ] mount boot
-# [ ] extract wifi firmware
-# [ ] reloads the kernel modules
 # [ ] install grub
-# [ ] disables itself
+# [ ] extract wifi firmware
+# [ ] reboots if grub or wifi firmware has changed
+
+my $root_block_device = undef;
+my $root_fs_uuid = undef;
+my $efi_block_device = undef;
 
 sub
 find_root_device
@@ -25,6 +29,57 @@ find_root_device
         die("Could not find root device");
 }
 
-my $root_block_device = find_root_device();
+sub
+find_fs_uuid_of_device
+{
+        my $dev = shift || die;
+        my $blkid_output = `blkid ${dev}`;
+        # /dev/nvme0n1p5: LABEL="/" UUID="fe9c5ac8-edf4-442e-a09e-e0451606898e" BLOCK_SIZE="4096" TYPE="ext4" PARTLABEL="primary" PARTUUID="03378b79-346d-42f9-b404-44b22bc6798f"
+        if ($blkid_output =~ /UUID="([^"]+)"/) {
+                return $1;
+        }
 
-system("resize2fs $root_block_device");
+        die("Could not find fs uuid of $dev");
+}
+
+sub
+find_efi_parition
+{
+        my $uuid_in_grub_cfg = shift || die;
+        my @candidates;
+
+        my $efi_parition = undef;
+
+        for (`blkid`) {
+                if (/^([\S]+):.*TYPE="vfat"/) {
+                        push(@candidates, $1);
+                }
+        }
+
+        for my $dev (@candidates) {
+                system("mount -o ro $dev /mnt");
+                        if (-f '/mnt/EFI/boot/grub.cfg') {
+                                open(GRUBCFG, '<', '/mnt/EFI/boot/grub.cfg') || die ("Can't open /mnt/EFI/boot/grub.cfg: $!");
+                                my @lines = <GRUBCFG>;
+                                for (@lines) {
+                                        if (/${uuid_in_grub_cfg}/) {
+                                                $efi_parition = $dev;
+                                        }
+                                }
+                                close(GRUBCFG);
+                        }
+                system("umount /mnt");
+                last if defined $efi_parition;
+        }
+
+        die ("No efi parition found") unless defined $efi_parition;
+
+        return $efi_parition;
+}
+
+
+$root_block_device = find_root_device();
+# system("resize2fs $root_block_device");
+
+$root_fs_uuid = find_fs_uuid_of_device($root_block_device);
+$efi_block_device = find_efi_parition($root_fs_uuid);
