@@ -134,6 +134,27 @@ build_dd()
 )
 }
 
+build_efi()
+{
+(
+        rm -f EFI
+        mkdir -p EFI/BOOT
+        cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi EFI/boot/bootaa64.efi
+
+        export INITRD=`ls -1 testing/boot/ | grep initrd`
+        export VMLINUZ=`ls -1 testing/boot/ | grep vmlinuz`
+        export UUID=`disktype build/media | grep UUID | awk '{print $2}'`
+        cat > EFI/boot/grub.cfg <<EOF
+search.fs_uuid ${UUID} root
+set prefix=(\$root)'/boot/'
+linux $VMLINUZ root=UUID=${UUID} ro
+inird $INITRD
+boot
+EOF
+        tar czf efi.tgz EFI
+)
+}
+
 build_di_stick()
 {
         rm -rf di-stick
@@ -158,7 +179,7 @@ publish_artefacts()
 {
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
-        sudo cp m1-d-i.tar m1.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi /u/
+        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi /u/
 }
 
 mkdir -p build
@@ -173,4 +194,5 @@ build_rootfs
 build_live_stick
 build_di_stick
 build_dd
+build_efi
 publish_artefacts

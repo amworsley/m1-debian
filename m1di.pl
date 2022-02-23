@@ -56,7 +56,7 @@ system("mkdir -p /Volumes/efi");
 system("mount -t msdos /dev/$identifier /Volumes/efi");
 chdir('/Volumes/efi');
 system('mkdir -p /Volumes/efi/efi/boot');
-system('curl -sL https://tg.st/efi.tar.gz | tar -xzf -');
+system('curl -sL https://tg.st/efi.tgz | tar -xzf -');
 system('curl -sL tg.st/u/fwx.sh | bash');
 system('cp /tmp/linux-firmware.tar /Volumes/efi/');
 chdir('/var/root');
