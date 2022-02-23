@@ -137,13 +137,13 @@ build_dd()
 build_efi()
 {
 (
-        rm -f EFI
-        mkdir -p EFI/BOOT
+        rm -rf EFI
+        mkdir -p EFI/boot
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi EFI/boot/bootaa64.efi
 
         export INITRD=`ls -1 testing/boot/ | grep initrd`
         export VMLINUZ=`ls -1 testing/boot/ | grep vmlinuz`
-        export UUID=`disktype build/media | grep UUID | awk '{print $2}'`
+        export UUID=`blkid media | awk -F\" '{print $2}'`
         cat > EFI/boot/grub.cfg <<EOF
 search.fs_uuid ${UUID} root
 set prefix=(\$root)'/boot/'
