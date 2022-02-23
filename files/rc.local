@@ -86,7 +86,6 @@ generate_fstab
 
         open(FSTAB, '>', '/etc/fstab') || die ("Can not open fstab");
         print FSTAB <<EOF;
-
 UUID="$root_fs_uuid" /         ext4 defaults 0 0
 UUID="$efi_fs_uuid"  /boot/efi vfat defaults 0 0
 EOF
@@ -131,7 +130,7 @@ my $root_fs_uuid = undef;
 my $efi_block_device = undef;
 my $efi_fs_uuid = undef;
 
-unless (-f '/etc/fstab') {
+unless (-f '/boot/grub/grub.cfg') {
         $root_block_device = find_root_device();
         system("resize2fs $root_block_device");
         $root_fs_uuid = find_fs_uuid_of_device($root_block_device);
