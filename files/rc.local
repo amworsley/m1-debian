@@ -2,16 +2,12 @@
 
 # [x] resize root filesystem
 # [x] find root fs uuid
-# [ ] find boot partition
-# [ ] generate fstab
-# [ ] mount boot
+# [x] find boot partition
+# [x] generate fstab
+# [x] mount /boot/efi
 # [ ] install grub
 # [ ] extract wifi firmware
 # [ ] reboots if grub or wifi firmware has changed
-
-my $root_block_device = undef;
-my $root_fs_uuid = undef;
-my $efi_block_device = undef;
 
 sub
 find_root_device
@@ -77,9 +73,32 @@ find_efi_parition
         return $efi_parition;
 }
 
+sub
+generate_fstab
+{
+        my $root_fs_uuid = shift || die;
+        my $efi_fs_uuid = shift || die;
 
-$root_block_device = find_root_device();
-# system("resize2fs $root_block_device");
+        open(FSTAB, '>', '/etc/fstab') || die ("Can not open fstab");
+        print FSTAB <<EOF;
 
-$root_fs_uuid = find_fs_uuid_of_device($root_block_device);
-$efi_block_device = find_efi_parition($root_fs_uuid);
+UUID="$root_fs_uuid" /         ext4 defaults 0 0
+UUID="$efi_fs_uuid"  /boot/efi vfat defaults 0 0
+EOF
+        close(FSTAB);
+}
+
+my $root_block_device = undef;
+my $root_fs_uuid = undef;
+my $efi_block_device = undef;
+my $efi_fs_uuid = undef;
+
+unless (-f '/etc/fstab') {
+        $root_block_device = find_root_device();
+        system("resize2fs $root_block_device");
+        $root_fs_uuid = find_fs_uuid_of_device($root_block_device);
+        $efi_block_device = find_efi_parition($root_fs_uuid);
+        $efi_fs_uuid = find_fs_uuid_of_device($efi_block_device);
+        generate_fstab($root_fs_uuid, $efi_fs_uuid);
+        system('mount /boot/efi');
+}
