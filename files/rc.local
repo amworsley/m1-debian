@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+
+# [x] resize root filesystem
+# [ ] find boot partition
+# [ ] generate fstab
+# [ ] mount boot
+# [ ] extract wifi firmware
+# [ ] reloads the kernel modules
+# [ ] install grub
+# [ ] disables itself
+
+sub
+find_root_device
+{
+        open(MOUNT, '<', '/proc/mounts') || die ("Can not open /proc/mounts for reading: $!");
+        my @lines = <MOUNT>;
+        close(MOUNT);
+
+        for (@lines) {
+                if (/^([\S]+)+ \/ /) {
+                        return $1;
+                }
+        }
+
+        die("Could not find root device");
+}
+
+my $root_block_device = find_root_device();
+
+system("resize2fs $root_block_device");
