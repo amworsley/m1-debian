@@ -6,8 +6,12 @@
 # [x] generate fstab
 # [x] mount /boot/efi
 # [x] install grub
-# [ ] extract wifi firmware
+# [x] extract wifi firmware
+# [ ] on life system skip everything but wifi firmware
 # [ ] In order to change the uuid of the root filesystem, bootstrap.sh must remember it in a file within the mounted disk image. And the initrd needs to change it.
+
+my $firmware_tarball = '/boot/efi/linux-firmware.tar';
+my $firmware_manifest = '/lib/firmware/ASAHI_FIRMWARE_MANIFEST';
 
 sub
 find_root_device
@@ -30,7 +34,7 @@ find_fs_uuid_of_device
 {
         my $dev = shift || die;
         my $blkid_output = `blkid ${dev}`;
-        # /dev/nvme0n1p5: LABEL="/" UUID="fe9c5ac8-edf4-442e-a09e-e0451606898e" BLOCK_SIZE="4096" TYPE="ext4" PARTLABEL="primary" PARTUUID="03378b79-346d-42f9-b404-44b22bc6798f"
+
         if ($blkid_output =~ /UUID="([^"]+)"/) {
                 return $1;
         }
@@ -92,11 +96,32 @@ sub
 install_grub
 {
         system('apt-get install -y grub-efi-arm64-signed-');
-        system('grub-install --target=arm64-efi --efi-directory=/boot/efi --removable');
-        system('update-grub');
         system("echo 'grub-efi-arm64 grub2/update_nvram boolean false' | debconf-set-selections");
         system("echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean true' | debconf-set-selections");
         system("dpkg-reconfigure -fnoninteractive grub-efi-arm64");
+}
+
+sub
+update_wifi_firmware_if_necessary
+{
+        return unless -f $firmware_tarball;
+
+        if (-f $firmware_manifest) {
+                system("sha256sum -c $firmware_manifest --quiet");
+                return if $? == 0;
+        }
+
+        system("sha256sum $firmware_tarball > $firmware_manifest");
+        system("tar -C /lib/firmware/ -xf $firmware_tarball");
+
+        system('rmmod brcmfmac');
+        system('rmmod brcmutil');
+        sleep(1);
+        system('modprobe brcmfmac');
+        sleep(1);
+        system('rmmod brcmfmac');
+        sleep(1);
+        system('modprobe brcmfmac');
 }
 
 my $root_block_device = undef;
@@ -114,3 +139,5 @@ unless (-f '/etc/fstab') {
         system('mount /boot/efi');
         install_grub();
 }
+
+update_wifi_firmware_if_necessary();
