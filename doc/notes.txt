@@ -77,3 +77,5 @@ echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 23:54 < kettenis> if the interrupts are hooked up correctly for thise SMC gpios, gpio-keys instead of gpio-keys-polled should work
 23:54 < j`ey> no irq_chip in the current driver
 
+17:34 <marcan> the image as built will have a real grub config with static UUIDs
+17:35 <marcan> well, a systemd early unit but yes
