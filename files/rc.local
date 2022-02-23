@@ -5,9 +5,9 @@
 # [x] find boot partition
 # [x] generate fstab
 # [x] mount /boot/efi
-# [ ] install grub
+# [x] install grub
 # [ ] extract wifi firmware
-# [ ] reboots if grub or wifi firmware has changed
+# [ ] In order to change the uuid of the root filesystem, bootstrap.sh must remember it in a file within the mounted disk image. And the initrd needs to change it.
 
 sub
 find_root_device
@@ -88,6 +88,17 @@ EOF
         close(FSTAB);
 }
 
+sub
+install_grub
+{
+        system('apt-get install -y grub-efi-arm64-signed-');
+        system('grub-install --target=arm64-efi --efi-directory=/boot/efi --removable');
+        system('update-grub');
+        system("echo 'grub-efi-arm64 grub2/update_nvram boolean false' | debconf-set-selections");
+        system("echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean true' | debconf-set-selections");
+        system("dpkg-reconfigure -fnoninteractive grub-efi-arm64");
+}
+
 my $root_block_device = undef;
 my $root_fs_uuid = undef;
 my $efi_block_device = undef;
@@ -101,4 +112,5 @@ unless (-f '/etc/fstab') {
         $efi_fs_uuid = find_fs_uuid_of_device($efi_block_device);
         generate_fstab($root_fs_uuid, $efi_fs_uuid);
         system('mount /boot/efi');
+        install_grub();
 }
