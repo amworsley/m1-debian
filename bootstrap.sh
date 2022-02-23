@@ -78,9 +78,9 @@ build_rootfs()
 
         cd testing
 
-        rm etc/fstab
+        sudo rm etc/fstab
 
-        mkdir -p boot/efi
+        sudo mkdir -p boot/efi
 
         sudo bash -c 'echo live > etc/hostname'
 
@@ -132,7 +132,7 @@ build_dd()
         tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 media
         sudo mount -o loop media mnt
         sudo cp -a testing/* mnt/
-        sudo touch /mnt/etc/fstab
+        sudo touch mnt/etc/fstab
         sudo rm mnt/init
         sudo umount mnt
         tar cf - media | pigz > m1.tgz
