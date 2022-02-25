@@ -160,7 +160,8 @@ build_di_stick()
 {
         rm -rf di-stick
         mkdir -p di-stick/efi/boot di-stick/efi/debian/
-        test -f initrd.gz || wget https://d-i.debian.org/daily-images/arm64/daily/netboot/debian-installer/arm64/initrd.gz
+        rm -f initrd.gz
+        wget https://d-i.debian.org/daily-images/arm64/daily/netboot/debian-installer/arm64/initrd.gz
         sudo rm -rf initrd; mkdir initrd; (cd initrd; gzip -cd ../initrd.gz | sudo cpio -imd --quiet)
         sudo rm -rf initrd/lib/modules/*
         sudo cp -a testing/lib/modules/* initrd/lib/modules/
@@ -193,7 +194,7 @@ build_m1n1
 build_uboot
 build_rootfs
 build_live_stick
-build_di_stick
+# build_di_stick
 build_dd
 build_efi
 publish_artefacts
