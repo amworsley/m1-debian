@@ -112,7 +112,8 @@ build_live_stick()
 (
         rm -rf live-stick
         mkdir -p live-stick/efi/boot live-stick/efi/debian/
-        sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz > ../live-stick/initrd.gz'
+        sudo cp ../files/wifi.pl testing/etc/rc.local
+        sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz -9 > ../live-stick/initrd.gz'
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi live-stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* live-stick/vmlinuz
         cp ../files/grub.cfg live-stick/efi/debian/grub.cfg
@@ -132,7 +133,7 @@ build_dd()
         sudo cp -a testing/* mnt/
         sudo rm mnt/init
         sudo umount mnt
-        tar cf - media | pigz > m1.tgz
+        tar cf - media | pigz -9 > m1.tgz
 )
 }
 
@@ -167,7 +168,7 @@ build_di_stick()
         sudo cp -a testing/lib/modules/* initrd/lib/modules/
         sudo cp ../files/wifi.sh initrd/
         sudo cp ../files/boot.sh initrd/
-        (cd initrd; find . | cpio --quiet -H newc -o | pigz > ../di-stick/initrd.gz)
+        (cd initrd; find . | cpio --quiet -H newc -o | pigz -9 > ../di-stick/initrd.gz)
         sudo rm -rf initrd
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi di-stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* di-stick/vmlinuz
