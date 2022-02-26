@@ -8,7 +8,7 @@
 # [x] install grub
 # [x] extract wifi firmware
 # [ ] on life system skip everything but wifi firmware
-# [ ] In order to change the uuid of the root filesystem, bootstrap.sh must remember it in a file within the mounted disk image. And the initrd needs to change it.
+# [x] change uuid of ext4
 
 my $firmware_tarball = '/boot/efi/linux-firmware.tar';
 my $firmware_manifest = '/lib/firmware/ASAHI_FIRMWARE_MANIFEST';
@@ -126,17 +126,20 @@ update_wifi_firmware_if_necessary
 }
 
 my $root_block_device = undef;
-my $root_fs_uuid = undef;
+my $initial_root_fs_uuid = undef;
+my $final_root_fs_uuid = undef;
 my $efi_block_device = undef;
 my $efi_fs_uuid = undef;
 
 unless (-f '/boot/grub/grub.cfg') {
         $root_block_device = find_root_device();
         system("resize2fs $root_block_device");
-        $root_fs_uuid = find_fs_uuid_of_device($root_block_device);
-        $efi_block_device = find_efi_parition($root_fs_uuid);
+        $initial_root_fs_uuid = find_fs_uuid_of_device($root_block_device);
+        $efi_block_device = find_efi_parition($initial_root_fs_uuid);
         $efi_fs_uuid = find_fs_uuid_of_device($efi_block_device);
-        generate_fstab($root_fs_uuid, $efi_fs_uuid);
+        system("tune2fs -U random ${root_block_device}");
+        $final_root_fs_uuid = find_fs_uuid_of_device($root_block_device);
+        generate_fstab($final_root_fs_uuid, $efi_fs_uuid);
         system('mount /boot/efi');
         install_grub();
 }
