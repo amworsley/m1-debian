@@ -1,0 +1,43 @@
+This repository contains scripts to bootstrap Debian Linux on m1
+
+fwx.sh
+======
+fwx.sh extracts the wifi firmware and copies it to /tmp/linux-firmware.tar
+
+bootstrap.sh
+============
+bootstrap.sh is tested to run on arm64 and amd64 Debian stable and testing. It
+creates several artefacts:
+
+        - Live System
+
+                asahi-debian-live.tar can be extracted on the root of a msdos
+                (vfat32) usb stick and than be booted using U Boot.
+
+        - Debian Installer
+
+                m1-d-i.tar can be extracted on the root of a msdos (vfat32) usb
+                stick and can be booted using U Boot.
+
+        - Diskimage for Asahi Installer
+
+                efi.tgz can be extracted on the root of the esp partition
+
+                m1.tgz contains a single file which can be dded on a at least 1
+                GB big partition.
+
+                        In the disk image is a /etc/rc.local that will extract
+                        the wifi firmware, generate a /etc/fstab, install grub
+                        using Debian methods, mount /boot/efi, assigns a new
+                        UUID to the root filesystem.
+
+        - U-boot
+
+                u-boot.bin is m1n1 with dtb for all models and U Boot
+                u-boot.macho is m1n1 with dtb for all models and U Boot
+
+        - vmlinuz
+        k.deb
+        m1n1/build/m1n1.bin
+        m1n1/build/m1n1.macho
+        grubaa64.efi
