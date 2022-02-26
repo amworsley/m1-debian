@@ -14,7 +14,7 @@ for (`blkid`) {
 
 for my $dev (@vfat_devices) {
         system("mount -o ro $dev /mnt");
-        if (test -f $firmware_tarball) {
+        if (-f $firmware_tarball) {
                 system("tar -C /lib/firmware/ -xf $firmware_tarball");
                 system('rmmod brcmfmac');
                 system('rmmod brcmutil');
