@@ -19,6 +19,10 @@ creates several artefacts:
                 m1-d-i.tar can be extracted on the root of a msdos (vfat32) usb
                 stick and can be booted using U Boot.
 
+                In the initrd is a /etc/rc.local which searched for the wifi
+                firmware on any vfat, extracts it and reloads the wifi kernel
+                modules.
+
         - Diskimage for Asahi Installer
 
                 efi.tgz can be extracted on the root of the esp partition
