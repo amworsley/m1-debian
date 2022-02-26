@@ -136,8 +136,9 @@ unless (-f '/boot/grub/grub.cfg') {
         system("resize2fs $root_block_device");
         $initial_root_fs_uuid = find_fs_uuid_of_device($root_block_device);
         $efi_block_device = find_efi_parition($initial_root_fs_uuid);
-        $efi_fs_uuid = find_fs_uuid_of_device($efi_block_device);
+        system("mlabel -s -n :: -i $efi_block_device");
         system("tune2fs -U random ${root_block_device}");
+        $efi_fs_uuid = find_fs_uuid_of_device($efi_block_device);
         $final_root_fs_uuid = find_fs_uuid_of_device($root_block_device);
         generate_fstab($final_root_fs_uuid, $efi_fs_uuid);
         system('mount /boot/efi');
