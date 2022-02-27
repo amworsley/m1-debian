@@ -135,3 +135,10 @@ echo 1 > /sys/module/hid_apple/parameters/swap_opt_cmd
 cloud-initramfs-growroot
 16:00 < Glanzmann> So applying a new uuid to the rootfs needs to be done in the initrd.
 tune2fs -U random /dev/whatever
+
+07:54 < VinDuv> So I’ve been looking at how macOS installation from USB works on M1 Macs and I think it might be interesting for the Asashi installer. The way it works is that there’s a hidden plist file on the USB drive that references a macOS
+                application on the drive; if this file is present, the USB drive will show up in the power-button-held boot menu, and when selected, it will run the application. It doesn’t seem to care about file signature
+07:54 < VinDuv> (it works even if the app is just a shell script) and it looks like it’s in 1TR mode.
+07:56 < VinDuv> So the installation workflow from 1TR could be “plug in a USB stick, hold the power button, select Install Asahi” instead of having to manually open the terminal and run curl | sh. The installer doesn’t even need to be graphical since
+                it’s possible for the launched shell script to start the recovery environment’s Terminal and giving it an arbitrary command to run.
+07:59 < VinDuv> This is also not limited to external USB drives; it also works if the files are in an APFS volume in internal storage, which I guess might be useful to have a Asahi Recovery boot option in the boot menu or something.
