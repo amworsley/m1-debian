@@ -142,3 +142,42 @@ tune2fs -U random /dev/whatever
 07:56 < VinDuv> So the installation workflow from 1TR could be “plug in a USB stick, hold the power button, select Install Asahi” instead of having to manually open the terminal and run curl | sh. The installer doesn’t even need to be graphical since
                 it’s possible for the launched shell script to start the recovery environment’s Terminal and giving it an arbitrary command to run.
 07:59 < VinDuv> This is also not limited to external USB drives; it also works if the files are in an APFS volume in internal storage, which I guess might be useful to have a Asahi Recovery boot option in the boot menu or something.
+
+---- .IAPhysicalMedia ---------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AppName</key>
+	<string>Some App.app</string>
+	<key>ProductBuildVersion</key>
+	<string>00A191</string>
+	<key>ProductVersion</key>
+	<string>12.2.1</string>
+</dict>
+</plist>
+
+---- Some App.app/Contents/Info.plist -----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Some App</string>
+	<key>CFBundleExecutable</key>
+	<string>SomeApp</string>
+</dict>
+</plist>
+
+---- Some App.app/Contents/Resources/<lang code>.lproj/InfoPlist.strings ------
+"CFBundleDisplayName" = "Some App";
+
+---- Some App.app/Contents/MacOS/SomeApp (executable) -------------------------
+#!/bin/bash
+exec /System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal "${0%/*}/../Resources/myscript.command"
+
+---- Some App.app/Contents/Resources/myscript.command -------------------------
+#!/bin/sh
+
+echo "Hello, world!"
+exec /bin/bash
