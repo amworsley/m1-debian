@@ -181,3 +181,7 @@ exec /System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal "${0%/*
 
 echo "Hello, world!"
 exec /bin/bash
+
+
+19:14 <VinDuv> marcan: I have done a bit more testing with the .IAPhysicalMedia file and it looks like ProductBuildVersion can be any value including blank. ProductVersion seems to be checked against the minimal macOS version supported by the Mac; on my mini the icon shows up in the boot menu only if it’s >= 11.3.
+19:15 <VinDuv> Maybe it should be set to a higher value for forward compatibility with future Macs that will require 13.0? I’ve tested setting it to 99 and it works.
