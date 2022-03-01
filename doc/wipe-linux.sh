@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# Fetch from https://marcan.st/paste/4wuJXyRX.txt
-# Written by marcan 2022-02-22
+# Source: https://mrcn.st/wipe-linux.sh - 2022-03-01
+
+diskutil list | grep Apple_APFS | grep '2\.5 GB' | sed 's/.* //g' | xargs -n 1 diskutil apfs deleteContainer
+diskutil list /dev/disk0 | grep -Ei 'asahi|linux|EFI' | sed 's/.* //g' | xargs -n 1 diskutil eraseVolume free free
 
 cat > /tmp/uuids.txt <<EOF
 3D3287DE-280D-4619-AAAB-D97469CA9C71
