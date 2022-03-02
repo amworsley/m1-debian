@@ -1,16 +1,6 @@
 #!/usr/bin/perl
 
-# [x] resize root filesystem
-# [x] find root fs uuid
-# [x] find boot partition
-# [x] generate fstab
-# [x] mount /boot/efi
-# [x] install grub
-# [x] extract wifi firmware
-# [ ] on life system skip everything but wifi firmware
-# [x] change uuid of ext4
-
-my $firmware_tarball = '/boot/efi/linux-firmware.tar';
+my $firmware_tarball = '/boot/efi/vendorfw/firmware.tar';
 my $firmware_manifest = '/lib/firmware/ASAHI_FIRMWARE_MANIFEST';
 my $grubcfg = '/mnt/EFI/debian/grub.cfg';
 

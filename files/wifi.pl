@@ -3,7 +3,7 @@
 use strict;
 use warnings FATAL => 'all';
 
-my $firmware_tarball = '/mnt/linux-firmware.tar';
+my $firmware_tarball = '/mnt/vendorfw/firmware.tar';
 my @vfat_devices;
 
 for (`blkid`) {
