@@ -153,6 +153,11 @@ EOF
 )
 }
 
+build_asahi_installer_image()
+{
+        zip -r9 debian-base.zip EFI media
+}
+
 build_di_stick()
 {
         rm -rf di-stick
@@ -178,7 +183,7 @@ publish_artefacts()
 {
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
-        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi /u/
+        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
 }
 
 mkdir -p build
@@ -194,4 +199,5 @@ build_live_stick
 build_di_stick
 build_dd
 build_efi
+build_asahi_installer_image
 publish_artefacts
