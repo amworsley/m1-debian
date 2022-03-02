@@ -155,7 +155,10 @@ EOF
 
 build_asahi_installer_image()
 {
-        zip -r9 debian-base.zip EFI media
+        rm -rf esp
+        mkdir esp
+        mv EFI esp/
+        zip -r9 debian-base.zip esp media
 }
 
 build_di_stick()
