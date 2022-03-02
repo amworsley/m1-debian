@@ -198,9 +198,9 @@ build_linux
 build_m1n1
 build_uboot
 build_rootfs
-build_live_stick
 build_di_stick
 build_dd
 build_efi
 build_asahi_installer_image
+build_live_stick
 publish_artefacts
