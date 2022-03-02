@@ -85,12 +85,13 @@ EOF
 sub
 install_grub
 {
-        system('rm -rf /boot/efi/*');
+        system('rm -rf /boot/efi/EFI');
         system('apt-get install -y grub-efi-arm64-signed-');
         system("echo 'grub-efi-arm64 grub2/update_nvram boolean false' | debconf-set-selections");
         system("echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean true' | debconf-set-selections");
-        system("dpkg-reconfigure -fnoninteractive grub-efi-arm64");
-        system("update-grub");
+        system('dpkg-reconfigure -fnoninteractive grub-efi-arm64');
+        system('update-grub');
+        system('grub-install --removable /boot/efi');
 }
 
 sub
