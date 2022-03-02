@@ -34,7 +34,7 @@ build_linux()
         curl -s https://tg.st/u/XKVZ.patch | git am -
         curl -s https://tg.st/u/config-2022-02-19 > .config
         make olddefconfig
-        make -j $(( 2* `nproc`)) V=0 bindeb-pkg
+        make -j `nproc` V=0 bindeb-pkg
 )
 }
 
@@ -45,7 +45,7 @@ build_m1n1()
         cd m1n1
         git fetch
         git reset --hard origin/main; git clean -f -x -d &> /dev/null
-        make -j $(( 2* `nproc`))
+        make -j `nproc`
 )
 }
 
@@ -59,7 +59,7 @@ build_uboot()
         git reset --hard origin/x2r10g10b10; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
         make apple_m1_defconfig
-        make -j $(( 2* `nproc`))
+        make -j `nproc`
 )
 
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` u-boot/u-boot-nodtb.bin > u-boot.bin
