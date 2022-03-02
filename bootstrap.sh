@@ -32,7 +32,7 @@ build_linux()
         curl -s https://tg.st/u/XKVZ.patch | git am -
         curl -s https://tg.st/u/config-2022-02-19 > .config
         make olddefconfig
-        make -j `nproc` V=0 bindeb-pkg
+        make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
 }
 
