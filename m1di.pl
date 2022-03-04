@@ -57,7 +57,8 @@ system("mount -t msdos /dev/$identifier /Volumes/efi");
 chdir('/Volumes/efi');
 system('curl -sL https://tg.st/u/efi.tgz | tar -xz');
 system('curl -sL tg.st/u/fwx.sh | bash');
-system('cp /tmp/linux-firmware.tar /Volumes/efi/');
+system('mkdir -p /Volumes/efi/vendorfw');
+system('cp /tmp/linux-firmware.tar /Volumes/efi/vendorfw/firmware.tar');
 chdir('/var/root');
 system('umount /Volumes/efi');
 
