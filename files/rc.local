@@ -119,7 +119,6 @@ update_wifi_firmware_if_necessary
 
 my $root_block_device = undef;
 my $initial_root_fs_uuid = undef;
-my $final_root_fs_uuid = undef;
 my $efi_block_device = undef;
 my $efi_fs_uuid = undef;
 
@@ -128,11 +127,8 @@ unless (-f '/boot/grub/grub.cfg') {
         system("resize2fs $root_block_device");
         $initial_root_fs_uuid = find_fs_uuid_of_device($root_block_device);
         $efi_block_device = find_efi_parition($initial_root_fs_uuid);
-        system("mlabel -s -n :: -i $efi_block_device");
-        system("tune2fs -U random ${root_block_device}");
         $efi_fs_uuid = find_fs_uuid_of_device($efi_block_device);
-        $final_root_fs_uuid = find_fs_uuid_of_device($root_block_device);
-        generate_fstab($final_root_fs_uuid, $efi_fs_uuid);
+        generate_fstab($initial_root_fs_uuid, $efi_fs_uuid);
         system('mount /boot/efi');
         install_grub();
 }
