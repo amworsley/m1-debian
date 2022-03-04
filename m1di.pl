@@ -38,6 +38,8 @@ find_identifier_before_free_space
 	return ($identifier, $size);
 }
 
+die "This script must be run as root\n" if ($< != 0);
+
 ($identifier, $size) = find_identifier_before_free_space();
 system("diskutil addPartition $identifier %EFI% LB 512MB");
 
