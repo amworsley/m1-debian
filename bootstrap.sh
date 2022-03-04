@@ -122,7 +122,7 @@ build_dd()
         rm -f media
         dd if=/dev/zero of=media bs=1 count=0 seek=1G
         mkdir -p mnt
-        mkfs.ext4 -O media
+        mkfs.ext4 media
         tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 media
         sudo mount -o loop media mnt
         sudo cp -a testing/* mnt/
