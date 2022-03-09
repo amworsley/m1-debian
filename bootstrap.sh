@@ -52,8 +52,7 @@ build_uboot()
         test -d u-boot || git clone --depth 1 https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch
-        git reset --hard origin/x2r10g10b10; git clean -f -x -d &> /dev/null
-        curl -s https://tg.st/u/v2-console-usb-kbd-Limit-poll-frequency-to-improve-performance.diff | patch -p1
+        git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
         make apple_m1_defconfig
         make -j `nproc`
 )
