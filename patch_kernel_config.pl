@@ -57,7 +57,8 @@ my %asahi_options = (
         'CONFIG_USB_DWC3' => 'y',
         'CONFIG_USB_DWC3_PCI' => 'y',
         'CONFIG_FB_EFI' => 'n',
-        'CONFIG_BACKLIGHT_CLASS_DEVICE' => 'm',
+        'CONFIG_BACKLIGHT_CLASS_DEVICE' => 'y',
+        'CONFIG_BACKLIGHT_GPIO' => 'm',
 );
 
 my %debian_options;
