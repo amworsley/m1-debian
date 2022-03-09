@@ -188,6 +188,9 @@ exec /bin/bash
 
 21:46 < povik> with pulse, you can get the jack by getting into pacmd
 21:46 < povik> and running: load-module module-alsa-sink device=hw:0,1
+21:56 < povik> that mode of playing in parallel through the speakers and jack has a defect
+21:57 < povik> there's noise mixed-in then, at a period
+21:57 < povik> don't know how that happens yet
 
 If you see this in Xorg.0.log, it means that simpledrm has not initialized.
 ...
