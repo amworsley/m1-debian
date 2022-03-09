@@ -185,3 +185,29 @@ exec /bin/bash
 
 19:14 <VinDuv> marcan: I have done a bit more testing with the .IAPhysicalMedia file and it looks like ProductBuildVersion can be any value including blank. ProductVersion seems to be checked against the minimal macOS version supported by the Mac; on my mini the icon shows up in the boot menu only if it’s >= 11.3.
 19:15 <VinDuv> Maybe it should be set to a higher value for forward compatibility with future Macs that will require 13.0? I’ve tested setting it to 99 and it works.
+
+21:46 < povik> with pulse, you can get the jack by getting into pacmd
+21:46 < povik> and running: load-module module-alsa-sink device=hw:0,1
+
+If you see this in Xorg.0.log, it means that simpledrm has not initialized.
+...
+[     4.259] (EE) open /dev/dri/card0: No such file or directory
+...
+[     4.278] (EE) 
+[     4.278] (EE) Backtrace:
+[     4.278] (EE) 0: /usr/lib/xorg/Xorg (OsLookupColor+0x188) [0xaaaad26e0398]
+[     4.278] (EE) unw_get_proc_info failed: no unwind info found [-10]
+
+An initialized simpledrm looks like that:
+
+(air) [~] dmesg | grep -i simpledrm
+[    2.215718] [drm] Initialized simpledrm 1.0.0 20200625 for be2120000.framebuffer on minor 0
+[    2.218952] simple-framebuffer be2120000.framebuffer: [drm] fb1: simpledrmdrmfb frame buffer device
+
+This is probably because someone forgot to enable one of the following kernel options:
+
+CONFIG_BACKLIGHT_CLASS_DEVICE=y
+CONFIG_BACKLIGHT_GPIO=m
+CONFIG_DRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_FB_EFI=n
