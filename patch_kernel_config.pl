@@ -56,6 +56,7 @@ my %asahi_options = (
         'CONFIG_SPMI_APPLE' => 'y',
         'CONFIG_USB_DWC3' => 'y',
         'CONFIG_USB_DWC3_PCI' => 'y',
+        'CONFIG_FB_EFI' => 'n',
 );
 
 my %debian_options;
