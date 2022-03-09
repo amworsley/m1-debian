@@ -161,7 +161,7 @@ build_asahi_installer_image()
         cp u-boot.bin aii/m1n1/boot.bin
         ln media aii/media
         cd aii
-        zip -r9 ../debian-base.zip esp media
+        zip -r9 ../debian-base.zip esp m1n1 media
 )
 }
 
