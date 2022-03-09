@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 # This was taken from the linux-image-5.16.0-3-arm64-unsigned
 # Than it was copied as .config in the asahi tree
 # Than make olddefconfig was executed twice
-my @lines = `cat config-round2`;
+my @lines = `cat /boot/config-5.17.0-rc6-asahi-next-20220301-25570-g0cf7b747744a`;
 chomp @lines;
 
 my %asahi_options = (
@@ -29,7 +29,7 @@ my %asahi_options = (
         'CONFIG_CHARGER_MACSMC' => 'y',
         'CONFIG_COMMON_CLK_APPLE_NCO' => 'y',
         'CONFIG_DRM' => 'y',
-        'CONFIG_DRM_SIMPLEDRM' => 'm',
+        'CONFIG_DRM_SIMPLEDRM' => 'y',
         'CONFIG_FW_LOADER_USER_HELPER' => 'n',
         'CONFIG_FW_LOADER_USER_HELPER_FALLBACK' => 'n',
         'CONFIG_GPIO_MACSMC' => 'y',
