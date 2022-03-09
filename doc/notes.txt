@@ -214,3 +214,49 @@ CONFIG_BACKLIGHT_GPIO=m
 CONFIG_DRM=y
 CONFIG_DRM_SIMPLEDRM=y
 CONFIG_FB_EFI=n
+
+-------------------------------------------------------------------------------------------------------------
+Howto convert from the old bootchain to the m1n1 chainloaded bootchain:
+
+(air) [~] parted /dev/nvme0n1 print
+Model: APPLE SSD AP0512Q (nvme)
+Disk /dev/nvme0n1: 500GB
+Sector size (logical/physical): 4096B/4096B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End    Size    File system  Name                  Flags
+ 1      24.6kB  524MB  524MB                iBootSystemContainer
+ 2      524MB   400GB  399GB                Container
+ 3      400GB   402GB  2501MB
+ 4      402GB   403GB  513MB   fat32                              boot, esp
+ 5      403GB   495GB  91.8GB  ext4         primary
+ 6      495GB   500GB  5369MB               RecoveryOSContainer
+
+I deleted partition 4 and 3, run the asahi installer again.
+
+Than I booted debian from the live stick and mounted the root filesystem and the efi file system:
+
+mount /dev/nvme0n1p5 /mnt
+mount /dev/nvme0n1p4 /mnt/boot/efi
+
+Than I bindmounted the rest of it:
+
+mount -t sysfs none /mnt/sys
+mount -t efivarfs none /mnt/sys/firmware/efi/efivars
+mount -t proc none /mnt/proc
+mount -o bind /dev /mnt/dev
+mount -o bind /dev/pts /mnt/dev/pts
+
+Than I changerooted into it:
+
+cd /mnt
+chroot . bin/bash
+
+blkid
+# Than I updated /etc/fstab with the new id of the efi partition
+
+curl -sLo /boot/efi/m1n1/boot.bin tg.st/u/u-boot.bin
+
+exit, umounted everything and rebooted.
+-------------------------------------------------------------------------------------------------------------
