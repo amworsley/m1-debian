@@ -99,7 +99,7 @@ build_rootfs()
         sudo chroot . dpkg -i ${KERNEL}
         sudo rm ${KERNEL}
 
-        sudo bash -c 'apt-get clean'
+        sudo bash -c 'chroot . apt-get clean'
 )
 }
 
