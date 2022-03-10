@@ -75,7 +75,7 @@ build_rootfs()
 
         sudo mkdir -p boot/efi
 
-        sudo bash -c 'echo live > etc/hostname'
+        sudo bash -c 'echo debian > etc/hostname'
 
         sudo bash -c 'echo > etc/motd'
 
