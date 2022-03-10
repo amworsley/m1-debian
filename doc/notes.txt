@@ -262,3 +262,110 @@ grub-install --removable /boot/efi
 
 exit, umounted everything and rebooted.
 -------------------------------------------------------------------------------------------------------------
+12:41 < chadmed> https://gist.github.com/chadmed/2c772c8fdac8280cb17846388203a213 <- some notes on the speaker system in the j314s, and an asound.conf that makes them sound... okay-ish for now
+
+## BEGIN NOTES ##
+
+# HOUSEKEEPING
+# All testing conducted with channels set to 40% in alsamixer,
+# with no amp gain.
+
+# Do NOT try to play sound with the speakers set to 100% in alsamixer,
+# you will fry the cones!
+
+# DRIVER MAPPINGS/ALSA QUIRKS
+# The speaker array as set up by the ASoC driver maps like
+# this on a J314s:
+# 0: Left Woofer 1
+# 1: Right Woofer 1
+# 2: Left Tweeter
+# 3: Right Tweeter
+# 4: Left (Sub)Woofer 2
+# 5: Right (Sub)Woofer 2
+
+# ALSA sets up the speaker array on the J314s as a 4.0 surround system,
+# with the RL and RR channels duplicated across the woofers like this:
+# 2: Front Left
+# 3: Front Right
+# 0: Rear Left
+# 1: Rear Right
+# 4: Rear Left
+# 5: Rear Right
+
+# Obviously this is not correct, but for us it does not matter, since
+# we can just tell ALSA to route FL and FR to all drivers, presenting
+# it to the rest of userspace as a stereo device. Surround sources
+# are downmixed appropriately.
+
+# SOUND CHECK
+# Testing reveals that drivers 4 and 5 are likely
+# only there to help with bass and sub bass. They
+# are extremely bad at reproducing frequencies above
+# ~500Hz, and even with the help of the tweeters sound
+# rough/deep fried in the mids. Drivers 0 and 1 are obviously
+# intended to be the main woofers in the array.
+
+# If we weren't intending to mimic whatever macOS does, my ear-only
+# testing would have me setting up a xover network like this:
+
+# Freq Range (Hz) | Drivers
+# 0-300 | 0 1 4 5
+# 300-6500 | 0 1
+# 6500-20000 | 2 3
+
+# Figures based on typical {LP,BP,HP}F rolloff characteristics.
+
+# Using all 4 woofers below 300Hz moves more air than just using the
+# (sub)woofers alone. 3-way loudspeakers work like this conventionally.
+
+# The ttable in the j314s-array pcm device tries to compensate for the lack of
+# EQ right now by greatly reducing the volume of 4 and 5, and slightly reducing
+# the volume of 0 and 1 relative to 2 and 3. I have found this gives an acceptably
+# clear sound without being too bright or losing too much out of the mids. Bass is
+# nonexistent, though I suspect this is just because we have not applied appropriate
+# correction to overcome the machine's housing yet. I will not be applying EQ or filtering
+# in ALSA using plugins even in the interim because
+# a) it's deprecated
+# b) it introduces overhead and chews up CPU time
+
+# FIRs can be applied to a 6 channel slave PCM which would then feed the routing table
+# PCM configured below with all coefficients set to 1
+
+## END NOTES ##
+
+# Create a six channel slave for the audio array
+pcm_slave.outputs {
+    pcm "hw:0,0"
+    channels 6
+}
+
+
+# We need to map L and R to the correct drivers. We can use
+# the coefficients in ttable to roughly tune the sound profile.
+pcm.j314s-array {
+    type route
+    slave outputs
+    ttable {
+        0.0 = 0.65
+        0.2 = 1
+        0.4 = 0.3
+        1.1 = 0.65
+        1.3 = 1
+        1.5 = 0.3
+    }
+}
+
+
+# Set up a plug and ctl interface for ALSA defaults
+# XXX: Does not work for PipeWire, but does work for JACK
+# and PulseAudio
+pcm.!default {
+    type plug
+    slave.pcm j314s-array
+}
+
+ctl.!default {
+    type hw
+    card 0
+}
+-------------------------------------------------------------------------------------------------
