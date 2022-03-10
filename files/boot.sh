@@ -11,3 +11,5 @@ chroot /target wget https://tg.st/u/k.deb
 chroot /target dpkg -i k.deb
 chroot /target rm k.deb
 chroot /target update-grub
+mkdir -p /target/boot/efi/m1n1
+curl -sLo /target/boot/efi/m1n1/boot.bin https://tg.st/u/u-boot.bin
