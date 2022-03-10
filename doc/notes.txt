@@ -258,5 +258,7 @@ blkid
 
 curl -sLo /boot/efi/m1n1/boot.bin tg.st/u/u-boot.bin
 
+grub-install --removable /boot/efi
+
 exit, umounted everything and rebooted.
 -------------------------------------------------------------------------------------------------------------
