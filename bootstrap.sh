@@ -156,12 +156,12 @@ build_asahi_installer_image()
 {
 (
         rm -rf aii
-        mkdir -p aii/esp aii/m1n1
+        mkdir -p aii/esp/m1n1
         cp -a EFI aii/esp/
-        cp u-boot.bin aii/m1n1/boot.bin
+        cp u-boot.bin aii/esp/m1n1/boot.bin
         ln media aii/media
         cd aii
-        zip -r9 ../debian-base.zip esp m1n1 media
+        zip -r9 ../debian-base.zip esp media
 )
 }
 
