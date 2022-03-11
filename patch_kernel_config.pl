@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 # This was taken from the linux-image-5.16.0-3-arm64-unsigned
 # Than it was copied as .config in the asahi tree
 # Than make olddefconfig was executed twice
-my @lines = `cat /boot/config-5.17.0-rc6-asahi-next-20220301-25570-g0cf7b747744a`;
+my @lines = `cat config`;
 chomp @lines;
 
 my %asahi_options = (
@@ -56,7 +56,7 @@ my %asahi_options = (
         'CONFIG_SPMI_APPLE' => 'y',
         'CONFIG_USB_DWC3' => 'y',
         'CONFIG_USB_DWC3_PCI' => 'y',
-        'CONFIG_FB_EFI' => 'n',
+        'CONFIG_FB_EFI' => 'y',
         'CONFIG_BACKLIGHT_CLASS_DEVICE' => 'y',
         'CONFIG_BACKLIGHT_GPIO' => 'm',
 );
