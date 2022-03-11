@@ -380,3 +380,7 @@ ctl.!default {
 17:03 < kov> the gnome one was unrelated and is from a bunch of months ago, I have not seen any crashes in my testing with debian's gnome so I assume the fix is
              already in
 17:04 < kov> it's this one https://gitlab.gnome.org/GNOME/gnome-shell/-/commit/be8a1dcbfc7edf19ef13a63ddf034dba814ee000
+
+17:49 < j`ey> marcan: I learnt a new git command just now: git range-diff asahi/asahi-soc/prev..asahi asahi/asahi-soc/next..asahi/asahi good way to compare the
+              new/old branches even after a rebase
+17:49 < j`ey> (where 'asahi' is my local not-yet-updated branch)
