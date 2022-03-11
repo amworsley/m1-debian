@@ -369,3 +369,6 @@ ctl.!default {
     card 0
 }
 -------------------------------------------------------------------------------------------------
+
+# Control what happens after power loss
+/sys/devices/platform/soc/23e400000.smc/macsmc-reboot/ac_power_mode
