@@ -372,3 +372,11 @@ ctl.!default {
 
 # Control what happens after power loss
 /sys/devices/platform/soc/23e400000.smc/macsmc-reboot/ac_power_mode
+
+16k bugs
+========
+17:02 < kov> Glanzmann, https://bugs.webkit.org/show_bug.cgi?id=236564
+17:02 < kov> Glanzmann, that is already on the 2.34.6 stable release
+17:03 < kov> the gnome one was unrelated and is from a bunch of months ago, I have not seen any crashes in my testing with debian's gnome so I assume the fix is
+             already in
+17:04 < kov> it's this one https://gitlab.gnome.org/GNOME/gnome-shell/-/commit/be8a1dcbfc7edf19ef13a63ddf034dba814ee000
