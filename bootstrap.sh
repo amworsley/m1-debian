@@ -27,8 +27,9 @@ build_linux()
         cd linux
         git fetch
         git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
-        curl -s https://tg.st/u/0001-4k-iommu-patch.patch | git am -
+        curl -s https://tg.st/u/0001-4k-iommu-patch-2022-03-11.patch | git am -
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
+        # curl -s https://tg.st/u/config-debian-distro-kernel-2022-03-09-4k > .config
         curl -s https://tg.st/u/config-2022-03-09-4k > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
@@ -121,7 +122,7 @@ build_dd()
 {
 (
         rm -f media
-        dd if=/dev/zero of=media bs=1 count=0 seek=1G
+        dd if=/dev/zero of=media bs=1 count=0 seek=2G
         mkdir -p mnt
         mkfs.ext4 media
         tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 media
