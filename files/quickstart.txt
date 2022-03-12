@@ -107,3 +107,19 @@ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.ta
         - Install grub
 
         - reboot
+
+Repack live
+===========
+You might want to save the state of your live system to the usb stick. In order
+to do so, run the following commands:
+
+apt update
+apt-get install -y cpio pigz
+rm /etc/rc.local
+# remove '#' before allow-hotplug
+vi /etc/network/interfaces
+mount /dev/sda1 /mnt
+mv /mnt/initrd.gz /mnt/initrd.old
+cd /
+find . -xdev | cpio --quiet -H newc -o | pigz -9 > /mnt/initrd.gz
+umount /mnt
