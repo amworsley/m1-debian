@@ -1,3 +1,6 @@
+# grow the root partition
+sgdisk -n 0:0
+
 # grow root filesystem
 lsblk
 resize2fs /dev/nvme0n1pX
