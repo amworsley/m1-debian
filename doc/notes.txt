@@ -387,4 +387,3 @@ ctl.!default {
 
 21:44 < kov> Glanzmann, trying to use the debian installer from your artefacts and getting a blank screen after the boot, any thoughts? (the consoles on tty2 etc come up)
 21:55 < kov> Glanzmann, hrm adding vga=normal fb=false to the kernel cmdline made it work
-
