@@ -395,3 +395,11 @@ ctl.!default {
 15:49 < j`ey> cat m1n1.bin <(echo 'chainload=$ESP_UUID;$BOOT_OBJ_PATH') > blah.bin
 
 16:43 < povik> marcan: two fixes on top of 'asahi' that should make it into the release: https://github.com/povik/linux/commits/asahi-fixes
+
+# Manually install m1n1 in chainloading mode:
+# boot into 1tr
+diskutil list
+diskutil info <identifier of esp>
+curl -sLo tg.st/u/m1n1-rust.bin
+cat m1n1-rust.bin <(echo 'chainload=<Partition UUID>;m1n1/boot.bin') > object.bin
+kmutil configure-boot -c object.bin --raw --entry-point 2048 --lowest-virtual-address 0 -v /Volumes/Linux
