@@ -396,12 +396,11 @@ ctl.!default {
 
 16:43 < povik> marcan: two fixes on top of 'asahi' that should make it into the release: https://github.com/povik/linux/commits/asahi-fixes
 
-# Manually install m1n1 in chainloading mode:
 # boot into 1tr
 diskutil list
 diskutil info <identifier of esp>
 curl -sLo tg.st/u/m1n1-rust.bin
-cat m1n1-rust.bin <(echo 'chainload=<Partition UUID>;m1n1/boot.bin') > object.bin
+cat m1n1-rust.bin <(echo 'chainload=<ESP Partition UUID>;m1n1/boot.bin') <(echo 'chosen.asahi,efi-system-partition=<ESP Parition UUID>') > object.bin
 kmutil configure-boot -c object.bin --raw --entry-point 2048 --lowest-virtual-address 0 -v /Volumes/Linux
 
 20:29 < Glanzmann> One question though what is difference between chosen.asahi,efi-system-partition=EFI-PARTITION-PARTUUID and chainload=EFI-PARTITION-PARTUUID;m1n1/boot.bin?
