@@ -387,3 +387,6 @@ ctl.!default {
 
 21:44 < kov> Glanzmann, trying to use the debian installer from your artefacts and getting a blank screen after the boot, any thoughts? (the consoles on tty2 etc come up)
 21:55 < kov> Glanzmann, hrm adding vga=normal fb=false to the kernel cmdline made it work
+
+07:19 < chadmed> Glanzmann: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2210
+07:47 < chadmed> pushed some changes to asahi-audio, should sound better than it did before now. FIRs are also installed to the directory i proposed in the feature request
