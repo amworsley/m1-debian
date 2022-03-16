@@ -201,12 +201,12 @@ cd build
 sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
 
 build_linux
-# build_m1n1
-# build_uboot
-# build_rootfs
-# build_di_stick
-# build_dd
-# build_efi
-# build_asahi_installer_image
-# build_live_stick
-# publish_artefacts
+build_m1n1
+build_uboot
+build_rootfs
+build_di_stick
+build_dd
+build_efi
+build_asahi_installer_image
+build_live_stick
+publish_artefacts
