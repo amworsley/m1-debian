@@ -29,8 +29,8 @@ build_linux()
         git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch-2022-03-11.patch | git am -
-        # curl -s https://tg.st/u/config-2022-03-15-4k > .config
-        curl -s https://tg.st/u/config-debian-distro-kernel-2022-03-09-4k > .config
+        curl -s https://tg.st/u/config-2022-03-15-4k > .config
+        # curl -s https://tg.st/u/config-debian-distro-kernel-2022-03-09-4k > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
