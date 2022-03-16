@@ -390,3 +390,6 @@ ctl.!default {
 
 07:19 < chadmed> Glanzmann: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2210
 07:47 < chadmed> pushed some changes to asahi-audio, should sound better than it did before now. FIRs are also installed to the directory i proposed in the feature request
+
+15:49 < j`ey> https://github.com/AsahiLinux/asahi-installer/blob/main/src/osinstall.py#L141
+15:49 < j`ey> cat m1n1.bin <(echo 'chainload=$ESP_UUID;$BOOT_OBJ_PATH') > blah.bin
