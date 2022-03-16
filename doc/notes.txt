@@ -393,3 +393,5 @@ ctl.!default {
 
 15:49 < j`ey> https://github.com/AsahiLinux/asahi-installer/blob/main/src/osinstall.py#L141
 15:49 < j`ey> cat m1n1.bin <(echo 'chainload=$ESP_UUID;$BOOT_OBJ_PATH') > blah.bin
+
+16:43 < povik> marcan: two fixes on top of 'asahi' that should make it into the release: https://github.com/povik/linux/commits/asahi-fixes
