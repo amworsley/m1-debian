@@ -59,6 +59,7 @@ my %asahi_options = (
         'CONFIG_FB_EFI' => 'y',
         'CONFIG_BACKLIGHT_CLASS_DEVICE' => 'y',
         'CONFIG_BACKLIGHT_GPIO' => 'm',
+        'CONFIG_TYPEC_TPS6598X' => 'y',
 );
 
 my %debian_options;
@@ -70,13 +71,18 @@ for (@lines) {
 }
 
 for my $o (keys %asahi_options) {
-        if (not exists $debian_options{$o}) {
+        if ((not exists $debian_options{$o}) && $asahi_options{$o} ne 'n') {
                 print "$o missing, adding\n";
                 $debian_options{$o} = $asahi_options{$o};
+        } elsif ((exists $debian_options{$o}) && ($asahi_options{$o} eq 'n')) {
+                print "$o present, removing\n";
+                delete $debian_options{$o};
+        } elsif ((exists $asahi_options{$o} && exists $debian_options{$o}) && ($debian_options{$o} ne $asahi_options{$o})) {
+                print "$o different\n";
         }
 }
 
-open(CONFIG, '>', 'config') || die;
+open(CONFIG, '>', 'config.new') || die;
 for (keys %debian_options) {
         print CONFIG $_ . '=' . $debian_options{$_} . "\n";
 }
