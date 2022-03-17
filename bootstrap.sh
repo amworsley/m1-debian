@@ -29,8 +29,7 @@ build_linux()
         git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch-2022-03-11.patch | git am -
-        curl -s https://tg.st/u/config-2022-03-15-4k > .config
-        # curl -s https://tg.st/u/config-debian-distro-kernel-2022-03-09-4k > .config
+        curl -s https://tg.st/u/config-2022-03-17-distro-sven-jannau.txt > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
@@ -192,7 +191,7 @@ publish_artefacts()
 {
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
-        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho di-stick/vmlinuz k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
+        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
 }
 
 mkdir -p build
@@ -204,7 +203,7 @@ build_linux
 build_m1n1
 build_uboot
 build_rootfs
-# build_di_stick
+# build_di_stick - Debian failed to upload the initrd.gz
 build_dd
 build_efi
 build_asahi_installer_image
