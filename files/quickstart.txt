@@ -221,3 +221,39 @@ device list
 station wlan0 scan
 station wlan0 get-networks
 station wlan0 connect SSID
+
+Deinstall Linux
+===============
+# Lets assume you have the following partioning
+
+(mini) [~] sudo parted /dev/nvme0n1 print
+Model: APPLE SSD AP0256Q (nvme)
+Disk /dev/nvme0n1: 251GB
+Sector size (logical/physical): 4096B/4096B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End    Size    File system  Name                  Flags
+ 1      24.6kB  524MB  524MB                iBootSystemContainer
+ 2      524MB   101GB  100GB
+ 3      101GB   103GB  2500MB
+ 4      103GB   104GB  513MB   fat32                              boot, esp
+ 5      104GB   246GB  142GB   ext4
+ 6      246GB   251GB  5369MB               RecoveryOSContainer
+
+# Never delete the first, the second and the last partition because that either
+# renders your mac unbootable (first two) or unupgradable (last one). However
+# you can recover the system by using a second system if you screw up.
+
+# In the above example we need to delete the partition number 3 (stub partition
+# you can identify it by the size 2500 MB). The partition 4 (you can identtify
+# it by the fact that it is fat32 and the flags boot, esp). And the partition
+# number 5 (you can identify it by the fact that it is ext4).
+
+You delete the partitions by doing:
+
+# n is the partition number
+sudo parted /dev/nvme0n1 rm <n>
+
+# If you're asked if you want to proceed, say 'y'. If your asked if you want to
+# ignore, say, ignore.
