@@ -1,45 +1,47 @@
-# grow the root partition
-sgdisk -n 0:0
+Set root password
+=================
+passwd
+pwconv
 
-# grow root filesystem
-lsblk
-resize2fs /dev/nvme0n1pX
+Configure wifi
+==============
+vi /etc/wpa/wpa_supplicant.conf
+ifup wlp1s0f0
+# remove the '#' before allow-hotplug to let wifi come up after boot
+vi /etc/network/interfaces
 
-# Ethernet
-ip l s
-dhclient <device>
+Install openssh
+===============
+# Login for root is disabled by default. So you need another user
+sudo apt update
+sudo apt install -y openssh-server
 
-# Wifi
-rmmod brcmfmac
-rmmod brcmutil
-mount /dev/sda1 /mnt
-tar -C /lib/firmware/ -xf /mnt/linux-firmware.tar
-umount /mnt
-modprobe brcmfmac
-vim /etc/wpa_supplicant/wpa_supplicant.conf
-wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
-dhclient wlan0
-
-# Time
-ntpdate pool.ntp.org
-date --set 2022-01-25
-date --set 14:21
-
-# Configure timezone
+Configure timezone
+==================
 dpkg-reconfigure tzdata
 
-# Fix grub
-# We deinstall grub-efi-arm64-signed- because it creates a file fbaa64.efi
-# which makes u-boot hang.
-apt-get install grub-efi grub-efi-arm64-signed-
-grub-install --target=arm64-efi --efi-directory=/boot/efi --removable
-update-grub
-# Set removable media to yes and nvram to no to make later grub updates work
-dpkg-reconfigure grub-efi-arm64
+Create a user
+=============
+useradd -m -c 'firstname lastname' -s /bin/bash username
+passwd username
 
-See also: https://github.com/AsahiLinux/docs/wiki/U-Boot
+Lightweight desktop
+===================
+apt-get install lightdm blackbox xterm firefox-esr
+/etc/init.d/lightdm start
 
-# xorg
+Install gnome
+=============
+apt-get install gnome
+/etc/init.d/gdm3 start
+
+Disable sleep, hibernate and suspend targets
+============================================
+# asahi does not handle sleep well at the moment
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+Xorg
+====
 
 # Keyboard use capslock as additional ctrl
 cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<'EOF'
@@ -78,38 +80,100 @@ Section "InputClass"
 EndSection
 EOF
 
-# Create a user
-useradd -m -c 'firstname lastname' -s /bin/bash username
-passwd username
 
-# Lightweight desktop
-apt-get install lightdm blackbox xterm firefox-esr
+Install latest kernel and m1n1 stage 2 (m1n1, dtbs, u-boot)
+===========================================================
+curl -sL tg.st/u/ksh | sudo bash
 
-# Install gnome
-apt-get install gnome
-/etc/init.d/gdm3 start
+Use the live system to install debian
+=====================================
 
-# If you need to install the kernel on a bootstrapped system or one that needs recovery
-wget https://tg.st/u/k.deb
-dpkg -i k.deb
+parted -a optimal /dev/nvme0n1 print free
+parted -a optimal /dev/nvme0n1 mkpart primary ext4 <begin of free> <end of free>
+tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 /dev/nvme0n1p5
 
-# asahi does not handle sleep well at the moment
-sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+mount /dev/nvme0n1p5 /mnt
 
-- You can also use the live system to install Debian on the m1, the rough outline is:
+debootstrap --arch=arch64 testing /mnt http://deb.debian.org/debian
 
-        - Create two paritions:
+mount -t sysfs none /mnt/sys
+mount -t efivarfs none /mnt/sys/firmware/efi/efivars
+mount -t proc none /mnt/proc
+mount -o bind /dev /mnt/dev
+mount -o bind /dev/pts /mnt/dev/pts
 
-                - One 1 GB vfat
-                - Rest with ext4
+mkdir -p /mnt/boot/efi
+mount /dev/nvme0n1p4 /mnt/boot/efi
 
-        - Use debootstrap to bootstrap debian
+cd /mnt
+chroot . bin/bash
 
-        - Install the kernel
+cat <<EOF > /etc/fstab
+/dev/nvme0n1p5 /         ext4 defaults 0 0
+/dev/nvme0n1p4 /boot/efi vfat defaults 0 0
+EOF
 
-        - Install grub
+cat <<EOF > /etc/apt/sources.list
+deb http://ftp.debian.org/debian testing main contrib non-free
+deb-src http://ftp.debian.org/debian testing main contrib non-free
+EOF
 
-        - reboot
+apt update
+apt-get -y install initramfs-tools pciutils wpasupplicant tcpdump vim tmux vlan ntpdate parted curl wget grub-efi-arm64 mtr-tiny dbus ca-certificates sudo openssh-client mtools gdisk
+
+apt-get install -y grub-efi-arm64-signed-
+echo 'grub-efi-arm64 grub2/update_nvram boolean false' | debconf-set-selections
+echo 'grub-efi-arm64 grub2/force_efi_extra_removable boolean true' | debconf-set-selections
+dpkg-reconfigure -fnoninteractive grub-efi-arm64
+update-grub
+grub-install --removable /boot/efi
+
+echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
+export HOSTNAME=debian
+echo $HOSTNAME > /etc/hostname
+cat <<EOF > /etc/hosts
+127.0.0.1 localhost $HOSTNAME
+EOF
+
+cat <<EOF > /etc/wpa_supplicant/wpa_supplicant.conf
+network={
+        ssid="ssid"
+        scan_ssid=1
+        key_mgmt=WPA-PSK
+        psk="password"
+}
+EOF
+
+tar -C /lib/firmware/ -xf /boot/efi/vendorfw/firmware.tar
+
+cat <<EOF > /etc/network/interfaces
+# interfaces(5) file used by ifup(8) and ifdown(8)
+# Include files from /etc/network/interfaces.d:
+source /etc/network/interfaces.d/*
+
+allow-hotplug enp3s0
+iface enp3s0 inet dhcp
+
+# allow-hotplug wlp1s0f0
+iface wlp1s0f0 inet dhcp
+        wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+EOF
+
+curl -sLo /tmp/k.deb tg.st/u/k.deb
+curl -sLo /boot/efi/m1n1/boot.bin tg.st/u/u-boot.bin
+dpkg -i /tmp/k.deb
+
+exit
+
+cd /
+umount /mnt/boot/efi
+umount /mnt/sys
+umount /mnt/proc
+umount /mnt/dev/pts
+umount /mnt/dev
+umount /mnt
+reboot
 
 Repack live
 ===========
