@@ -2,13 +2,40 @@
 
 # SPDX-License-Identifier: MIT
 
-set -x
+#set -x
 set -e
 
 unset LC_CTYPE
 unset LANG
 
 export DEBOOTSTRAP=debootstrap
+
+usage()
+{
+   echo "$(basename $0): Build binares to install M1 linux"
+   echo ""
+   echo "-h : Print usage information"
+   #echo "-n : Dry-run print commands instead of executing them"
+   echo "-x : Enabling tracing of shell script"
+   echo "-q : Disable tracing of shell script"
+   echo
+   echo "Commands: (defaults to doing all)"
+   echo " install : Install require debian packages"
+   echo " linux : extract, patch and build linux image"
+   echo " m1n1 : extract, build latest m1n1 image"
+   echo " uboot : extract, patch and build u-boot image (requires m1n1)"
+   echo " rootfs : Creates directory 'testing' containing debian rootfs "
+   echo " di : Build debian installer"
+   echo " dd : From testing rootfs make m1.tgz (ext4 rootfs image)"
+   echo " live : From rootfs testing + linux build create tar ball"
+   echo " efi : Create efi.tgz file of grub EFI partition from testing rootfs"
+   echo
+   echo "  See README for details "
+   echo
+   #if [ -r README ]; then
+   #    cat README
+   #fi
+}
 
 handle_crosscompile()
 {
@@ -199,11 +226,43 @@ publish_artefacts()
         sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho 2k.bin 4k.bin k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
 }
 
-mkdir -p build
-cd build
+while getopts 'hnxqC:' argv
+do
+    case $argv in
+    h)
+       usage
+       exit 0
+    ;;
+    n)
+       echo "Dry-Run"
+       DR=echo
+    ;;
+    q)
+        echo "Disable tracing"
+        set +x
+    ;;
+    x)
+        echo "Enabling tracing"
+        set -x
+    ;;
+    C)
+       CONF="$OPTARG"
+    ;;
+    esac
+done
 
+$DR mkdir -p build
+$DR cd build
+
+do_install ()
+{
+   $DR \
 sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
 
+}
+
+build_all ()
+{
 build_linux
 build_m1n1
 build_uboot
@@ -214,3 +273,29 @@ build_efi
 build_asahi_installer_image
 build_live_stick
 publish_artefacts
+}
+
+shift $(($OPTIND-1))
+
+if [ -z "$1" ]; then
+    do_install
+    build_all
+fi
+
+while [ -n "$1" ]; do
+    case $1 in
+	all) build_all ;;
+	install) do_install ;;
+	linux) build_linux ;;
+	m1n1) build_m1n1 ;;
+	uboot|u-boot) build_uboot ;;
+	rootfs) build_rootfs ;;
+	di|di_stick) build_di_stick ;;
+	dd) build_dd ;;
+	efi) build_efi ;;
+	asahi|image|asahi_installer_image) build_asahi_installer_image ;;
+	live|stick|live_stick) build_live_stick ;;
+	publish|artefacts) publish_artefacts ;;
+    esac
+    shift
+done
