@@ -414,3 +414,5 @@ kmutil configure-boot -c object.bin --raw --entry-point 2048 --lowest-virtual-ad
 20:33 < Glanzmann> I see, so the first stage informs the second stage about the uuid of the esp partition which is than passed using dt to u-boot which can than select the right esp to select the efi binary.
 
 17:25 < Jamie[m]1> I had a dumb idea and had to implement it: using http range requests and DEFLATE trickery to download Wifi firmware from Apple's CDN with only 18MB of transfer (out of a 13GB ipsw) http://github.com/JJJollyjim/firmware-abomination
+
+23:23 <@jannau> Glanzmann: on the mini vram can fit 5.5 million pixels, would be good for 3440x1600 or 3840x1433 at 32bpp
