@@ -1,9 +1,11 @@
 #!/bin/sh
 
-for DEVICE in /dev/sda1; do
-        mount -o ro $DEVICE /mnt;
-        if test -f /mnt/linux-firmware.tar; then
-                tar -C /lib/firmware -xf /mnt/linux-firmware.tar
+FIRMWARE=/mnt/vendorfw/firmware.tar
+
+for DEVICE in /dev/nvme0n1p4 /dev/nvme0n1p5 /dev/nvme0n1p6; do
+        mount -o ro -t vfat $DEVICE /mnt;
+        if test -f ${FIRMWARE}; then
+                tar -C /lib/firmware -xf ${FIRMWARE}
                 rmmod brcmfmac
                 rmmod brcmutil
                 sleep 1
