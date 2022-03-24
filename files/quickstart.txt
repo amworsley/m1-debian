@@ -94,7 +94,7 @@ tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 /dev/nvme0n1p5
 
 mount /dev/nvme0n1p5 /mnt
 
-debootstrap --arch=arch64 testing /mnt http://deb.debian.org/debian
+debootstrap --arch=arm64 testing /mnt http://deb.debian.org/debian
 
 mount -t sysfs none /mnt/sys
 mount -t efivarfs none /mnt/sys/firmware/efi/efivars
