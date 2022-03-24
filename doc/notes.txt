@@ -416,3 +416,5 @@ kmutil configure-boot -c object.bin --raw --entry-point 2048 --lowest-virtual-ad
 17:25 < Jamie[m]1> I had a dumb idea and had to implement it: using http range requests and DEFLATE trickery to download Wifi firmware from Apple's CDN with only 18MB of transfer (out of a 13GB ipsw) http://github.com/JJJollyjim/firmware-abomination
 
 23:23 <@jannau> Glanzmann: on the mini vram can fit 5.5 million pixels, would be good for 3440x1600 or 3840x1433 at 32bpp
+
+11:37 < AdryzzOLEDEdition[m]> https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-03/msg01260.html
