@@ -18,7 +18,7 @@ If you don't want to use the prebuild artefacts, you can build them yourself usi
 
 * In the boot picker, choose Options. Once loaded, open a Terminal under Utilities > Terminal
 
-* Run the asahi installer and select Debian (1):
+* Run the asahi installer and select Debian:
 
         curl -sL tg.st/d | sh
 
