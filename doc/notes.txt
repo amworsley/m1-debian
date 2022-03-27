@@ -422,3 +422,4 @@ kmutil configure-boot -c object.bin --raw --entry-point 2048 --lowest-virtual-ad
 https://gist.github.com/rqou/2dafd40cfe0362cc84c3ee26c68b2b36
 
 https://arvanta.net/alpine/install-alpine-m1/
+21:48 < mps> Glanzmann: no, but /etc/local.d/$scriptname.start
