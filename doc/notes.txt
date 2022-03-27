@@ -420,3 +420,5 @@ kmutil configure-boot -c object.bin --raw --entry-point 2048 --lowest-virtual-ad
 11:37 < AdryzzOLEDEdition[m]> https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-03/msg01260.html
 
 https://gist.github.com/rqou/2dafd40cfe0362cc84c3ee26c68b2b36
+
+https://arvanta.net/alpine/install-alpine-m1/
