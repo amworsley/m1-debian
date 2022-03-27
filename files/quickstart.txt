@@ -27,7 +27,7 @@ passwd username
 
 Lightweight desktop
 ===================
-apt-get install lightdm blackbox xterm firefox-esr
+apt-get install lightdm blackbox xterm firefox-esr big-cursor
 /etc/init.d/lightdm start
 
 Install gnome
@@ -79,7 +79,6 @@ Section "InputClass"
   Driver "libinput"
 EndSection
 EOF
-
 
 Install latest kernel and m1n1 stage 2 (m1n1, dtbs, u-boot)
 ===========================================================
