@@ -6,7 +6,7 @@
             "boot_object": "m1n1.bin",
             "next_object": "m1n1/boot.bin",
             "package": "debian-base.zip",
-            "supported_fw": ["12.1", "12.3"],
+            "supported_fw": ["12.3"],
             "partitions": [
                 {
                     "name": "EFI",
@@ -25,14 +25,14 @@
                     "image": "media"
                 }
             ]
-        }
+        },
         {
             "name": "Fedora 35 Workstation packaged by Thomas Glanzmann",
             "default_os_name": "Fedora",
             "boot_object": "m1n1.bin",
             "next_object": "m1n1/boot.bin",
             "package": "fc35-base.zip",
-            "supported_fw": ["12.1", "12.3"],
+            "supported_fw": ["12.3"],
             "partitions": [
                 {
                     "name": "EFI",
