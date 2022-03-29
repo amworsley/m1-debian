@@ -423,3 +423,17 @@ https://gist.github.com/rqou/2dafd40cfe0362cc84c3ee26c68b2b36
 
 https://arvanta.net/alpine/install-alpine-m1/
 21:48 < mps> Glanzmann: no, but /etc/local.d/$scriptname.start
+
+# geekbench
+16:08 <j`ey> looks like theres some results https://browser.geekbench.com/v5/cpu/13927518
+16:09 <j`ey> https://browser.geekbench.com/v5/cpu/search?utf8=%E2%9C%93&q=asahi
+16:10 <j`ey> jannau: https://www.geekbench.com/blog/2021/03/geekbench-54/
+16:14 <bluetail[m]> jannau: same m1 16 gb, 3000 more in multicore. How? https://browser.geekbench.com/v5/cpu/13856349
+16:18 <bluetail[m]> jannau: does it matter? I mean, it looks like we do have geekbench on arm linux...
+16:19 <bluetail[m]> https://www.geekbench.com/blog/2021/03/geekbench-54/
+16:24 <psydroid[m]1> https://browser.geekbench.com/v5/cpu/12429267
+16:25 <jannau> the multicore test doesn't scale well, here are results from a m1 ultra: https://browser.geekbench.com/v5/cpu/13932507
+16:31 <jannau> Chainfire: it's geekbench issue. kernel compiles are on the m1 ultra twice as fast as on the m1 max
+
+my air:  https://browser.geekbench.com/v5/cpu/13933197
+my mini: https://browser.geekbench.com/v5/cpu/13933401
