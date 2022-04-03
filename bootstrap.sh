@@ -9,6 +9,7 @@ set -o pipefail
 
 cd "$(dirname "$0")"
 #set -x
+VERB=0
 set -e
 
 unset LC_CTYPE
@@ -26,6 +27,7 @@ usage()
    echo " -n : Dry-run print commands instead of executing them"
    echo " -x : Enabling tracing of shell script"
    echo " -q : Disable tracing of shell script"
+   echo " -V level : Set kernel build verbose level (default $VERB)"
    echo
    echo "Commands: (defaults to doing all)"
    echo " install : Install require debian packages"
@@ -66,7 +68,7 @@ $DO_CMD <<EOF
         git reset --hard asahi-6.1-rc6-5; git clean -f -x -d &> /dev/null
         cat ../../config-16k.txt > .config
         make olddefconfig
-        make -j `nproc` V=0 bindeb-pkg > /dev/null
+        make -j `nproc` V=$VERB bindeb-pkg > /dev/null
 EOF
 )
 }
@@ -282,7 +284,7 @@ EOF
 }
 
 CMD="/bin/bash"
-while getopts 'hnxqC:' argv
+while getopts 'hnxqV:' argv
 do
     case $argv in
     h)
@@ -303,8 +305,8 @@ do
         set -x
 	CMD="/bin/bash -x"
     ;;
-    C)
-       CONF="$OPTARG"
+    V)
+       VERB="$OPTARG"
     ;;
     esac
 done
