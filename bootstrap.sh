@@ -295,8 +295,15 @@ else
     DO_CMD="$CMD"
 fi
 
-$DR mkdir -p build
-$DR cd build
+if [ -n $DR ]; then
+    if [ ! -d build ]; then
+	echo "Creating build directory to run script"
+    fi
+    echo mkdir -p build
+    echo DR cd build
+fi
+mkdir -p build
+cd build
 
 do_install ()
 {
