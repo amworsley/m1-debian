@@ -111,6 +111,8 @@ $DO_CMD <<EOF
 EOF
 )
 
+	local DTB_FILES=$(find linux/arch/arm64/boot/dts/apple/ -name \*.dtb)
+	local UBOOT_GZIP="u-boot/u-boot-nodtb.bin.gz"
 $DO_CMD <<EOF
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.bin
         cat m1n1/build/m1n1.macho `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.macho
