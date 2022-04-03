@@ -22,6 +22,7 @@ usage()
    echo " -x : Enabling tracing of shell script"
    echo " -q : Disable tracing of shell script"
    echo " -V level : Set kernel build verbose level (default $VERB)"
+   echo " -r : Reduce kernel size greatly by CONFIG_DEBUG_INFO_REDUCED=y"
    echo
    echo "Commands: (defaults to doing all)"
    echo " install : Install require debian packages"
@@ -62,6 +63,11 @@ $DO_CMD <<EOF
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch-2022-03-11.patch | git am -
         curl -s https://tg.st/u/config-2022-03-17-distro-sven-jannau.txt > .config
+	if [ -n $DO_PATCH ]; then
+	    sed -i.orig '
+/^CONFIG_DEBUG_INFO_REDUCED=./s//CONFIG_DEBUG_INFO_REDUCED=y/
+	' .config
+	fi
         make olddefconfig
         make -j `nproc` V=$VERB bindeb-pkg > /dev/null
 EOF
@@ -253,7 +259,7 @@ EOF
 }
 
 CMD="/bin/bash"
-while getopts 'hnxqV:' argv
+while getopts 'hnxqV:r' argv
 do
     case $argv in
     h)
@@ -276,6 +282,10 @@ do
     ;;
     V)
        VERB="$OPTARG"
+    ;;
+    r)
+       echo "Reduce kernel debug info"
+       DO_PATCH=1
     ;;
     esac
 done
