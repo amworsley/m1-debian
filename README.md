@@ -119,8 +119,8 @@ instructions and a video in order to do so, but short version is:
 
         - Backup /boot/efi/EFI
         - Delete the old stub and efi/esp partition
-        - Rerun the asahi installer wie m1n1+u-boot option
+        - Rerun the asahi installer with m1n1+u-boot option
         - Put the /boot/efi/EFI back
 
-So, you never need to install your Debian. Kernel updates are easy, stub
+So, you never need to reinstall your Debian. Kernel updates are easy, stub
 updates are a little bit more cumbersome but also seldom.
