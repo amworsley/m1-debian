@@ -143,7 +143,7 @@ build_efi()
 
         export INITRD=`ls -1 testing/boot/ | grep initrd`
         export VMLINUZ=`ls -1 testing/boot/ | grep vmlinuz`
-        export UUID=`blkid media | awk -F\" '{print $2}'`
+        export UUID=`blkid -s UUID -o value media`
         cat > EFI/debian/grub.cfg <<EOF
 search.fs_uuid ${UUID} root
 linux (\$root)/boot/${VMLINUZ} root=UUID=${UUID} rw
