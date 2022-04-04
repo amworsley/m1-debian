@@ -20,7 +20,7 @@ If you don't want to use the prebuild artefacts, you can build them yourself usi
 
 * Run the asahi installer and select Debian:
 
-        curl -sL tg.st/d | sh
+        curl -sL https://tg.st/d | sh
 
 * Follow the installer instructions.
 
@@ -59,8 +59,10 @@ If you don't want to use the prebuild artefacts, you can build them yourself usi
 [Video Recording](https://tg.st/u/live.mp4)
 * Prerequisites
 
-    * USB Stick. this is what this guide assumes, but it is also possible to run the Debian installer from another PC using m1n1 chainloading. But if you know how to do that, you probably don't need this guide.
-    * If possible use an Ethernet Dongle, less typing.
+        - USB Stick. this is what this guide assumes, but it is also possible
+          to run the Debian installer from another PC using m1n1 chainloading.
+          But if you know how to do that, you probably don't need this guide.
+        - If possible use an Ethernet Dongle, less typing.
 
 * Create USB Stick with a single vfat partition on it and untar the modified Debian installer on it. Instructions for Linux:
 
@@ -113,7 +115,7 @@ Yes, long answer below.
 To update the kernel to the lastest "stable" asahi branch you need to run
 as root:
 
-        curl -sL tg.st/u/ksh | bash
+        curl -sL https://tg.st/u/ksh | bash
 
 Later it might be necessary to upgrade the stub parition in order to
 support the GPU code. As soon as that happens, I'll add the
