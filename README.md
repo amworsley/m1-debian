@@ -53,6 +53,8 @@ If you don't want to use the prebuild artefacts, you can build them yourself usi
         apt update
         apt install -y openssh-server
 
+* Consult the **[/root/quickstart.txt](https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/blob_plain/refs/heads/master:/files/quickstart.txt)** file to find out how to do other interesting things.
+
 # Livesystem
 [Video Recording](https://tg.st/u/live.mp4)
 * Prerequisites
