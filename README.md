@@ -101,3 +101,26 @@ Than open a terminal, and run the following commands:
 * Log in as **root** without password.
 
 * Consult the **[/root/quickstart.txt](https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/blob_plain/refs/heads/master:/files/quickstart.txt)** file to find out how to get the networking up, etc.
+
+# FAQ
+
+*  If I install Debian, will it still be relatively easy to update the Asahi work as it develops?
+
+Yes, long answer below.
+
+To update the kernel to the lastest "stable" asahi branch you need to run
+as root:
+
+        curl -sL tg.st/u/ksh | bash
+
+Later it might be necessary to upgrade the stub parition in order to
+support the GPU code. As soon as that happens, I'll add the
+instructions and a video in order to do so, but short version is:
+
+        - Backup /boot/efi/EFI
+        - Delete the old stub and efi/esp partition
+        - Rerun the asahi installer wie m1n1+u-boot option
+        - Put the /boot/efi/EFI back
+
+So, you never need to install your Debian. Kernel updates are easy, stub
+updates are a little bit more cumbersome but also seldom.
