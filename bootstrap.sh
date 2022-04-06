@@ -55,6 +55,7 @@ build_uboot()
         cd u-boot
         git fetch
         git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
+        curl -s https://tg.st/u/102777230b057efa00fe39c7e545e13ddead1177.patch | git am -
         make apple_m1_defconfig
         make -j `nproc`
 )
