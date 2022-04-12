@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# Script to install chainload rust in Debian
+
 my $esp_line = `diskutil list disk0 | grep EFI`;
 
 my $esp_disk = undef;
@@ -14,11 +16,11 @@ my $partuuid = `diskutil info $esp_disk | grep 'Partition UUID' | awk -F: '{prin
 
 $partuuid =~ s/\s+//g;
 
-my $m1n1 = `curl -sL tg.st/u/m1n1-rust.bin`;
+my $m1n1 = `curl -sL tg.st/m1n1-rust.bin`;
 
 open(OBJECT, '>', 'object.bin') || die;
 print OBJECT $m1n1;
-print OBJECT "chainload=$partuuid;m1n1/boot.bin\n";
+print OBJECT "chainload=$partuuid;m1n1/boot.bin')\n";
 print OBJECT "chosen.asahi,efi-system-partition=$partuuid\n";
 close (OBJECT);
 
