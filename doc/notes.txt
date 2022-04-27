@@ -442,3 +442,78 @@ my mini: https://browser.geekbench.com/v5/cpu/13933401
 
 # Browse the devicetree
 /proc/device-tree/chosen/asahi,efi-system-partition
+
+# mps mtrack configuration
+Section "InputClass"
+        MatchIsTouchpad "on"
+        Identifier      "Touchpads"
+        Driver          "mtrack"
+        Option          "Sensitivity" "0.15"
+        Option          "FingerHigh" "10"
+        Option          "FingerLow" "3"
+        Option          "IgnoreThumb" "true"
+        Option          "DisableOnThumb" "true"
+        Option          "DisableOnPalm" "true"
+        Option          "ThumbRatio" "60"
+        Option          "ThumbSize" "15"
+        Option          "IgnorePalm" "true"
+        Option          "TapButton1" "1"
+        Option          "TapButton2" "3"
+        Option          "TapButton3" "2"
+        Option          "TapButton4" "4"
+        Option          "ClickFinger1" "1"
+        Option          "ClickFinger2" "2"
+        Option          "ClickFinger3" "3"
+        Option          "ButtonMoveEmulate" "false"
+        Option          "ButtonIntegrated" "true"
+        Option          "ClickTime" "25"
+        Option          "BottomEdge" "30"
+        Option          "SwipeLeftButton" "8"
+        Option          "SwipeRightButton" "9"
+        Option          "SwipeUpButton" "0"
+        Option          "SwipeDownButton" "0"
+        Option          "SwipeDistance" "700"
+        Option          "ScrollCoastDuration" "500"
+        Option          "ScrollCoastEnableSpeed" "1"
+        Option          "ScrollUpButton" "4"
+        Option          "ScrollDownButton" "5"
+        Option          "ScrollLeftButton" "7"
+        Option          "ScrollRightButton" "6"
+        Option          "ScrollDistance" "250"
+        Option          "EdgeLeftSize" "0"
+EndSection
+
+14:26 < mps> Glanzmann: also github with guide is here https://github.com/p2rkw/xf86-input-mtrack
+14:27 < mps> Glanzmann: and this one helped me to understand some things https://int3ractive.com/blog/2018/make-the-best-of-macbook-touchpad-on-ubuntu/
+14:28 < j`ey> mps: what kinda 'swipes'?
+14:28 -!- bisko (~bisko@0002be12.user.oftc.net) has quit: Ping timeout: 480 seconds
+14:28 < mps> left and right, i.e, next and previous url in firefox
+14:28 < j`ey> ah cool
+14:29 < mps> this is enough for me (for now at least)
+14:30 -!- bisko (~bisko@0002be12.user.oftc.net) has joined #asahi
+14:30 < mps> there is also https://github.com/BlueDragonX/dispad which disables touchpad while typing
+14:32 < mps> but I have to find some time to learn better about all this touchpad options
+14:50 < mps> three fingers swipe left -> previous url, three finger swipe right -> next url
+
+# Old config:
+
+Section "InputClass"
+  Identifier "libinput touchpad catchall"
+  MatchIsTouchpad "on"
+  MatchDevicePath "/dev/input/event*"
+  Option "Tapping" "False"
+  Option "TappingDrag" "False"
+  Option "DisableWhileTyping" "True"
+  Option "AccelProfile" "adaptive"
+  Option "AccelSpeed" "0.3"
+  Option "AccelerationNumerator" "2"
+  Option "AccelerationDenominator" "1"
+  Option "AccelerationThreshold" "4"
+  Option "AdaptiveDeceleration" "2"
+  Option "NaturalScrolling" "0"
+        Option "TappingButtonMap" "lmr"
+        Option "ClickMethod" "clickfinger"
+  Driver "libinput"
+EndSection
+
+
