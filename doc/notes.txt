@@ -439,3 +439,6 @@ my air:  https://browser.geekbench.com/v5/cpu/13933197
 my mini: https://browser.geekbench.com/v5/cpu/13933401
 
 15:58 < kov> Glanzmann, jannau out of curiosity I ran geekbench on my Fedora VM under MacOS (M1 Max - 8 vcpus) https://browser.geekbench.com/v5/cpu/13951703
+
+# Browse the devicetree
+/proc/device-tree/chosen/asahi,efi-system-partition
