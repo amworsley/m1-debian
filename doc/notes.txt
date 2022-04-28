@@ -516,4 +516,6 @@ Section "InputClass"
   Driver "libinput"
 EndSection
 
+luks: https://g3la.de/hedgedoc/s/MIaCyVv1A#
 
+https://blog.devgenius.io/installing-gentoo-linux-in-apple-macbook-pro-m1-49e163534898
