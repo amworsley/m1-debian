@@ -519,3 +519,8 @@ EndSection
 luks: https://g3la.de/hedgedoc/s/MIaCyVv1A#
 
 https://blog.devgenius.io/installing-gentoo-linux-in-apple-macbook-pro-m1-49e163534898
+
+07:53 < VinDuv> Glanzmann: I’ll be a bit busy until next week but if you want to play with my patch, it’s here: https://github.com/AsahiLinux/m1n1/pull/183
+07:54 < VinDuv> If you apply both patches and boot with display=wait,3840x2160, it should boot in 4k and m1n1 will say “waiting for monitor disconnect” and then wait 10 seconds
+07:59 < VinDuv> btw I’m working on a Python script that detects, from macOS, if a monitor disconnects during wakeup (so it needs m1n1 to wait) as well as its native resolution. If it works well and is integrated into the installer, it
+                could autoconfigure the display= option in m1n1 during installation.
