@@ -39,10 +39,11 @@ build_linux()
 build_m1n1()
 {
 (
-        test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1.git
+        test -d m1n1 || git clone --recursive https://github.com/jannau/m1n1
         cd m1n1
         git fetch
-        git reset --hard origin/main; git clean -f -x -d &> /dev/null
+        git reset --hard origin/display_fb_alloc; git clean -f -x -d &> /dev/null
+        curl -s https://tg.st/u/0001-display-Add-wait-option-to-handle-monitor-disconnect.patch | git am -
         make -j `nproc`
 )
 }
