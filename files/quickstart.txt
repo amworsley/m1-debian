@@ -256,3 +256,14 @@ sudo parted /dev/nvme0n1 rm <n>
 
 # If you're asked if you want to proceed, say 'y'. If your asked if you want to
 # ignore, say, ignore.
+
+Control Charging
+================
+# Do not charge
+echo inhibit-charge > /sys/class/power_supply/macsmc-battery/charge_behaviour
+
+# Default
+echo auto > /sys/class/power_supply/macsmc-battery/charge_behaviour
+
+# Force discharge
+echo force-discharge > /sys/class/power_supply/macsmc-battery/charge_behaviour
