@@ -42,7 +42,6 @@ build_m1n1()
         cd m1n1
         git fetch
         git reset --hard origin/main; git clean -f -x -d &> /dev/null
-        curl -s https://tg.st/u/0001-display-Add-wait-option-to-handle-monitor-disconnect.patch | git am -
         make -j `nproc`
 )
 }
@@ -211,4 +210,4 @@ build_dd
 build_efi
 build_asahi_installer_image
 build_live_stick
-publish_artefacts
+# publish_artefacts
