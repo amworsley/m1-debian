@@ -210,4 +210,4 @@ build_dd
 build_efi
 build_asahi_installer_image
 build_live_stick
-# publish_artefacts
+publish_artefacts
