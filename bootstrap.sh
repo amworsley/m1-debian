@@ -61,7 +61,10 @@ build_uboot()
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.bin
         cat m1n1/build/m1n1.macho `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.macho
         cp u-boot.bin 4k.bin
+        cp u-boot.bin 2k.bin
+        echo 'display=2560x1440' >> 2k.bin
         echo 'display=wait,3840x2160' >> 4k.bin
+
 }
 
 build_rootfs()
@@ -193,7 +196,7 @@ publish_artefacts()
 {
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
-        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho 4k.bin k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
+        sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho 2k.bin 4k.bin k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
 }
 
 mkdir -p build
