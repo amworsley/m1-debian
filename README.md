@@ -94,7 +94,7 @@ Than open a terminal, and run the following commands:
 
 * You need to run the asahi installer and have either an OS installed or m1n1+UEFI.
 
-* If you have a EFI binary on the NVMe and want to boot from the usb stick, you need to interrupt u-boot on the countdoun by pressing any key and run the following comamnd to boot from usb:
+* If you have a EFI binary on the NVMe and want to boot from the usb stick, you need to interrupt u-boot on the countdown by pressing any key and run the following comamnd to boot from usb:
 
         run bootcmd_usb0
 
