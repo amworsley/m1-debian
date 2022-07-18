@@ -60,6 +60,7 @@ my %asahi_options = (
         'CONFIG_BACKLIGHT_CLASS_DEVICE' => 'y',
         'CONFIG_BACKLIGHT_GPIO' => 'm',
         'CONFIG_TYPEC_TPS6598X' => 'y',
+        'CONFIG_BT_HCIBCM4377' => 'm',
 );
 
 my %debian_options;
