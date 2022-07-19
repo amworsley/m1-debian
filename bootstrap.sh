@@ -28,8 +28,7 @@ build_linux()
         git fetch
         git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
-        curl -s https://tg.st/u/0001-4k-iommu-patch-2022-03-11.patch | git am -
-        curl -s https://tg.st/u/config-2022-03-17-distro-sven-jannau.txt > .config
+        curl -s https://tg.st/u/config-2022-07-19-16k.txt > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
