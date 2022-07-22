@@ -267,3 +267,6 @@ echo auto > /sys/class/power_supply/macsmc-battery/charge_behaviour
 
 # Force discharge
 echo force-discharge > /sys/class/power_supply/macsmc-battery/charge_behaviour
+
+# Find out which device tree you're using
+cat /proc/device-tree/compatible
