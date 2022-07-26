@@ -167,6 +167,7 @@ exit
 
 cd /
 umount /mnt/boot/efi
+umount /mnt/sys/firmware/efi/efivars
 umount /mnt/sys
 umount /mnt/proc
 umount /mnt/dev/pts
