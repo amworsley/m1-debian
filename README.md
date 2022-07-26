@@ -70,14 +70,13 @@ If you don't want to use the prebuild artefacts, you can build them yourself usi
 
         # Identify the usb stick device
         lsblk
+
         DEVICE=/dev/sdX
         parted -a optimal $DEVICE mklabel msdos
         parted -a optimal $DEVICE mkpart primary fat32 2048s 100%
         mkfs.vfat ${DEVICE}1
-
-        mount /dev/sdX1 /mnt
-        cd /mnt
-        curl -sL https://tg.st/u/asahi-debian-live.tar | tar -xf -
+        mount ${DEVICE}1 /mnt
+        curl -sL https://tg.st/u/asahi-debian-live.tar | tar -C /mnt -xf -
         umount /mnt
 
 In order to format the usb stick under Macos, open the disk utility, right-click on the usb stick (usually the lowest device in the list) and select erase. Choose the following options:
