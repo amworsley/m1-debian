@@ -6,7 +6,7 @@
             "boot_object": "m1n1.bin",
             "next_object": "m1n1/boot.bin",
             "package": "debian-base.zip",
-            "supported_fw": ["12.3"],
+            "supported_fw": ["12.3", "12.4"],
             "partitions": [
                 {
                     "name": "EFI",
@@ -31,8 +31,8 @@
             "default_os_name": "Fedora",
             "boot_object": "m1n1.bin",
             "next_object": "m1n1/boot.bin",
-            "package": "fc35-base.zip",
-            "supported_fw": ["12.3"],
+            "package": "fc35-base-2022-07-27.zip",
+            "supported_fw": ["12.3", "12.4"],
             "partitions": [
                 {
                     "name": "EFI",
@@ -47,7 +47,7 @@
                 {
                     "name": "Root",
                     "type": "Linux",
-                    "size": "11GB",
+                    "size": "21GB",
                     "expand": true,
                     "image": "media"
                 }
