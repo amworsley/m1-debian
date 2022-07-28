@@ -31,7 +31,7 @@
             "default_os_name": "Fedora",
             "boot_object": "m1n1.bin",
             "next_object": "m1n1/boot.bin",
-            "package": "fc35-base-2022-07-28.zip",
+            "package": "fc35-base-2022-07-27.zip",
             "supported_fw": ["12.3", "12.4"],
             "partitions": [
                 {
