@@ -10,6 +10,7 @@ set -o pipefail
 cd "$(dirname "$0")"
 #set -x
 VERB=0
+OUT_DEV=/dev/null
 set -e
 
 unset LC_CTYPE
@@ -75,7 +76,7 @@ $DO_CMD <<EOF
 	' .config
 	fi
         make olddefconfig
-        make -j `nproc` V=$VERB bindeb-pkg > /dev/null
+        make -j `nproc` V=$VERB bindeb-pkg > $OUT_DEV
 EOF
 )
 }
@@ -88,7 +89,7 @@ $DO_CMD <<EOF
         cd m1n1
         git fetch -a -t
         # https://github.com/AsahiLinux/PKGBUILDs/blob/main/m1n1/PKGBUILD
-        git reset --hard v1.1.8; git clean -f -x -d &> /dev/null
+        git reset --hard v1.1.8; git clean -f -x -d &> $OUT_DEV
         make -j `nproc`
 EOF
 )
@@ -103,7 +104,7 @@ $DO_CMD <<EOF
         cd u-boot
         git fetch -a -t
         # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
-        git reset --hard asahi-v2022.10-1; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-v2022.10-1; git clean -f -x -d &> $OUT_DEV
         git revert --no-edit 4d2b02faf69eaddd0f73758ab26c456071bd2017
 
         make apple_m1_defconfig
@@ -316,6 +317,9 @@ do
     ;;
     V)
        VERB="$OPTARG"
+       if [ "$VERB" -gt 0 ]; then
+	   OUT_DEV=/dev/stdout
+       fi
     ;;
     r)
        echo "Reduce kernel debug info"
