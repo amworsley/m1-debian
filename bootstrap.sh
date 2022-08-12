@@ -50,10 +50,10 @@ build_uboot()
 {
 (
         handle_crosscompile
-        test -d u-boot || git clone --depth 1 https://github.com/AsahiLinux/u-boot
+        test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch
-        git reset --hard origin/asahi; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-v2022.07-2; git clean -f -x -d &> /dev/null
         make apple_m1_defconfig
         make -j `nproc`
 )
