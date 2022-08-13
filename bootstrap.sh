@@ -16,6 +16,7 @@ handle_crosscompile()
                 export ARCH=arm64
                 export CROSS_COMPILE=aarch64-linux-gnu-
                 export DEBOOTSTRAP=qemu-debootstrap
+                sudo apt install -y libc6-dev-arm64-cross
         fi
 }
 
@@ -206,7 +207,7 @@ publish_artefacts()
 mkdir -p build
 cd build
 
-sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev-arm64-cross device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
+sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
 
 build_linux
 build_m1n1
