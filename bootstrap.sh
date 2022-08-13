@@ -56,6 +56,7 @@ build_uboot()
         git fetch
         # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
         git reset --hard asahi-v2022.07-2; git clean -f -x -d &> /dev/null
+        curl -s https://tg.st/u/0001-usb-storage-continue-probe-on-Invalid-device.patch | git am -
         make apple_m1_defconfig
         make -j `nproc`
 )
