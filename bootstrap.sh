@@ -41,7 +41,8 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
         cd m1n1
         git fetch
-        git reset --hard origin/main; git clean -f -x -d &> /dev/null
+        # https://github.com/AsahiLinux/PKGBUILDs/blob/main/m1n1/PKGBUILD
+        git reset --hard v1.1.3; git clean -f -x -d &> /dev/null
         make -j `nproc`
 )
 }
