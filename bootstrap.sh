@@ -53,6 +53,7 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch
+        # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
         git reset --hard asahi-v2022.07-2; git clean -f -x -d &> /dev/null
         make apple_m1_defconfig
         make -j `nproc`
