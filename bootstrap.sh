@@ -26,7 +26,7 @@ build_linux()
         handle_crosscompile
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
-        git fetch
+        git fetch -a -t
         git reset --hard asahi-5.19-5; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         curl -s https://tg.st/u/0001-4k-iommu-patch-2022-07-20.patch | git am -
