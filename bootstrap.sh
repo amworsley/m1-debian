@@ -58,6 +58,7 @@ build_uboot()
         # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
         git reset --hard asahi-v2022.07-3; git clean -f -x -d &> /dev/null
         git revert --no-edit 4d2b02faf69eaddd0f73758ab26c456071bd2017
+        curl -s https://tg.st/u/0001-usb-request-on-8-bytes-for-USB_SPEED_FULL-bMaxPacket.patch | git am -
         make apple_m1_defconfig
         make -j `nproc`
 )
