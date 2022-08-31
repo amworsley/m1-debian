@@ -2,7 +2,7 @@ This pages explains how to install Debian on Apple Silicon machines.
 
 # Tripwires
 The USB-A Port on the Mac Mini will not work in u-boot and grub.  The two
-additional USB-3 ports on the iMac 4 port model also don't work in u-boot, grub
+additional USB-3 ports on the iMac 4 port model don't work in u-boot, grub
 and Linux. In order to install Linux on a FileVault-enabled Mac run the
 installer from Recovery open Disk Utility > Expanding "Macintosh HD" >
 Selecting locked volume > click "Mount".
