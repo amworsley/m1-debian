@@ -144,6 +144,8 @@ network={
 }
 EOF
 
+passwd
+
 tar -C /lib/firmware/ -xf /boot/efi/vendorfw/firmware.tar
 
 cat <<EOF > /etc/network/interfaces
