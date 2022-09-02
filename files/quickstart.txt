@@ -113,12 +113,12 @@ cat <<EOF > /etc/fstab
 EOF
 
 cat <<EOF > /etc/apt/sources.list
-deb http://den.debian.org/debian testing main contrib non-free
-deb-src http://den.debian.org/debian testing main contrib non-free
+deb http://deb.debian.org/debian testing main contrib non-free
+deb-src http://deb.debian.org/debian testing main contrib non-free
 EOF
 
 apt update
-apt-get -y install initramfs-tools pciutils wpasupplicant tcpdump vim tmux vlan ntpdate parted curl wget grub-efi-arm64 mtr-tiny dbus ca-certificates sudo openssh-client mtools gdisk
+apt-get -y install initramfs-tools pciutils wpasupplicant tcpdump vim tmux vlan ntpdate parted curl wget grub-efi-arm64 mtr-tiny dbus ca-certificates sudo openssh-client mtools gdisk firmware-linux cryptsetup
 
 apt-get install -y grub-efi-arm64-signed-
 echo 'grub-efi-arm64 grub2/update_nvram boolean false' | debconf-set-selections
