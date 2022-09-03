@@ -279,3 +279,7 @@ https://g3la.de/hedgedoc/s/MIaCyVv1A#Bluetooth
 
 # Set Firefox as default browser
 xdg-mime default firefox-esr.desktop x-scheme-handler/https x-scheme-handler/http
+
+Get it running with debian and crypto file system
+=================================================
+https://g3la.de/hedgedoc/s/MIaCyVv1A#
