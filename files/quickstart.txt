@@ -282,4 +282,4 @@ xdg-mime default firefox-esr.desktop x-scheme-handler/https x-scheme-handler/htt
 
 Get it running with debian and crypto file system
 =================================================
-https://g3la.de/hedgedoc/s/MIaCyVv1A#
+https://g3la.de/hedgedoc/buDIXGBuRzKMwUnYOpStuw#
