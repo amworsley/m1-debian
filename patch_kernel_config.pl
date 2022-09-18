@@ -66,6 +66,7 @@ my %asahi_options = (
         'CONFIG_SND_SOC_CS42L84' => 'm',
         'CONFIG_SND_SOC_TAS2780' => 'm',
         'CONFIG_USB_XHCI_PCI_ASMEDIA' => 'y',
+        'CONFIG_APPLE_M1_CPU_PMU' => 'y',
 
 );
 
