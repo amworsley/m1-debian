@@ -63,6 +63,10 @@ my %asahi_options = (
         'CONFIG_BT_HCIBCM4377' => 'm',
         'CONFIG_HID_DOCKCHANNEL' => 'm',
         'CONFIG_APPLE_DOCKCHANNEL' => 'm',
+        'CONFIG_SND_SOC_CS42L84' => 'm',
+        'CONFIG_SND_SOC_TAS2780' => 'm',
+        'CONFIG_USB_XHCI_PCI_ASMEDIA' => 'y',
+
 );
 
 my %debian_options;
