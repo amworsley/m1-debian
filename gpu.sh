@@ -46,11 +46,9 @@ build_uboot()
         make apple_m1_defconfig
         make -j `nproc`
 )
-
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.bin
         sudo cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
-
 }
 
 mkdir -p build
