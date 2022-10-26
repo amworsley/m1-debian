@@ -15,7 +15,7 @@ build_linux()
         cd linux
         git fetch -a -t
         git reset --hard origin/asahi-wip;
-        curl -sL https://tg.st/u/78cf358c267e7df34d6428d2ee621cf83d9a06b2c5b1e798562730e196cd3754.config > .config
+        curl -sL https://tg.st/u/e633ae8c7e2f16d7bc845a0695e583a836d94846e1c33da182216e565c3769c4.config > .config
         make olddefconfig
         make -j `nproc` V=0 > /dev/null
         sudo make modules_install
@@ -55,9 +55,6 @@ build_uboot()
 
 mkdir -p build
 cd build
-
-echo 'On my last try it booted, but the following things did not work: usb-a, usb-c, network, shutdown or reboot'
-exit 1;
 
 build_linux
 build_m1n1
