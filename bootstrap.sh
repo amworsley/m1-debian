@@ -27,7 +27,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.0-rc5-4; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-6.0-rc6-1; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         cat ../../config > .config
         make olddefconfig
