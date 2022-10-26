@@ -29,7 +29,7 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.0-rc6-1; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
-        cat ../../config-16k.txt > .config
+        cat ../../config > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
@@ -211,6 +211,9 @@ sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu l
 build_linux
 build_m1n1
 build_uboot
+
+exit
+
 build_rootfs
 #build_di_stick
 build_dd
