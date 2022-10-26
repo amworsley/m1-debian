@@ -14,7 +14,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard origin/asahi-wip;
+        git reset --hard origin/gpu/rust-wip;
         curl -sL https://tg.st/u/e633ae8c7e2f16d7bc845a0695e583a836d94846e1c33da182216e565c3769c4.config > .config
         make olddefconfig
         make -j `nproc` V=0 > /dev/null
@@ -53,6 +53,6 @@ build_uboot()
 mkdir -p build
 cd build
 
-build_linux
+#build_linux
 build_m1n1
 build_uboot
