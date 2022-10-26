@@ -40,7 +40,6 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
         git reset --hard origin/asahi;
         curl -s https://tg.st/u/0001-usb-request-on-8-bytes-for-USB_SPEED_FULL-bMaxPacket.patch | git am -
         make apple_m1_defconfig
