@@ -68,6 +68,7 @@ my %asahi_options = (
         'CONFIG_USB_XHCI_PCI_ASMEDIA' => 'y',
         'CONFIG_APPLE_M1_CPU_PMU' => 'y',
         'CONFIG_SND_SOC_CS42L83' => 'm',
+        'CONFIG_DRM_APPLE' => 'y',
 );
 
 my %debian_options;
