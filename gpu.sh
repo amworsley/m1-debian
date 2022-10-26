@@ -54,6 +54,6 @@ build_uboot()
 mkdir -p build
 cd build
 
-#build_linux
+build_linux
 build_m1n1
 build_uboot
