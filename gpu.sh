@@ -18,12 +18,13 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard origin/asahi-wip;
-        curl -sL https://tg.st/u/e633ae8c7e2f16d7bc845a0695e583a836d94846e1c33da182216e565c3769c4.config > .config
-        make olddefconfig
-        make -j `nproc` V=0 > /dev/null
-        sudo make modules_install
-        sudo make install
+        git reset --hard origin/gpu/rust-wip;
+        source "$HOME/.cargo/env"
+        curl -sL https://tg.st/u/3007a82fe2f3ef7d91945e1cb3e5a167f8d6b0550ecb67850d1cd85f3efa112e.config > .config
+        make LLVM=-14 olddefconfig
+        make LLVM=-14 -j `nproc` V=0 > /dev/null
+        sudo make LLVM=-14 modules_install
+        sudo make LLVM=-14 install
 )
 }
 
