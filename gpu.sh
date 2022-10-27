@@ -14,7 +14,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard origin/gpu/rust-wip;
+        git reset --hard origin/asahi-wip;
         source "$HOME/.cargo/env"
         curl -sL https://tg.st/u/3007a82fe2f3ef7d91945e1cb3e5a167f8d6b0550ecb67850d1cd85f3efa112e.config > .config
         make LLVM=-14 olddefconfig
