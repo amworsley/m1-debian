@@ -1,9 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # SPDX-License-Identifier: MIT
 
-set -x
-set -e
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
+
+cd "$(dirname "$0")"
 
 unset LC_CTYPE
 unset LANG
