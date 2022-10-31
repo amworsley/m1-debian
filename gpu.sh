@@ -46,7 +46,7 @@ build_uboot()
         cd u-boot
         git fetch -a -t
         git reset --hard origin/asahi;
-        curl -s https://tg.st/u/0001-usb-request-on-8-bytes-for-USB_SPEED_FULL-bMaxPacket.patch | git am -
+        curl -s https://tg.st/u/0001-usb_setup_descriptor-Add-1ms-delay-in-order-to-unbre.patch | patch -p1
         make apple_m1_defconfig
         make -j `nproc`
 )
