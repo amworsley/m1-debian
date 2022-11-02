@@ -226,3 +226,5 @@ build_efi
 build_asahi_installer_image
 build_live_stick
 publish_artefacts
+
+echo 'Reminder: On the next release publish __all__ kernel packages'
