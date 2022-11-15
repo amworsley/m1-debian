@@ -70,6 +70,12 @@ my %asahi_options = (
         'CONFIG_SND_SOC_CS42L83' => 'm',
         'CONFIG_DRM_APPLE' => 'y',
         'CONFIG_DRM_ASAHI' => 'y',
+        'CONFIG_GENERIC_PHY' => 'y',
+        'CONFIG_PHY_APPLE_ATC' => 'm',
+        'CONFIG_CONSTRUCTORS' => 'y',
+        'CONFIG_RUST' => 'y',
+        'CONFIG_PWM_APPLE' => 'm',
+        'CONFIG_DRM_SIMPLEDRM_BACKLIGHT' => 'y',
 );
 
 my %debian_options;
