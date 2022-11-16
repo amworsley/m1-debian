@@ -20,7 +20,7 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.1-rc5-9;
         source "$HOME/.cargo/env"
-        curl -sL https://tg.st/u/699384cd214c3e5692d18d0a5a6f30dbcc61cdbc3a6dff5028350d43285feecb.config > .config
+        cat ../../config.edge > .config
         make LLVM=-14 olddefconfig
         make LLVM=-14 -j `nproc` V=0 > /dev/null
         sudo make LLVM=-14 modules_install
@@ -54,10 +54,6 @@ build_uboot()
         sudo cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
-
-echo "This results in a u-boot which does not have a keybord on the mini."
-echo "This results in a kernel which does not boot."
-exit 1
 
 mkdir -p build
 cd build

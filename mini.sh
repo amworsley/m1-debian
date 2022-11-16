@@ -55,9 +55,6 @@ build_uboot()
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
 
-echo This results in a kernel that does get the local ethernet interface up
-exit 1
-
 mkdir -p build
 cd build
 
