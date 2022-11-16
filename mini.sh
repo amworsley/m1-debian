@@ -18,9 +18,9 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.1-rc5-9;
+        git reset --hard asahi-6.1-rc5-9
         source "$HOME/.cargo/env"
-        curl -sL https://tg.st/u/699384cd214c3e5692d18d0a5a6f30dbcc61cdbc3a6dff5028350d43285feecb.config > .config
+        cat ../../upstream.config > .config
         make LLVM=-14 olddefconfig
         make LLVM=-14 -j `nproc` V=0 > /dev/null
         sudo make LLVM=-14 modules_install
@@ -46,7 +46,8 @@ build_uboot()
         cd u-boot
         git fetch -a -t
         git reset --hard asahi-v2022.07-4;
-        curl -s https://tg.st/u/0001-usb_setup_descriptor-Add-1ms-delay-in-order-to-unbre.patch | patch -p1
+        curl -s https://tg.st/u/0001-usb-request-on-8-bytes-for-USB_SPEED_FULL-bMaxPacket.patch | git am -
+
         make apple_m1_defconfig
         make -j `nproc`
 )
@@ -54,10 +55,6 @@ build_uboot()
         sudo cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
-
-echo "This results in a u-boot which does not have a keybord on the mini."
-echo "This results in a kernel which does not boot."
-exit 1
 
 mkdir -p build
 cd build
