@@ -20,7 +20,7 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.1-rc5-9
         source "$HOME/.cargo/env"
-        cat ../../upstream.config > .config
+        curl https://raw.githubusercontent.com/AsahiLinux/PKGBUILDs/main/linux-asahi/config | grep -v CONFIG_LOCALVERSION > .config
         make LLVM=-14 olddefconfig
         make LLVM=-14 -j `nproc` V=0 > /dev/null
         sudo make LLVM=-14 modules_install
@@ -45,8 +45,7 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        git reset --hard asahi-v2022.07-4;
-        curl -s https://tg.st/u/0001-usb-request-on-8-bytes-for-USB_SPEED_FULL-bMaxPacket.patch | git am -
+        git reset --hard origin/asahi;
 
         make apple_m1_defconfig
         make -j `nproc`
@@ -55,6 +54,9 @@ build_uboot()
         sudo cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
+
+echo This results in a kernel that does get the local ethernet interface up
+exit 1
 
 mkdir -p build
 cd build
