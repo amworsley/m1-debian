@@ -23,7 +23,7 @@ build_linux()
         cat ../../config.edge > .config
         make LLVM=-14 olddefconfig
         make LLVM=-14 -j `nproc` V=0 > /dev/null
-        sudo make LLVM=-14 modules_install
+        sudo make LLVM=-14 V=0 modules_install > /dev/null
         sudo make LLVM=-14 install
 )
 }
@@ -54,6 +54,10 @@ build_uboot()
         sudo cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
+
+echo 'Has no gpu yet'
+echo 'Boot but crashes shortly after. Do not use.'
+exit 1
 
 mkdir -p build
 cd build
