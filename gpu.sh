@@ -45,8 +45,8 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        git reset --hard asahi-v2022.07-4;
-        curl -s https://tg.st/u/0001-usb_setup_descriptor-Add-1ms-delay-in-order-to-unbre.patch | patch -p1
+        git reset --hard origin/asahi;
+
         make apple_m1_defconfig
         make -j `nproc`
 )
