@@ -18,7 +18,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.1-rc5-9;
+        git reset --hard asahi-6.1-rc5-11;
         source "$HOME/.cargo/env"
         cat ../../config.edge > .config
         make LLVM=-14 olddefconfig
@@ -45,7 +45,7 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        git reset --hard origin/asahi;
+        git reset --hard asahi-v2022.10-1;
 
         make apple_m1_defconfig
         make -j `nproc`
@@ -55,9 +55,7 @@ build_uboot()
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
 
-echo 'Has no gpu yet'
-echo 'Boot but crashes shortly after. Do not use.'
-exit 1
+echo 'Warning: Has no gpu yet'
 
 mkdir -p build
 cd build
