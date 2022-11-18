@@ -20,7 +20,7 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.1-rc5-11;
         source "$HOME/.cargo/env"
-        cat ../../config.edge > .config
+        curl -o .config https://tg.st/u/1dbcb0d155911d80f29e61153f53e39bff1c6198f9ed0673520d4cf45343fa9f.config
         make LLVM=-14 olddefconfig
         make LLVM=-14 -j `nproc` V=0 > /dev/null
         sudo make LLVM=-14 V=0 modules_install > /dev/null
