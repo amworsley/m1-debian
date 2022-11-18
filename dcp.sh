@@ -55,8 +55,6 @@ build_uboot()
         sudo cp u-boot.bin /boot/efi/m1n1/boot.bin
 }
 
-echo 'Warning: Has no gpu yet'
-
 mkdir -p build
 cd build
 
