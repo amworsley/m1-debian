@@ -18,7 +18,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.1-rc5-11;
+        git reset --hard asahi-6.1-rc6-5
         source "$HOME/.cargo/env"
         curl -o .config https://tg.st/u/1dbcb0d155911d80f29e61153f53e39bff1c6198f9ed0673520d4cf45343fa9f.config
         make LLVM=-14 olddefconfig
