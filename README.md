@@ -5,12 +5,16 @@ The USB-A Port on the Mac Mini will not work in u-boot and grub.  The two
 additional USB-3 ports on the iMac 4 port model don't work in u-boot, grub
 and Linux. In order to install Linux on a FileVault-enabled Mac run the
 installer from Recovery open Disk Utility > Expanding "Macintosh HD" >
-Selecting locked volume > click "Mount".
-
-# This installation is not suited to be mixed with other ASAHI or BSD installations until further investiation.
+Selecting locked volume > click "Mount". Debian does not include the choosen
+EFI patch. As a result it will always pick the first ESP partition. This can be
+problematic if you're using multiple ESP partitions for example when having
+multiple Linux and BSD installations.
 
 # Artefacts
 If you don't want to use the prebuild artefacts, you can build them yourself using the [bootstrap.sh](https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/blob_plain/refs/heads/master:/bootstrap.sh) script.
+
+# Kernel header files
+The kernel header files can be found here: <https://thomas.glanzmann.de/asahi/>
 
 # Asahi installer
 
