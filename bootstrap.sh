@@ -32,7 +32,6 @@ build_linux()
         cd linux
         git fetch -a -t
         git reset --hard asahi-6.1-rc6-5; git clean -f -x -d &> /dev/null
-        curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         cat ../../config-16k.txt > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
