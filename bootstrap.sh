@@ -31,7 +31,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.0-rc6-1; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-6.1-rc6-5; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
         cat ../../config-16k.txt > .config
         make olddefconfig
@@ -46,7 +46,7 @@ build_m1n1()
         cd m1n1
         git fetch -a -t
         # https://github.com/AsahiLinux/PKGBUILDs/blob/main/m1n1/PKGBUILD
-        git reset --hard v1.1.4; git clean -f -x -d &> /dev/null
+        git reset --hard v1.1.8; git clean -f -x -d &> /dev/null
         make -j `nproc`
 )
 }
@@ -59,9 +59,8 @@ build_uboot()
         cd u-boot
         git fetch -a -t
         # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
-        git reset --hard asahi-v2022.07-3; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-v2022.10-1; git clean -f -x -d &> /dev/null
         git revert --no-edit 4d2b02faf69eaddd0f73758ab26c456071bd2017
-        curl -s https://tg.st/u/0001-usb_setup_descriptor-Add-1ms-delay-in-order-to-unbre.patch | git am -
 
         make apple_m1_defconfig
         make -j `nproc`
