@@ -33,7 +33,7 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.1-rc6-5; git clean -f -x -d &> /dev/null
         curl -s https://tg.st/u/40c9642c7569c52189f84621316fc9149979ee65.patch | git am -
-        cat ../../config > .config
+        cat ../../config-16k.txt > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
@@ -210,7 +210,7 @@ publish_artefacts()
 mkdir -p build
 cd build
 
-sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves clang-14 lld-14 llvm-14
+sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves clang-14 lld-14 llvm-14 curl
 
 build_linux
 build_m1n1

@@ -7,6 +7,8 @@ and Linux. In order to install Linux on a FileVault-enabled Mac run the
 installer from Recovery open Disk Utility > Expanding "Macintosh HD" >
 Selecting locked volume > click "Mount".
 
+# This installation is not suited to be mixed with other ASAHI or BSD installations until further investiation.
+
 # Artefacts
 If you don't want to use the prebuild artefacts, you can build them yourself using the [bootstrap.sh](https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/blob_plain/refs/heads/master:/bootstrap.sh) script.
 
