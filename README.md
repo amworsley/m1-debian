@@ -43,6 +43,7 @@ If you don't want to use the prebuild artefacts, you can build them yourself usi
 
 * Install a desktop environment for example blackbox
 
+        apt-get update
         apt-get install -y xinit blackbox xterm firefox-esr lightdm
 
 * Create yourself an unprivileged user

@@ -206,19 +206,17 @@ publish_artefacts()
         export KERNEL=`ls -1rt linux-image*.deb | grep -v dbg | tail -1`
         cp ${KERNEL} k.deb
         sudo cp m1-d-i.tar m1.tgz efi.tgz asahi-debian-live.tar u-boot.bin u-boot.macho 2k.bin 4k.bin k.deb m1n1/build/m1n1.bin m1n1/build/m1n1.macho testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi debian-base.zip /u/
+        echo 'Reminder: Publish __all__ kernel packages'
 }
 
 mkdir -p build
 cd build
 
-sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves clang-14 lld-14 llvm-14 curl
+sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
 
 build_linux
 build_m1n1
 build_uboot
-
-exit
-
 build_rootfs
 #build_di_stick
 build_dd
@@ -226,5 +224,3 @@ build_efi
 build_asahi_installer_image
 build_live_stick
 publish_artefacts
-
-echo 'Reminder: On the next release publish __all__ kernel packages'

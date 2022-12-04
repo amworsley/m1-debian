@@ -27,11 +27,13 @@ passwd username
 
 Lightweight desktop
 ===================
+apt-get update
 apt-get install lightdm blackbox xterm firefox-esr big-cursor
 /etc/init.d/lightdm start
 
 Install gnome
 =============
+apt-get update
 apt-get install gnome
 /etc/init.d/gdm3 start
 
@@ -198,6 +200,7 @@ iwd
 With iwd you can force to use 5ghz. The following needs to be done to get iwd
 running.
 
+sudo apt-get update
 sudo apt-get install iwd
 
 cat <<EOF > /etc/iwd/main.conf
