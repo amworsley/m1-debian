@@ -34,7 +34,7 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
         cd m1n1
         git fetch -a -t
-        git reset --hard v1.1.8;
+        git reset --hard v1.2.2;
         make -j `nproc`
 )
 }

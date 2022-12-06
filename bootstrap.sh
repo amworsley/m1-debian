@@ -45,7 +45,7 @@ build_m1n1()
         cd m1n1
         git fetch -a -t
         # https://github.com/AsahiLinux/PKGBUILDs/blob/main/m1n1/PKGBUILD
-        git reset --hard v1.1.8; git clean -f -x -d &> /dev/null
+        git reset --hard v1.2.2; git clean -f -x -d &> /dev/null
         make -j `nproc`
 )
 }
