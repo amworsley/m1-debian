@@ -43,6 +43,7 @@ usage()
    echo " dd : From testing rootfs make m1.tgz (ext4 rootfs image)"
    echo " live : From rootfs testing + linux build create tar ball"
    echo " efi : Create efi.tgz file of grub EFI partition from testing rootfs"
+   echo " clean : Remove build directory"
    echo
    echo "  See README for details "
    echo
@@ -345,7 +346,7 @@ if [ -n $DR ]; then
 	echo "Creating build directory to run script"
     fi
     echo mkdir -p build
-    echo DR cd build
+    echo cd build
 else
 mkdir -p build
 cd build
@@ -395,6 +396,10 @@ while [ -n "$1" ]; do
 	asahi|image|asahi_installer_image) build_asahi_installer_image ;;
 	live|stick|live_stick) build_live_stick ;;
 	publish|artefacts) publish_artefacts ;;
+	clean)
+	    $DR cd ..
+	    $DR rm -rf build
+	;;
     esac
     shift
 done
