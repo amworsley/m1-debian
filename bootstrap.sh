@@ -341,7 +341,7 @@ else
     DO_CMD="$CMD"
 fi
 
-if [ -n $DR ]; then
+if [ -n "$DR" ]; then
     if [ ! -d build ]; then
 	echo "Creating build directory to run script"
     fi
