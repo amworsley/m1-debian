@@ -12,6 +12,7 @@ cd "$(dirname "$0")"
 VERB=0
 OUT_DEV=/dev/null
 set -e
+config="config-16k.txt"
 
 unset LC_CTYPE
 unset LANG
@@ -30,6 +31,7 @@ usage()
    echo " -q : Disable tracing of shell script"
    echo " -V level : Set kernel build verbose level (default $VERB)"
    echo " -r : Reduce kernel size greatly by CONFIG_DEBUG_INFO_REDUCED=y"
+   echo " -4 : Use 4k page config - instead of $config"
    echo
    echo "Commands: (defaults to doing all)"
    echo " install : Install require debian packages"
@@ -68,8 +70,7 @@ $DO_CMD <<EOF
         cd linux
         git fetch -a -t
         git reset --hard asahi-6.1-rc6-5; git clean -f -x -d &> /dev/null
-        cat ../../config-16k.txt > .config
-        cat ../../config-4k.txt > .config
+        cat ../../$config > .config
 	if [ -n $DO_PATCH ]; then
 	    sed -i.orig '
 /^CONFIG_DEBUG_INFO_REDUCED=./s//CONFIG_DEBUG_INFO_REDUCED=y/
@@ -294,12 +295,16 @@ EOF
 }
 
 CMD="/bin/bash"
-while getopts 'hnxqV:r' argv
+while getopts 'hnxqV:r4' argv
 do
     case $argv in
     h)
        usage
        exit 0
+    ;;
+    4)
+       config="config-4k.txt"
+       echo "Switching config to $config"
     ;;
     n)
        echo "Dry-Run"
