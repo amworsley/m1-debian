@@ -332,6 +332,8 @@ do
     ;;
     esac
 done
+# Obscure option syntax: A + to turn off a "no" option...
+set +o nounset
 if [ -n "$DR" ]; then
     DO_CMD="cat"
 else
@@ -374,8 +376,6 @@ publish_artefacts
 
 shift $(($OPTIND-1))
 
-# Obscure option syntax: A + to turn off a "no" option...
-set +o nounset
 if [ -z "$1" ]; then
     do_install
     build_all
