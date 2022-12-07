@@ -18,12 +18,12 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard origin/gpu/rust-wip;
+        git reset --hard asahi-6.1-rc8-3;
         source "$HOME/.cargo/env"
-        curl -o .config https://tg.st/u/92ad8143f16d51179975a7dc5f4a50990f57a20c97668a0be746a118f992ed63.config
+        cat ../../config-gpu.txt > .config
         make LLVM=-14 olddefconfig
         make LLVM=-14 -j `nproc` V=0 > /dev/null
-        # sudo make LLVM=-14 V=0 modules_install > /dev/null
+        sudo make LLVM=-14 V=0 modules_install > /dev/null
         sudo make LLVM=-14 install
 )
 }
@@ -34,7 +34,7 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
         cd m1n1
         git fetch -a -t
-        git reset --hard origin/lina/gpu-wip;
+        git reset --hard v1.2.2;
         make -j `nproc`
 )
 }
