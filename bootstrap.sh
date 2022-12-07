@@ -31,7 +31,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.1-rc8-2; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-6.1-rc8-3; git clean -f -x -d &> /dev/null
         cat ../../config-16k.txt > .config
         make olddefconfig
         make -j `nproc` V=0 bindeb-pkg > /dev/null
