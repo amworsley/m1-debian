@@ -22,9 +22,7 @@ build_linux()
         source "$HOME/.cargo/env"
         cat ../../config-gpu.txt > .config
         make LLVM=-14 olddefconfig
-        make LLVM=-14 -j `nproc` V=0 > /dev/null
-        sudo make LLVM=-14 V=0 modules_install > /dev/null
-        sudo make LLVM=-14 install
+        make -j `nproc` V=0 bindeb-pkg > /dev/null
 )
 }
 
