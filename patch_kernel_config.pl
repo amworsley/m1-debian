@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 # This was taken from the linux-image-5.16.0-3-arm64-unsigned
 # Than it was copied as .config in the asahi tree
 # Than make olddefconfig was executed twice
-my @lines = `cat config`;
+my @lines = `cat .config`;
 chomp @lines;
 
 my %asahi_options = (
@@ -98,7 +98,7 @@ for my $o (keys %asahi_options) {
         }
 }
 
-open(CONFIG, '>', 'config.new') || die;
+open(CONFIG, '>', '.config') || die;
 for (keys %debian_options) {
         print CONFIG $_ . '=' . $debian_options{$_} . "\n";
 }
