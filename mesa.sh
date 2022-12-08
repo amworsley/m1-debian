@@ -18,7 +18,7 @@ main() {
         git fetch -a -t
         rm -rf debian
         cp -a ../../mesa-debian debian
-        fakeroot debian/rules binary
+        dpkg-buildpackage -uc -us -a arm64
 }
 
 main "$@"
