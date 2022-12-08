@@ -12,6 +12,16 @@ cd "$(dirname "$0")"
 unset LC_CTYPE
 unset LANG
 
+handle_crosscompile()
+{
+        if [ "`uname -m`" != 'aarch64' ]; then
+                export ARCH=arm64
+                export CROSS_COMPILE=aarch64-linux-gnu-
+                export DEBOOTSTRAP=qemu-debootstrap
+                sudo apt install -y libc6-dev-arm64-cross
+        fi
+}
+
 build_linux()
 {
 (
@@ -22,7 +32,7 @@ build_linux()
         source "$HOME/.cargo/env"
         cat ../../config-gpu.txt > .config
         make LLVM=-14 olddefconfig
-        make -j `nproc` V=0 bindeb-pkg > /dev/null
+        make -j `nproc` LLVM=-14 V=0 bindeb-pkg > /dev/null
 )
 }
 
@@ -54,6 +64,7 @@ build_uboot()
 mkdir -p build
 cd build
 
+handle_crosscompile
 build_linux
 build_m1n1
 build_uboot
