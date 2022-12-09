@@ -19,6 +19,7 @@ main() {
         git fetch -a -t
         rm -rf debian
         cp -a ../../mesa-debian debian
+        EMAIL=thomas@glanzmann.de dch -v 23.0.0-`date +%Y%m%d%H%M` 'asahi wip'
         sudo apt-get build-dep .
         dpkg-buildpackage -uc -us -a arm64
 }
