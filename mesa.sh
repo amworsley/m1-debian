@@ -11,13 +11,15 @@ unset LC_CTYPE
 unset LANG
 
 main() {
-        sudo apt-get build-dep mesa
+        mkdir -p build
         cd build
+        command -v git >/dev/null || sudo apt-get install git
         test -d mesa || git clone https://gitlab.freedesktop.org/asahi/mesa.git
         cd mesa
         git fetch -a -t
         rm -rf debian
         cp -a ../../mesa-debian debian
+        sudo apt-get build-dep .
         dpkg-buildpackage -uc -us -a arm64
 }
 
