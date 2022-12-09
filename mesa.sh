@@ -13,6 +13,10 @@ unset LANG
 main() {
         mkdir -p build
         cd build
+
+        # devscripts needed for dch and dcmd
+        dpkg -s devscripts >/dev/null 2>&1 || sudo apt-get install devscripts
+
         command -v git >/dev/null || sudo apt-get install git
         test -d mesa || git clone https://gitlab.freedesktop.org/asahi/mesa.git
         cd mesa
