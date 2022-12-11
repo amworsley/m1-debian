@@ -123,7 +123,10 @@ Yes, long answer below.
 To update the kernel to the lastest "stable" asahi branch you need to run
 as root:
 
-        curl -sL https://tg.st/u/ksh | bash
+        apt update
+        apt upgrade
+
+For installations before 2022-12-12, see <https://thomas.glanzmann.de/asahi/README.txt>
 
 Later it might be necessary to upgrade the stub parition in order to
 support the GPU code. As soon as that happens, I'll add the

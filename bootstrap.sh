@@ -50,8 +50,7 @@ build_rootfs()
         sudo chroot . apt update
         sudo chroot . apt install -y m1n1 linux-image-asahi
         sudo chroot . apt clean
-
-        sudo bash -c 'chroot . apt-get clean'
+        sudo rm var/lib/apt/lists/* || true
 )
 }
 
