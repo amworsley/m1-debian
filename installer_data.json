@@ -25,33 +25,6 @@
                     "image": "media"
                 }
             ]
-        },
-        {
-            "name": "Fedora 35 Workstation packaged by Thomas Glanzmann",
-            "default_os_name": "Fedora",
-            "boot_object": "m1n1.bin",
-            "next_object": "m1n1/boot.bin",
-            "package": "fc35-base-2022-07-28.zip",
-            "supported_fw": ["12.3", "12.4"],
-            "partitions": [
-                {
-                    "name": "EFI",
-                    "type": "EFI",
-                    "size": "512MB",
-                    "format": "fat",
-                    "volume_id": "0x1d531917",
-                    "copy_firmware": true,
-                    "copy_installer_data": true,
-                    "source": "esp"
-                },
-                {
-                    "name": "Root",
-                    "type": "Linux",
-                    "size": "21GB",
-                    "expand": true,
-                    "image": "media"
-                }
-            ]
         }
     ]
 }
