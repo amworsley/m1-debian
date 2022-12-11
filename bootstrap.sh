@@ -24,13 +24,15 @@ build_rootfs()
 
         cd testing
 
-        sudo mkdir -p boot/efi
+        sudo mkdir -p boot/efi/m1n1
 
         sudo bash -c 'echo debian > etc/hostname'
 
         sudo bash -c 'echo > etc/motd'
 
         sudo cp ../../files/sources.list etc/apt/sources.list
+        sudo cp ../../files/glanzmann.list etc/apt/sources.list.d/
+        sudo cp ../../files/thomas-glanzmann.gpg etc/apt/trusted.gpg.d/
         sudo cp ../../files/hosts etc/hosts
         sudo cp ../../files/resolv.conf etc/resolv.conf
         sudo cp ../../files/quickstart.txt root/
@@ -45,9 +47,8 @@ build_rootfs()
 
         sudo -- ln -s lib/systemd/systemd init
 
-        sudo cp ../${KERNEL} .
-        sudo chroot . dpkg -i ${KERNEL}
-        sudo rm ${KERNEL}
+        sudo chroot . apt update
+        sudo chroot . apt install -y m1n1 linux-image-asahi
 
         sudo bash -c 'chroot . apt-get clean'
 )
@@ -93,7 +94,7 @@ build_asahi_installer_image()
         rm -rf aii
         mkdir -p aii/esp/m1n1
         cp -a EFI aii/esp/
-        cp u-boot.bin aii/esp/m1n1/boot.bin
+        cp testing/boot/esp/m1n1/boot.bin aii/esp/m1n1/boot.bin
         ln media aii/media
         cd aii
         zip -r9 ../debian-base.zip esp media
