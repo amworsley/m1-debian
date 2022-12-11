@@ -14,6 +14,69 @@ unset LANG
 
 export DEBOOTSTRAP=debootstrap
 
+<<<<<<< HEAD
+=======
+handle_crosscompile()
+{
+        if [ "`uname -m`" != 'aarch64' ]; then
+                export ARCH=arm64
+                export CROSS_COMPILE=aarch64-linux-gnu-
+                export DEBOOTSTRAP=qemu-debootstrap
+                sudo apt install -y libc6-dev-arm64-cross
+        fi
+}
+
+build_linux()
+{
+(
+        handle_crosscompile
+        test -d linux || git clone https://github.com/AsahiLinux/linux
+        cd linux
+        git fetch -a -t
+        git reset --hard asahi-6.1-rc8-3; git clean -f -x -d &> /dev/null
+        cat ../../config-16k.txt > .config
+        make olddefconfig
+        make -j `nproc` V=0 bindeb-pkg > /dev/null
+)
+}
+
+build_m1n1()
+{
+(
+        test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
+        cd m1n1
+        git fetch -a -t
+        # https://github.com/AsahiLinux/PKGBUILDs/blob/main/m1n1/PKGBUILD
+        git reset --hard v1.2.3; git clean -f -x -d &> /dev/null
+        make -j `nproc`
+)
+}
+
+build_uboot()
+{
+(
+        handle_crosscompile
+        test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
+        cd u-boot
+        git fetch -a -t
+        # For tag, see https://github.com/AsahiLinux/PKGBUILDs/blob/main/uboot-asahi/PKGBUILD
+        git reset --hard asahi-v2022.10-1; git clean -f -x -d &> /dev/null
+        git revert --no-edit 4d2b02faf69eaddd0f73758ab26c456071bd2017
+
+        make apple_m1_defconfig
+        make -j `nproc`
+)
+
+        cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.bin
+        cat m1n1/build/m1n1.macho `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.macho
+        cp u-boot.bin 4k.bin
+        cp u-boot.bin 2k.bin
+        echo 'display=2560x1440' >> 2k.bin
+        echo 'display=wait,3840x2160' >> 4k.bin
+
+}
+
+>>>>>>> 0469ea3ee783f57bd1b368502d3286d96064e6e1
 build_rootfs()
 {
 (
