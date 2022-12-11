@@ -17,14 +17,13 @@ export DEBOOTSTRAP=debootstrap
 build_rootfs()
 {
 (
-        handle_crosscompile
         sudo rm -rf testing
         mkdir -p cache
         sudo eatmydata ${DEBOOTSTRAP} --cache-dir=`pwd`/cache --arch=arm64 --include initramfs-tools,pciutils,wpasupplicant,tcpdump,vim,tmux,vlan,ntpdate,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client,mtools,gdisk,cryptsetup testing testing http://deb.debian.org/debian
 
         cd testing
 
-        sudo mkdir -p boot/efi/m1n1
+        sudo mkdir -p boot/efi/m1n1 etc/X11/xorg.conf.d
 
         sudo bash -c 'echo debian > etc/hostname'
 
@@ -39,6 +38,7 @@ build_rootfs()
         sudo cp ../../files/interfaces etc/network/interfaces
         sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
         sudo cp ../../files/rc.local etc/rc.local
+        sudo cp ../../files/30-modeset.conf etc/X11/xorg.conf.d/30-modeset.conf
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'
@@ -49,6 +49,7 @@ build_rootfs()
 
         sudo chroot . apt update
         sudo chroot . apt install -y m1n1 linux-image-asahi
+        sudo chroot . apt clean
 
         sudo bash -c 'chroot . apt-get clean'
 )
@@ -65,6 +66,22 @@ build_live_stick()
         cp testing/boot/vmlinuz* live-stick/vmlinuz
         cp ../files/grub.cfg live-stick/efi/debian/grub.cfg
         (cd live-stick; tar cf ../asahi-debian-live.tar .)
+)
+}
+
+build_dd()
+{
+(
+        rm -f media
+        dd if=/dev/zero of=media bs=1 count=0 seek=2G
+        mkdir -p mnt
+        mkfs.ext4 media
+        tune2fs -O extents,uninit_bg,dir_index -m 0 -c 0 -i 0 media
+        sudo mount -o loop media mnt
+        sudo cp -a testing/* mnt/
+        sudo rm -rf mnt/init mnt/boot/efi/m1n1
+        sudo umount mnt
+        tar cf - media | pigz -9 > m1.tgz
 )
 }
 
@@ -94,7 +111,7 @@ build_asahi_installer_image()
         rm -rf aii
         mkdir -p aii/esp/m1n1
         cp -a EFI aii/esp/
-        cp testing/boot/esp/m1n1/boot.bin aii/esp/m1n1/boot.bin
+        cp testing/usr/lib/m1n1/boot.bin aii/esp/m1n1/boot.bin
         ln media aii/media
         cd aii
         zip -r9 ../debian-base.zip esp media
@@ -111,10 +128,8 @@ cd build
 
 sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
 
-build_linux
-build_m1n1
-build_uboot
 build_rootfs
+build_dd
 build_efi
 build_asahi_installer_image
 build_live_stick
