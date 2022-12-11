@@ -11,13 +11,20 @@ unset LC_CTYPE
 unset LANG
 
 main() {
-        sudo apt-get build-dep mesa
+        mkdir -p build
         cd build
+
+        # devscripts needed for dch and dcmd
+        dpkg -s devscripts >/dev/null 2>&1 || sudo apt-get install devscripts
+
+        command -v git >/dev/null || sudo apt-get install git
         test -d mesa || git clone https://gitlab.freedesktop.org/asahi/mesa.git
         cd mesa
         git fetch -a -t
         rm -rf debian
         cp -a ../../mesa-debian debian
+        EMAIL=thomas@glanzmann.de dch -v 23.0.0-`date +%Y%m%d%H%M` 'asahi wip'
+        sudo apt-get build-dep .
         dpkg-buildpackage -uc -us -a arm64
 }
 
