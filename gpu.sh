@@ -51,9 +51,41 @@ build_uboot()
         cat m1n1/build/m1n1.bin   `find linux/arch/arm64/boot/dts/apple/ -name \*.dtb` <(gzip -c u-boot/u-boot-nodtb.bin) > u-boot.bin
 }
 
+package_boot_bin()
+{
+(
+        export M1N1_VERSION=1.2.2-1
+        rm -rf m1n1_${M1N1_VERSION}
+        mkdir -p m1n1_${M1N1_VERSION}/DEBIAN m1n1_${M1N1_VERSION}/usr/lib/m1n1/
+        cp u-boot.bin m1n1_${M1N1_VERSION}/usr/lib/m1n1/boot.bin
+cat > m1n1_${M1N1_VERSION}/DEBIAN/control <<EOF
+Package: m1n1
+Version: $M1N1_VERSION
+Section: base
+Priority: optional
+Architecture: arm64
+Maintainer: Thomas Glanzmann <thomas@glanzmann.de>
+Description: Apple silicon boot loader
+ Next to m1n1 this also contains the device trees and u-boot.
+EOF
+
+cat > m1n1_${M1N1_VERSION}/DEBIAN/postinst <<EOF
+#!/bin/bash
+
+export PATH=/bin
+cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
+cp /usr/lib/m1n1/boot.bin /boot/efi/m1n1/
+EOF
+
+chmod 755 m1n1_${M1N1_VERSION}/DEBIAN/postinst
+)
+        dpkg-deb --build m1n1_${M1N1_VERSION}
+}
+
 mkdir -p build
 cd build
 
 build_linux
 build_m1n1
 build_uboot
+package_boot_bin
