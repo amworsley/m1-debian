@@ -14,9 +14,9 @@ main() {
         mkdir -p build
         cd build
         export META_VERSION=6.1.0-1
-        rm -rf linux-image-asahi_${META_VERSION}
-        mkdir -p linux-image-asahi_${META_VERSION}/DEBIAN
-cat > linux-image-asahi_${META_VERSION}/DEBIAN/control <<EOF
+        rm -rf linux-image-asahi_${META_VERSION}_arm64
+        mkdir -p linux-image-asahi_${META_VERSION}_arm64/DEBIAN
+cat > linux-image-asahi_${META_VERSION}_arm64/DEBIAN/control <<EOF
 Package: linux-image-asahi
 Version: $META_VERSION
 Section: base
@@ -26,7 +26,7 @@ Architecture: arm64
 Maintainer: Thomas Glanzmann <thomas@glanzmann.de>
 Description: Linux for 64-bit apple silicon machines (meta-package)
 EOF
-        dpkg-deb --build linux-image-asahi_${META_VERSION}
+        dpkg-deb --build linux-image-asahi_${META_VERSION}_arm64
 }
 
 main "$@"

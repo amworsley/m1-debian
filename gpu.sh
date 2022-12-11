@@ -32,7 +32,7 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
         cd m1n1
         git fetch -a -t
-        git reset --hard v1.2.2;
+        git reset --hard v1.2.3;
         make -j `nproc`
 )
 }
@@ -54,11 +54,11 @@ build_uboot()
 package_boot_bin()
 {
 (
-        export M1N1_VERSION=1.2.2-1
-        rm -rf m1n1_${M1N1_VERSION}
-        mkdir -p m1n1_${M1N1_VERSION}/DEBIAN m1n1_${M1N1_VERSION}/usr/lib/m1n1/
-        cp u-boot.bin m1n1_${M1N1_VERSION}/usr/lib/m1n1/boot.bin
-        cat <<EOF > m1n1_${M1N1_VERSION}/DEBIAN/control
+        export M1N1_VERSION=1.2.3-1
+        rm -rf m1n1_${M1N1_VERSION}_arm64
+        mkdir -p m1n1_${M1N1_VERSION}_arm64/DEBIAN m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/
+        cp u-boot.bin m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/boot.bin
+        cat <<EOF > m1n1_${M1N1_VERSION}_arm64/DEBIAN/control
 Package: m1n1
 Version: $M1N1_VERSION
 Section: base
@@ -69,7 +69,7 @@ Description: Apple silicon boot loader
  Next to m1n1 this also contains the device trees and u-boot.
 EOF
 
-        cat > m1n1_${M1N1_VERSION}/DEBIAN/postinst <<EOF
+        cat > m1n1_${M1N1_VERSION}_arm64/DEBIAN/postinst <<EOF
 #!/bin/bash
 
 export PATH=/bin
@@ -77,8 +77,8 @@ cp /boot/efi/m1n1/boot.bin /boot/efi/m1n1/`date +%Y%m%d%H%M`.bin
 cp /usr/lib/m1n1/boot.bin /boot/efi/m1n1/
 EOF
 
-        chmod 755 m1n1_${M1N1_VERSION}/DEBIAN/postinst
-        dpkg-deb --build m1n1_${M1N1_VERSION}
+        chmod 755 m1n1_${M1N1_VERSION}_arm64/DEBIAN/postinst
+        dpkg-deb --build m1n1_${M1N1_VERSION}_arm64
 )
 }
 
