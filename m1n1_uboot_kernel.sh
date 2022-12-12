@@ -20,7 +20,7 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.1-rc8-3;
         source "$HOME/.cargo/env"
-        cat ../../config-gpu.txt > .config
+        cat ../../config.txt > .config
         make LLVM=-15 olddefconfig
         make -j `nproc` LLVM=-15 V=0 bindeb-pkg > /dev/null
 )

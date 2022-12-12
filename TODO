@@ -1,2 +1,4 @@
-Put net.ifnames=0 as default
-Check if /boot/esp is mounted otherwise bail on error, for bootstrap check for the file '/debootstrap'
+[ ] Put net.ifnames=0 as default
+[ ] Check if /boot/esp is mounted otherwise bail on error, for bootstrap check for the file '/debootstrap'
+[ ] Re-enable crosscompilation for m1n1_uboot_kernel.sh
+[ ] Script the bootstrapping of rust necessary for the kernel
