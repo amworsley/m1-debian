@@ -63,7 +63,7 @@ build_live_stick()
         rm -rf live-stick
         mkdir -p live-stick/efi/boot live-stick/efi/debian/
         sudo cp ../files/wifi.pl testing/etc/rc.local
-        sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | pigz -9 > ../live-stick/initrd.gz'
+        sudo bash -c 'cd testing; find . | cpio --quiet -H newc -o | zstd -T0 -16 > ../live-stick/initrd.zstd'
         cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi live-stick/efi/boot/bootaa64.efi
         cp testing/boot/vmlinuz* live-stick/vmlinuz
         cp ../files/grub.cfg live-stick/efi/debian/grub.cfg
@@ -108,7 +108,7 @@ publish_artefacts()
 mkdir -p build
 cd build
 
-sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves
+sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu libc6-dev device-tree-compiler imagemagick ccache eatmydata debootstrap pigz libncurses-dev qemu-user-static binfmt-support rsync git flex bison bc kmod cpio libncurses5-dev libelf-dev:native libssl-dev dwarves zstd
 
 build_rootfs
 build_dd
