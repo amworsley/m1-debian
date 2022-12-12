@@ -41,6 +41,8 @@ build_rootfs()
         sudo cp ../../files/30-modeset.conf etc/X11/xorg.conf.d/30-modeset.conf
         sudo cp ../../files/blacklist.conf etc/modprobe.d/
 
+        sudo perl -p -i -e 's/"quiet"/"net.ifnames=0"/ if /^GRUB_CMDLINE_LINUX_DEFAULT=/' etc/default/grub
+
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'
 
