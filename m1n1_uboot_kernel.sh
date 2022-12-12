@@ -9,6 +9,10 @@ set -o xtrace
 
 cd "$(dirname "$0")"
 
+export CARGO_HOME="$(pwd)/build/cargo"
+export RUSTUP_HOME="$(pwd)/build/rust"
+source "$(pwd)/build/cargo/env"
+
 unset LC_CTYPE
 unset LANG
 
@@ -19,8 +23,8 @@ build_linux()
         cd linux
         git fetch -a -t
         git reset --hard asahi-6.1-rc8-3;
-        source "$HOME/.cargo/env"
         cat ../../config.txt > .config
+        make LLVM=-15 rustavailable
         make LLVM=-15 olddefconfig
         make -j `nproc` LLVM=-15 V=0 bindeb-pkg > /dev/null
 )
