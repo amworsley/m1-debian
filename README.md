@@ -43,7 +43,7 @@ using the following scripts:
 * Configure wifi by editing the wpa_supplicant.conf, enabling the interface and remove the # before allow-hotplug to enable it during boot.
 
         vi /etc/wpa_supplicant/wpa_supplicant.conf
-        ifup wlp1s0f0
+        ifup wlan0
         vi /etc/network/interfaces
 
 * Reboot to see if grub was correctly installed
@@ -121,7 +121,7 @@ Than open a terminal, and run the following commands:
 
 # FAQ
 
-*  If I install Debian, will it still be relatively easy to update the Asahi work as it develops?
+* If I install Debian, will it be easy to update the Asahi work as it develops?
 
 Yes, long answer below.
 
