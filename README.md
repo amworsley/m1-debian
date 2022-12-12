@@ -11,10 +11,15 @@ problematic if you're using multiple ESP partitions for example when having
 multiple Linux and BSD installations.
 
 # Artefacts
-If you don't want to use the prebuild artefacts, you can build them yourself using the [bootstrap.sh](https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/blob_plain/refs/heads/master:/bootstrap.sh) script.
+If you don't want to use the prebuild artefacts, you can build them yourself
+using the following scripts:
 
-# Kernel header files
-The kernel header files can be found here: <https://thomas.glanzmann.de/asahi/>
+        - prepare_rust.sh - Prepares a rust installation suitable for kernel compilation
+        - m1n1_uboot_kernel.sh - Builds m1n1, u-boot and the kernel including gpu support.
+        - mesa.sh - Creates mesa packages
+        - bootstrap.sh - Creates Debian root and live filesystem
+        - libunwind.sh - Builds libunwind that does not crash on 16kb pages
+        - meta.sh - Meta packages which makes sure that we always get latest and gratest kernel.
 
 # Asahi installer
 
