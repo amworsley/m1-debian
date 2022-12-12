@@ -1,0 +1,2 @@
+Put net.ifnames=0 as default
+Check if /boot/esp is mounted otherwise bail on error, for bootstrap check for the file '/debootstrap'
