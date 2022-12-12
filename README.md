@@ -19,7 +19,7 @@ using the following scripts:
         - mesa.sh - Creates mesa packages
         - bootstrap.sh - Creates Debian root and live filesystem
         - libunwind.sh - Builds libunwind that does not crash on 16kb pages
-        - meta.sh - Meta packages which makes sure that we always get latest and gratest kernel.
+        - meta.sh - Meta package which makes sure that we always get latest and gratest kernel.
 
 # Asahi installer
 
