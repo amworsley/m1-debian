@@ -39,6 +39,7 @@ build_rootfs()
         sudo cp ../../files/wpa.conf etc/wpa_supplicant/wpa_supplicant.conf
         sudo cp ../../files/rc.local etc/rc.local
         sudo cp ../../files/30-modeset.conf etc/X11/xorg.conf.d/30-modeset.conf
+        sudo cp ../../files/blacklist.conf etc/modprobe.d/
 
         sudo bash -c 'chroot . apt update'
         sudo bash -c 'chroot . apt install -y firmware-linux'

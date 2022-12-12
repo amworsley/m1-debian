@@ -107,13 +107,7 @@ update_wifi_firmware_if_necessary
         system("sha256sum $firmware_tarball > $firmware_manifest");
         system("tar -C /lib/firmware/ -xf $firmware_tarball");
 
-        system('rmmod brcmfmac');
-        system('rmmod brcmutil');
-        sleep(1);
-        system('modprobe brcmfmac');
-        sleep(1);
-        system('rmmod brcmfmac');
-        sleep(1);
+        unlink('/etc/modprobe.d/blacklist.conf');
         system('modprobe brcmfmac');
 }
 
