@@ -3,10 +3,10 @@
 use strict;
 use warnings FATAL => 'all';
 
-# This was taken from the linux-image-5.16.0-3-arm64-unsigned
-# Than it was copied as .config in the asahi tree
-# Than make olddefconfig was executed twice
-my @lines = `cat .config`;
+my $inputfile = $ARGV[0];
+my $outputfile = $ARGV[1];
+
+my @lines = `cat $inputfile`;
 chomp @lines;
 
 my %asahi_options = (
@@ -37,7 +37,7 @@ my %asahi_options = (
         'CONFIG_HID_MAGICMOUSE' => 'y',
         'CONFIG_I2C_APPLE' => 'y',
         'CONFIG_MFD_APPLE_SPMI_PMU' => 'y',
-        'CONFIG_MMC_SDHCI_PCI' => 'y',
+        'CONFIG_MMC_SDHCI_PCI' => 'm',
         'CONFIG_NLMON' => 'm',
         'CONFIG_NVMEM_SPMI_MFD' => 'y',
         'CONFIG_NVME_APPLE' => 'y',
@@ -45,21 +45,20 @@ my %asahi_options = (
         'CONFIG_PINCTRL_APPLE_GPIO' => 'y',
         'CONFIG_POWER_RESET_MACSMC' => 'y',
         'CONFIG_RTC_DRV_MACSMC' => 'y',
-        'CONFIG_SND_SIMPLE_CARD' => 'y',
-        'CONFIG_SND_SOC_APPLE_MCA' => 'y',
-        'CONFIG_SND_SOC_APPLE_SILICON' => 'y',
-        'CONFIG_SND_SOC_CS42L42' => 'y',
+        'CONFIG_SND_SIMPLE_CARD' => 'm',
+        'CONFIG_SND_SOC_APPLE_MCA' => 'm',
+        'CONFIG_SND_SOC_CS42L42' => 'm',
         'CONFIG_SND_SOC_TAS2770' => 'm',
         'CONFIG_SPI_APPLE' => 'y',
         'CONFIG_SPI_HID_APPLE_CORE' => 'y',
         'CONFIG_SPI_HID_APPLE_OF' => 'y',
         'CONFIG_SPMI_APPLE' => 'y',
-        'CONFIG_USB_DWC3' => 'y',
-        'CONFIG_USB_DWC3_PCI' => 'y',
+        'CONFIG_USB_DWC3' => 'm',
+        'CONFIG_USB_DWC3_PCI' => 'm',
         'CONFIG_FB_EFI' => 'y',
         'CONFIG_BACKLIGHT_CLASS_DEVICE' => 'y',
         'CONFIG_BACKLIGHT_GPIO' => 'm',
-        'CONFIG_TYPEC_TPS6598X' => 'y',
+        'CONFIG_TYPEC_TPS6598X' => 'm',
         'CONFIG_BT_HCIBCM4377' => 'm',
         'CONFIG_HID_DOCKCHANNEL' => 'm',
         'CONFIG_APPLE_DOCKCHANNEL' => 'm',
@@ -75,7 +74,12 @@ my %asahi_options = (
         'CONFIG_CONSTRUCTORS' => 'y',
         'CONFIG_RUST' => 'y',
         'CONFIG_PWM_APPLE' => 'm',
-        'CONFIG_DRM_SIMPLEDRM_BACKLIGHT' => 'y',
+        'CONFIG_DRM_SIMPLEDRM_BACKLIGHT' => 'n',
+        'CONFIG_ARM64_4K_PAGES' => 'n',
+        'CONFIG_ARM64_16K_PAGES' => 'y',
+        'CONFIG_ANDROID_BINDER_IPC' => 'y',
+        'CONFIG_MODVERSIONS' => 'n',
+        'CONFIG_DEBUG_INFO_BTF' => 'n',
 );
 
 my %debian_options;
@@ -94,11 +98,12 @@ for my $o (keys %asahi_options) {
                 print "$o present, removing\n";
                 delete $debian_options{$o};
         } elsif ((exists $asahi_options{$o} && exists $debian_options{$o}) && ($debian_options{$o} ne $asahi_options{$o})) {
-                print "$o different\n";
+                print "$o different, changing\n";
+                $debian_options{$o} = $asahi_options{$o};
         }
 }
 
-open(CONFIG, '>', '.config') || die;
+open(CONFIG, '>', $outputfile) || die;
 for (keys %debian_options) {
         print CONFIG $_ . '=' . $debian_options{$_} . "\n";
 }

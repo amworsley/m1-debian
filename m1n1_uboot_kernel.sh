@@ -23,7 +23,7 @@ build_linux()
         cd linux
         git fetch -a -t
         git reset --hard asahi-6.1-rc8-3;
-        cat ../../config.txt > .config
+        cat ../../newconfig.txt > .config
         make LLVM=-15 rustavailable
         make LLVM=-15 olddefconfig
         make -j `nproc` LLVM=-15 V=0 bindeb-pkg > /dev/null
@@ -93,6 +93,6 @@ mkdir -p build
 cd build
 
 build_linux
-build_m1n1
-build_uboot
-package_boot_bin
+# build_m1n1
+# build_uboot
+# package_boot_bin
