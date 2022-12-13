@@ -80,6 +80,8 @@ my %asahi_options = (
         'CONFIG_ANDROID_BINDER_IPC' => 'y',
         'CONFIG_MODVERSIONS' => 'n',
         'CONFIG_DEBUG_INFO_BTF' => 'n',
+        'CONFIG_OF_DYNAMIC' => 'y',
+        'CONFIG_OF_OVERLAY' => 'y',
 );
 
 my %debian_options;
