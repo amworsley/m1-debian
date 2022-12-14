@@ -93,6 +93,6 @@ mkdir -p build
 cd build
 
 build_linux
-# build_m1n1
-# build_uboot
-# package_boot_bin
+build_m1n1
+build_uboot
+package_boot_bin
