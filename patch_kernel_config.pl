@@ -37,6 +37,7 @@ my %asahi_options = (
         'CONFIG_CHARGER_MACSMC' => 'y',
         'CONFIG_COMMON_CLK_APPLE_NCO' => 'y',
         'CONFIG_CONSTRUCTORS' => 'y',
+        'CONFIG_DEBUG_INFO' => 'n',
         'CONFIG_DEBUG_INFO_BTF' => 'n',
         'CONFIG_DRM' => 'y',
         'CONFIG_DRM_APPLE' => 'y',

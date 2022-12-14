@@ -22,7 +22,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.1-rc8-3;
+        git reset --hard asahi-6.1-2;
         cat ../../config.txt > .config
         make LLVM=-15 rustavailable
         make LLVM=-15 olddefconfig
