@@ -39,6 +39,7 @@ my %asahi_options = (
         'CONFIG_CONSTRUCTORS' => 'y',
         'CONFIG_DEBUG_INFO' => 'n',
         'CONFIG_DEBUG_INFO_BTF' => 'n',
+        'CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT' => 'n',
         'CONFIG_DRM' => 'y',
         'CONFIG_DRM_APPLE' => 'y',
         'CONFIG_DRM_ASAHI' => 'y',

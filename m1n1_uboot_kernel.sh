@@ -34,9 +34,9 @@ build_linux()
         git fetch -a -t
         git reset --hard asahi-6.1-2;
         cat ../../config.txt > .config
-        make LLVM=-15 rustavailable
-        make LLVM=-15 olddefconfig
-        make -j `nproc` LLVM=-15 V=0 bindeb-pkg > /dev/null
+        make LLVM=${CLANG_VERSION} rustavailable
+        make LLVM=${CLANG_VERSION} olddefconfig
+        make -j `nproc` LLVM=${CLANG_VERSION} V=0 bindeb-pkg > /dev/null
 )
 }
 
@@ -99,6 +99,12 @@ EOF
         dpkg-deb --build m1n1_${M1N1_VERSION}_arm64
 )
 }
+
+if type clang-15; then
+        export CLANG_VERSION=-15
+elif type clang-11; then
+        export CLANG_VERSION=-11
+fi
 
 mkdir -p build
 cd build
