@@ -102,7 +102,7 @@ build_asahi_installer_image()
 
 publish_artefacts()
 {
-        sudo cp asahi-debian-live.tar debian-base.zip /u/
+        echo upload build/asahi-debian-live.tar build/debian-base.zip
 }
 
 mkdir -p build
