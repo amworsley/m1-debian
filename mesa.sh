@@ -21,6 +21,7 @@ main() {
         test -d mesa || git clone https://gitlab.freedesktop.org/asahi/mesa.git
         cd mesa
         git fetch -a -t
+        git reset --hard origin/main
         rm -rf debian
         cp -a ../../mesa-debian debian
         EMAIL=thomas@glanzmann.de dch -v 23.0.0-`date +%Y%m%d%H%M` 'asahi wip'
