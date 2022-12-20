@@ -11,8 +11,10 @@ cd "$(dirname "$0")"
 #set -x
 VERB=0
 OUT_DEV=/dev/null
+L_CLONE=/home/amw/src/Asahi/linux
+L_BRANCH=asahi
 set -e
-config="config-16k.txt"
+config="config.txt"
 
 unset LC_CTYPE
 unset LANG
@@ -67,10 +69,10 @@ build_linux()
 (
         handle_crosscompile
 $DO_CMD <<EOF
-        test -d linux || git clone https://github.com/AsahiLinux/linux
+        test -d linux || git clone -b $L_BRANCH $L_CLONE linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.1-rc6-5; git clean -f -x -d &> /dev/null
+        git reset --hard asahi-6.1-2;
         cat ../../$config > .config
 	if [ -n $DO_PATCH ]; then
 	    sed -i.orig '
