@@ -87,6 +87,25 @@ build_dd()
 )
 }
 
+build_efi()
+{
+(
+        rm -rf EFI
+        mkdir -p EFI/boot EFI/debian
+        cp testing/usr/lib/grub/arm64-efi/monolithic/grubaa64.efi EFI/boot/bootaa64.efi
+
+        export INITRD=`ls -1 testing/boot/ | grep initrd`
+        export VMLINUZ=`ls -1 testing/boot/ | grep vmlinuz`
+        export UUID=`blkid -s UUID -o value media`
+        cat > EFI/debian/grub.cfg <<EOF
+search.fs_uuid ${UUID} root
+linux (\$root)/boot/${VMLINUZ} root=UUID=${UUID} rw
+initrd (\$root)/boot/${INITRD}
+boot
+EOF
+)
+}
+
 build_asahi_installer_image()
 {
 (
@@ -112,6 +131,7 @@ sudo apt-get install -y build-essential bash git locales gcc-aarch64-linux-gnu l
 
 build_rootfs
 build_dd
+build_efi
 build_asahi_installer_image
 build_live_stick
 publish_artefacts
