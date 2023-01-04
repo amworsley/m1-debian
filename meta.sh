@@ -13,14 +13,14 @@ unset LANG
 main() {
         mkdir -p build
         cd build
-        export META_VERSION=6.1.0-1
+        export META_VERSION=6.2.0-1
         rm -rf linux-image-asahi_${META_VERSION}_arm64
         mkdir -p linux-image-asahi_${META_VERSION}_arm64/DEBIAN
 cat > linux-image-asahi_${META_VERSION}_arm64/DEBIAN/control <<EOF
 Package: linux-image-asahi
 Version: $META_VERSION
 Section: base
-Depends: linux-image-6.1.0-rc8-asahi (>= 6.1.0-rc8-asahi-36)
+Depends: linux-image-6.2.0-rc2-asahi (>= 6.2.0-rc2-asahi-62)
 Priority: optional
 Architecture: arm64
 Maintainer: Thomas Glanzmann <thomas@glanzmann.de>
