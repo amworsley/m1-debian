@@ -13,6 +13,7 @@ VERB=0
 OUT_DEV=/dev/null
 L_CLONE=/home/amw/src/Asahi/linux
 L_BRANCH=asahi
+ASASHI_LINUX_VER=asahi-6.2-rc3-2
 set -e
 config="config.txt"
 
@@ -34,6 +35,8 @@ usage()
    echo " -V level : Set kernel build verbose level (default $VERB)"
    echo " -r : Reduce kernel size greatly by CONFIG_DEBUG_INFO_REDUCED=y"
    echo " -4 : Use 4k page config - instead of $config"
+   echo
+   echo " -L X : Use linux version - default $ASASHI_LINUX_VER"
    echo
    echo "Commands: (defaults to doing all)"
    echo " install : Install require debian packages"
@@ -71,8 +74,8 @@ build_linux()
 $DO_CMD <<EOF
         test -d linux || git clone -b $L_BRANCH $L_CLONE linux
         cd linux
-        git fetch -a -t
-        git reset --hard asahi-6.1-2;
+        git fetch -a -t $L_CLONE
+        git reset --hard $ASASHI_LINUX_VER
         cat ../../$config > .config
 	if [ -n $DO_PATCH ]; then
 	    sed -i.orig '
@@ -298,12 +301,16 @@ EOF
 }
 
 CMD="/bin/bash"
-while getopts 'hnxqV:r4' argv
+while getopts 'hnxqV:L:r4' argv
 do
     case $argv in
     h)
        usage
        exit 0
+    ;;
+    L)
+       ASASHI_LINUX_VER="$OPTARG"
+       echo "Switching Linux to $ASASHI_LINUX_VER"
     ;;
     4)
        config="config-4k.txt"
