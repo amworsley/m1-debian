@@ -18,7 +18,6 @@ using the following scripts:
         - m1n1_uboot_kernel.sh - Builds m1n1, u-boot and the kernel including gpu support.
         - mesa.sh - Creates mesa packages
         - bootstrap.sh - Creates Debian root and live filesystem
-        - libunwind.sh - Builds libunwind that does not crash on 16kb pages
         - meta.sh - Meta package which makes sure that we always get latest and gratest kernel.
 
 # Asahi installer
