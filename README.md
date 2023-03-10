@@ -18,7 +18,7 @@ using the following scripts:
         - m1n1_uboot_kernel.sh - Builds m1n1, u-boot and the kernel including gpu support.
         - mesa.sh - Creates mesa packages
         - bootstrap.sh - Creates Debian root and live filesystem
-        - meta.sh - Meta package which makes sure that we always get latest and gratest kernel.
+        - meta.sh - Meta package which makes sure that we always get latest and greatest kernel.
 
 # Asahi installer
 
