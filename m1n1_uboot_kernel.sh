@@ -32,7 +32,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.2-1;
+        git reset --hard asahi-6.2-5;
         cat ../../config.txt > .config
         make LLVM=${CLANG_VERSION} rustavailable
         make LLVM=${CLANG_VERSION} olddefconfig
@@ -46,7 +46,7 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
         cd m1n1
         git fetch -a -t
-        git reset --hard v1.2.4;
+        git reset --hard v1.2.5;
         make -j `nproc`
 )
 }
@@ -58,7 +58,7 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        git reset --hard asahi-v2022.10-1;
+        git reset --hard asahi-v2023.01-3;
 
         make apple_m1_defconfig
         make -j `nproc`
