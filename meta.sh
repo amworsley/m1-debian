@@ -12,14 +12,14 @@ unset LANG
 
 mkdir -p build
 cd build
-export META_VERSION=6.1.0-3
+export META_VERSION=6.2.0
 rm -rf linux-image-asahi_${META_VERSION}_arm64
 mkdir -p linux-image-asahi_${META_VERSION}_arm64/DEBIAN
 cat > linux-image-asahi_${META_VERSION}_arm64/DEBIAN/control <<EOF
 Package: linux-image-asahi
 Version: $META_VERSION
 Section: base
-Depends: linux-image-6.1.0-asahi (>= 6.1.0-asahi-61)
+Depends: linux-image-6.2.0-asahi (>= 6.2.0-asahi-5)
 Provides: wireguard-modules (= 1.0.0)
 Priority: optional
 Architecture: arm64
