@@ -13,7 +13,7 @@ VERB=0
 OUT_DEV=/dev/null
 L_CLONE=/home/amw/src/Asahi/linux
 L_BRANCH=asahi
-ASASHI_LINUX_VER=asahi-6.2-rc3-2
+ASASHI_LINUX_VER=asahi-6.2-10
 set -e
 config="config.txt"
 
