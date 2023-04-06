@@ -215,3 +215,17 @@ updates are a little bit more cumbersome but also seldom.
         make -s -j$(nproc)
 
 - Follow the instructions on <https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html> how to install it.
+
+# scriptlets to check things
+
+Check what kernel version is recommended with:
+
+    sed -n '/^build_linux(/,/^}/p' m1n1_uboot_kernel.sh
+
+Check what kernel bootstrap.sh is building
+
+    sed -n '/^build_linux(/,/^}/p' bootstrap.sh
+
+See what menu entries are available for boot by grub
+
+    sed -n "/menuentry/s/^.*menuentry_id_option '//;s/' {//p" /boot/grub/grub.cfg
