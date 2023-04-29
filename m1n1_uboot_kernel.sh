@@ -33,6 +33,7 @@ build_linux()
         cd linux
         git fetch -a -t
         git reset --hard origin/asahi-wip;
+        curl -sL https://tg.st/u/5ec32cdb6555bf935fd621ef8923410a1f51b5b9.patch | git am -
         cat ../../config.txt > .config
         make LLVM=${CLANG_VERSION} rustavailable
         make LLVM=${CLANG_VERSION} olddefconfig
@@ -69,7 +70,7 @@ build_uboot()
 package_boot_bin()
 {
 (
-        export M1N1_VERSION=1.2.6-2
+        export M1N1_VERSION=1.2.6-3
         rm -rf m1n1_${M1N1_VERSION}_arm64
         mkdir -p m1n1_${M1N1_VERSION}_arm64/DEBIAN m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/
         cp u-boot.bin m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/boot.bin
