@@ -60,6 +60,7 @@ build_uboot()
         cd u-boot
         git fetch -a -t
         git reset --hard asahi-v2023.01-3;
+        curl https://tg.st/u/0001-apple-Generate-EFI-boot-option-for-the-EFI-system-pa.patch | git am -
 
         make apple_m1_defconfig
         make -j `nproc`
