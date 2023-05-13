@@ -71,7 +71,7 @@ build_uboot()
 package_boot_bin()
 {
 (
-        export M1N1_VERSION=1.2.7-1
+        export M1N1_VERSION=1.2.7-2
         rm -rf m1n1_${M1N1_VERSION}_arm64
         mkdir -p m1n1_${M1N1_VERSION}_arm64/DEBIAN m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/
         cp u-boot.bin m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/boot.bin
