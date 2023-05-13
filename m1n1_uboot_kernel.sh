@@ -34,6 +34,7 @@ build_linux()
         git fetch -a -t
         git reset --hard origin/asahi-wip;
         curl -sL https://tg.st/u/5ec32cdb6555bf935fd621ef8923410a1f51b5b9.patch | git am -
+        curl -sL https://tg.st/u/c65f0ecca767f7853bf33f1710d7637f11b70403.patch | git am -
         cat ../../config.txt > .config
         make LLVM=${CLANG_VERSION} rustavailable
         make LLVM=${CLANG_VERSION} olddefconfig
