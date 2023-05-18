@@ -11,9 +11,12 @@ cd "$(dirname "$0")"
 #set -x
 VERB=0
 OUT_DEV=/dev/null
-L_CLONE=/home/amw/src/Asahi/linux
-L_BRANCH=asahi
+L_CLONE=https://github.com/AsahiLinux/linux
+L_BRANCH=asahi-wip
 ASASHI_LINUX_VER=asahi-6.2-11
+if [ -r local-defs.sh ]; then
+    . local-defs.sh
+fi
 set -e
 config="config.txt"
 
@@ -52,9 +55,9 @@ usage()
    echo
    echo "  See README for details "
    echo
-   #if [ -r README ]; then
-   #    cat README
-   #fi
+   if [ -r README.md ]; then
+       sed '1,/^# scriptlets/d' README.md
+   fi
 }
 
 handle_crosscompile()
@@ -74,16 +77,21 @@ build_linux()
 $DO_CMD <<EOF
         test -d linux || git clone -b $L_BRANCH $L_CLONE linux
         cd linux
-        git fetch -a -t $L_CLONE
-        git reset --hard $ASASHI_LINUX_VER
+        git fetch -a -t
+        #git reset --hard $ASASHI_LINUX_VER
         cat ../../$config > .config
 	if [ -n $DO_PATCH ]; then
 	    sed -i.orig '
 /^CONFIG_DEBUG_INFO_REDUCED=./s//CONFIG_DEBUG_INFO_REDUCED=y/
 	' .config
 	fi
-        make olddefconfig
-        make -j `nproc` V=$VERB bindeb-pkg > $OUT_DEV
+        for patches in ../../glanzmann-p*.patch; do
+            echo "Applying $(basename $patches)"
+            git am $patches
+        done
+        make LLVM=clang rustavailable
+        make LLVM=clang olddefconfig
+        make -j `nproc` LLVM=clang V=$VERB bindeb-pkg > $OUT_DEV
 EOF
 )
 }
