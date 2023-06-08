@@ -12,7 +12,7 @@ unset LANG
 
 mkdir -p build
 cd build
-export META_VERSION=6.3.0-4
+export META_VERSION=6.3.0-5
 rm -rf linux-image-asahi_${META_VERSION}_arm64
 mkdir -p linux-image-asahi_${META_VERSION}_arm64/DEBIAN
 cat > linux-image-asahi_${META_VERSION}_arm64/DEBIAN/control <<EOF
