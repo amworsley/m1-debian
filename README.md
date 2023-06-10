@@ -218,6 +218,10 @@ updates are a little bit more cumbersome but also seldom.
 
 # scriptlets to check things
 
+See what kernel is grub is currently default for booting
+
+   sed -n '/default="[a-z]/ { s/^[^"]*"//;s/"$//p}' /boot/grub/grub.cfg
+
 Check what kernel version is recommended with:
 
     sed -n '/^build_linux(/,/^}/p' m1n1_uboot_kernel.sh
