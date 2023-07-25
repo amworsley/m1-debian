@@ -33,6 +33,7 @@ build_linux()
         cd linux
         git fetch -a -t
         git reset --hard asahi-6.4-3;
+        curl https://tg.st/u/0001-remove-debug-spam.patch | git am -
         cat ../../config.txt > .config
         make LLVM=${CLANG_VERSION} rustavailable
         make LLVM=${CLANG_VERSION} olddefconfig
