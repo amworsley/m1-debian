@@ -78,7 +78,7 @@ $DO_CMD <<EOF
         test -d linux || git clone -b $L_BRANCH $L_CLONE linux
         cd linux
         git fetch -a -t
-        #git reset --hard $ASASHI_LINUX_VER
+        git reset --hard $ASASHI_LINUX_VER
         cat ../../$config > .config
 	if [ -n $DO_PATCH ]; then
 	    sed -i.orig '
@@ -86,7 +86,11 @@ $DO_CMD <<EOF
 	' .config
 	fi
         for patches in ../../glanzmann-p*.patch; do
-            echo "Applying $(basename $patches)"
+            if [ ! -r "$patches" ]; then
+                echo " $patches - missing : skipping"
+                continue
+            fi
+            echo "Applying $(basename \"$patches\")"
             git am $patches
         done
         make LLVM=clang rustavailable
