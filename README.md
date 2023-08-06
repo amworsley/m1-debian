@@ -143,3 +143,63 @@ instructions and a video in order to do so, but short version is:
 
 So, you never need to reinstall Debian. Kernel updates are easy, stub
 updates are a little bit more cumbersome but also seldom.
+
+* How do I compile zfs on apple silicon debian?
+
+- In order to build zfs you need the rust environment. So from the m1-debian
+  repository you have to run these scripts:
+
+        ./dependencies.sh
+        ./prepare_rust.sh
+
+- Build a kernel that is not cross compiled. Because the cross compiled header
+  package does contain the fixtool for the wrong architecture at the moment and
+  install the resulting kernel deb and headers and boot into it:
+
+        ./m1n1_uboot_kernel.sh
+
+- Prepare your zfs build environment. You need to replace
+  /home/sithglan/work/m1-debian with your path to
+  your m1-debian checkout:
+
+        export CARGO_HOME="/home/sithglan/work/m1-debian/build/cargo"
+        export RUSTUP_HOME="/home/sithglan/work/m1-debian/build/rust"
+        source "/home/sithglan/work/m1-debian/build/cargo/env"
+
+- You have to specify the default rust version:
+
+        rustup default 1.68.2
+
+- Tell zfs which version of clang you use to compile the kernel:
+
+        export KERNEL_LLVM=-15
+
+- Checkout ZFS:
+
+        git clone https://github.com/openzfs/zfs
+        cd ./zfs
+        git checkout master
+
+- Apply the following patch:
+
+        diff --git a/META b/META
+        index 3919b0d..67c9f7d 100644
+        --- a/META
+        +++ b/META
+        @@ -4,7 +4,7 @@ Branch:        1.0
+        Version:       2.2.99
+        Release:       1
+        Release-Tags:  relext
+        -License:       CDDL
+        +License:       GPL
+        Author:        OpenZFS
+        Linux-Maximum: 6.4
+        Linux-Minimum: 3.10
+
+- Build ZFS:
+
+        sh autogen.sh
+        ./configure
+        make -s -j$(nproc)
+
+- Follow the instructions on <https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html> how to install it.
