@@ -152,12 +152,6 @@ updates are a little bit more cumbersome but also seldom.
         ./dependencies.sh
         ./prepare_rust.sh
 
-- Build a kernel that is not cross compiled. Because the cross compiled header
-  package does contain the fixtool for the wrong architecture at the moment and
-  install the resulting kernel deb and headers and boot into it:
-
-        ./m1n1_uboot_kernel.sh
-
 - Prepare your zfs build environment. You need to replace
   /home/sithglan/work/m1-debian with your path to
   your m1-debian checkout:
