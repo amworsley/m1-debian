@@ -120,7 +120,7 @@ Than open a terminal, and run the following commands:
 
 # FAQ
 
-* If I install Debian, will it be easy to update the Asahi work as it develops?
+## If I install Debian, will it be easy to update the Asahi work as it develops?
 
 Yes, long answer below.
 
@@ -144,7 +144,7 @@ instructions and a video in order to do so, but short version is:
 So, you never need to reinstall Debian. Kernel updates are easy, stub
 updates are a little bit more cumbersome but also seldom.
 
-* How do I compile zfs on apple silicon debian?
+## How do I compile zfs on apple silicon debian?
 
 - In order to build zfs you need the rust environment. So from the m1-debian
   repository you have to run these scripts:
