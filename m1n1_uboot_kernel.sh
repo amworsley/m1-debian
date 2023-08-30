@@ -32,8 +32,7 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.4-6;
-        curl https://tg.st/u/0001-remove-debug-spam.patch | git am -
+        git reset --hard asahi-6.4-9;
         cat ../../config.txt > .config
         make LLVM=${CLANG_VERSION} rustavailable
         make LLVM=${CLANG_VERSION} olddefconfig
@@ -47,7 +46,7 @@ build_m1n1()
         test -d m1n1 || git clone --recursive https://github.com/AsahiLinux/m1n1
         cd m1n1
         git fetch -a -t
-        git reset --hard v1.3.2;
+        git reset --hard v1.3.3;
         make -j `nproc`
 )
 }
@@ -70,7 +69,7 @@ build_uboot()
 package_boot_bin()
 {
 (
-        export M1N1_VERSION=1.3.2
+        export M1N1_VERSION=1.3.3
         rm -rf m1n1_${M1N1_VERSION}_arm64
         mkdir -p m1n1_${M1N1_VERSION}_arm64/DEBIAN m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/
         cp u-boot.bin m1n1_${M1N1_VERSION}_arm64/usr/lib/m1n1/boot.bin
