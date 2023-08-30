@@ -16,19 +16,9 @@ source "$(pwd)/build/cargo/env"
 unset LC_CTYPE
 unset LANG
 
-handle_crosscompile()
-{
-        if [ "`uname -m`" != 'aarch64' ]; then
-                export ARCH=arm64
-                export CROSS_COMPILE=aarch64-linux-gnu-
-                sudo apt install -y libc6-dev-arm64-cross
-        fi
-}
-
 build_linux()
 {
 (
-        handle_crosscompile
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
@@ -54,7 +44,6 @@ build_m1n1()
 build_uboot()
 {
 (
-        handle_crosscompile
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
