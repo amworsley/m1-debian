@@ -120,6 +120,10 @@ Than open a terminal, and run the following commands:
 
 # FAQ
 
+## Are you still maintaining this?
+
+Yes, I do and will continue doing this until there is an official Debian installer.
+
 ## If I install Debian, will it be easy to update the Asahi work as it develops?
 
 Yes, long answer below.
