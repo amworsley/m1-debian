@@ -136,7 +136,7 @@ as root:
 
 For installations before 2022-12-12, see <https://thomas.glanzmann.de/asahi/README.txt>
 
-Later it might be necessary to upgrade the stub parition in order to
+Later it might be necessary to upgrade the stub partion in order to
 support the GPU code. As soon as that happens, I'll add the
 instructions and a video in order to do so, but short version is:
 
