@@ -25,7 +25,7 @@ git fetch -a -t
 # the latest mesa tag will be in sync with the latest kernel tag and usually
 # also the latest live kernel (except when I'm about to do a release)
 # 17:18 <marcan> if those two desync it'll refuse to initialize
-git reset --hard asahi-20230821
+git reset --hard asahi-20230904
 rm -rf debian
 cp -a ../../mesa-debian debian
 EMAIL=thomas@glanzmann.de dch -v 23.0.0-`date +%Y%m%d%H%M` 'asahi wip'
