@@ -526,3 +526,7 @@ https://blog.devgenius.io/installing-gentoo-linux-in-apple-macbook-pro-m1-49e163
 
 14:34 < mps> Glanzmann: I use 'export MOZ_USE_XINPUT2=1' in system wide /etc/profile
 14:35 < mps> and checked out (disabled) smooth scroll in firefox
+
+mps rust 1.72.1 / bindgen 0.66.1
+<cy8aer> Glanzmann: Try Rust 1.72.0, bindgen(-cli) 0.68.1
+<janneg> that said rustc 1.70.0 / bindgen 0.62.0 work for me
