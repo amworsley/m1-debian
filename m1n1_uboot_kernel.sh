@@ -24,7 +24,8 @@ build_linux()
         test -d linux || git clone https://github.com/AsahiLinux/linux
         cd linux
         git fetch -a -t
-        git reset --hard asahi-6.5-13
+        git reset --hard asahi-6.5-15
+        git clean -f -x -d > /dev/null
         cat ../../config.txt > .config
         make LLVM=-15 rustavailable
         make LLVM=-15 olddefconfig
@@ -49,7 +50,7 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        git reset --hard asahi-v2023.07.02-2;
+        git reset --hard asahi-v2023.07.02-3
 
         make apple_m1_defconfig
         make -j `nproc`
