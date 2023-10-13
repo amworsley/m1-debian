@@ -16,7 +16,7 @@ source "$(pwd)/build/cargo/env"
 unset LC_CTYPE
 unset LANG
 
-export M1N1_VERSION=1.4.2
+export M1N1_VERSION=1.4.3
 
 build_linux()
 {
