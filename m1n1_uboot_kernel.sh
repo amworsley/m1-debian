@@ -40,6 +40,7 @@ build_m1n1()
         cd m1n1
         git fetch -a -t
         git reset --hard v${M1N1_VERSION};
+        git clean -f -x -d > /dev/null
         make -j `nproc`
 )
 }
@@ -51,6 +52,7 @@ build_uboot()
         cd u-boot
         git fetch -a -t
         git reset --hard asahi-v2023.07.02-3
+        git clean -f -x -d > /dev/null
 
         make apple_m1_defconfig
         make -j `nproc`
