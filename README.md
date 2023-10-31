@@ -120,6 +120,10 @@ Than open a terminal, and run the following commands:
 
 # FAQ
 
+## Does it work on M2?
+
+Yes, M3 is not yet supported.
+
 ## Are you still maintaining this?
 
 Yes, I do and will continue doing this until there is an official Debian installer.
