@@ -19,7 +19,7 @@ build_rootfs()
 (
         sudo rm -rf testing
         mkdir -p cache
-        sudo eatmydata ${DEBOOTSTRAP} --cache-dir=`pwd`/cache --arch=arm64 --include initramfs-tools,pciutils,wpasupplicant,tcpdump,vim,tmux,vlan,ntpdate,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client,mtools,gdisk,cryptsetup,wireless-regdb,zstd testing testing http://deb.debian.org/debian
+        sudo eatmydata ${DEBOOTSTRAP} --cache-dir=`pwd`/cache --arch=arm64 --include initramfs-tools,pciutils,wpasupplicant,tcpdump,vim,tmux,vlan,ntpdate,parted,curl,wget,grub-efi-arm64,mtr-tiny,dbus,ca-certificates,sudo,openssh-client,mtools,gdisk,cryptsetup,wireless-regdb,zstd stable testing http://deb.debian.org/debian
 
         cd testing
 
