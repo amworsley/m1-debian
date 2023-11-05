@@ -1,12 +1,12 @@
 {
     "os_list": [
         {
-            "name": "Debian bookworm (testing) packaged by Thomas Glanzmann",
+            "name": "Debian bookworm packaged by Thomas Glanzmann",
             "default_os_name": "Debian",
             "boot_object": "m1n1.bin",
             "next_object": "m1n1/boot.bin",
             "package": "debian-base.zip",
-            "supported_fw": ["12.3", "12.4"],
+            "supported_fw": ["12.3", "12.3.1", "12.4", "13.5"],
             "partitions": [
                 {
                     "name": "EFI",
