@@ -233,3 +233,9 @@ Check what kernel bootstrap.sh is building
 See what menu entries are available for boot by grub
 
     sed -n "/menuentry/s/^.*menuentry_id_option '//;s/' {//p" /boot/grub/grub.cfg
+
+Build a new kernel and modules directly in build/linux
+
+cd build/linux
+make -j 8 LLVM=clang V=1 Image.gz modules
+sudo make -j 8 LLVM=clang V=1 zinstall modules_install
