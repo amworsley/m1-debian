@@ -120,6 +120,20 @@ Than open a terminal, and run the following commands:
 
 # FAQ
 
+## How to enable spakers?
+
+Currently speakers are only supported on M1 air. Install the necessary packages:
+
+        apt update
+        apt upgrade -y
+        apt dist-upgrade -y
+        apt install -y alsa-ucm-conf-asahi speakersafetyd
+        reboot
+
+After the reboot I need to restart the speakersafetyd in order to hear sound out of the speakers:
+
+        sudo systemctl restart speakersafetyd
+
 ## Does it work on M2?
 
 Yes, M3 is not yet supported.
