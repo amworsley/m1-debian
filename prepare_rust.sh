@@ -17,6 +17,7 @@ rm -rf ${CARGO_HOME} ${RUSTUP_HOME}
 curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path --default-toolchain none
 source "$(pwd)/build/cargo/env"
 rustup override set 1.70.0
+rustup default 1.70.0
 rustup component add rust-src
 cargo install --locked --version 0.62.0 bindgen-cli
 rustup component add rustfmt
