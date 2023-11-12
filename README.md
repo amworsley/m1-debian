@@ -182,10 +182,6 @@ updates are a little bit more cumbersome but also seldom.
         export RUSTUP_HOME="/home/sithglan/work/m1-debian/build/rust"
         source "/home/sithglan/work/m1-debian/build/cargo/env"
 
-- You have to specify the default rust version:
-
-        rustup default 1.68.2
-
 - Tell zfs which version of clang you use to compile the kernel:
 
         export KERNEL_LLVM=-15
