@@ -85,6 +85,7 @@ my %asahi_options = (
         'CONFIG_USB_DWC3_PCI' => 'm',
         'CONFIG_USB_XHCI_PCI_ASMEDIA' => 'y',
         'CONFIG_VIDEO_APPLE_ISP' => 'm',
+        'CONFIG_REGULATOR_FIXED_VOLTAGE' => 'y',
 );
 
 my %debian_options;
