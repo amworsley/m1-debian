@@ -16,8 +16,9 @@ source "$(pwd)/build/cargo/env"
 unset LC_CTYPE
 unset LANG
 
-export M1N1_VERSION=1.4.6
-export KERNEL_VERSION=asahi-6.5-26
+export M1N1_VERSION=1.4.11
+export KERNEL_VERSION=asahi-6.6-14
+export UBOOT_VERSION=asahi-v2023.07.02-4
 
 build_linux()
 {
@@ -52,7 +53,7 @@ build_uboot()
         test -d u-boot || git clone https://github.com/AsahiLinux/u-boot
         cd u-boot
         git fetch -a -t
-        git reset --hard asahi-v2023.07.02-3
+        git reset --hard $UBOOT_VERSION
         git clean -f -x -d > /dev/null
 
         make apple_m1_defconfig
