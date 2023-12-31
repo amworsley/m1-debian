@@ -106,7 +106,7 @@ Than open a terminal, and run the following commands:
 
 * If you have a EFI binary on the NVMe and want to boot from the usb stick, you need to interrupt u-boot on the countdown by pressing any key and run the following comamnd to boot from usb:
 
-        run bootcmd_usb0
+        env set boot_efi_bootmgr; run bootcmd_usb0
 
 * Reboot with the USB stick connected, the Debian livesystem should automatically start, if it doesn't load the kernel and initrd manually, you can use tab. For x try 0,1,2,...
 
