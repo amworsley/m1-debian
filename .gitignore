@@ -1,2 +1,9 @@
 .*.swp
 build
+*.patch
+*.bin
+*.deb
+patches
+tags
+*.macho
+*.tgz
