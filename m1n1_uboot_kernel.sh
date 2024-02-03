@@ -13,12 +13,13 @@ LLVM="LLVM=-15"
 OUT_DEV=/dev/stdout
 L_CLONE=https://github.com/AsahiLinux/linux
 L_BRANCH=asahi-wip
+DO_PATCHES=""
+TRIM_DEBUG=""
 if [ -r local-defs.sh ]; then
     . local-defs.sh
 fi
 set -e
 config="config.txt"
-
 
 export CARGO_HOME="$(pwd)/build/cargo"
 export RUSTUP_HOME="$(pwd)/build/rust"
@@ -44,7 +45,8 @@ usage()
    echo " -V level : Set kernel build verbose level (default $VERB)"
    echo " -r : Reduce kernel size greatly by CONFIG_DEBUG_INFO_REDUCED=y"
    echo " -4 : Use 4k page config - instead of $config"
-   echo " -D : Don't use $USE_LLVM"
+   echo " -P : Apply any patches found in patches directory"
+   echo " -D : Don't use $LLVM"
    echo
    echo " -L X : linux version - default $KERNEL_VERSION"
    echo " -M X : m1n1 version - default $M1N1_VERSION"
@@ -58,7 +60,7 @@ usage()
    echo
 }
 CMD="/bin/bash"
-while getopts 'hnxqDV:L:M:U:r4' argv
+while getopts 'hnxqDPV:L:M:U:r4' argv
 do
     case $argv in
     D)
@@ -68,6 +70,15 @@ do
     h)
        usage
        exit 0
+    ;;
+    P)
+       if [ -d patches ]; then
+           DO_PATCHES="patches"
+           echo "Applying patches:"
+           ls -ltrh $DO_PATCHES
+       else
+           echo "Ignoring -P - no patches directory present"
+       fi
     ;;
     L)
        KERNEL_VERSION="$OPTARG"
@@ -111,7 +122,7 @@ do
     ;;
     r)
        echo "Reduce kernel debug info"
-       DO_PATCH=1
+       TRIM_DEBUG=1
     ;;
     esac
 done
@@ -136,10 +147,17 @@ $DO_CMD <<EOF
         git reset --hard $KERNEL_VERSION
         git clean -f -x -d > /dev/null
         cat ../../config.txt > .config
-	if [ -n "$DO_PATCH" ]; then
+	if [ -n "$TRIM_DEBUG" ]; then
 	    sed -i.orig '
 /^CONFIG_DEBUG_INFO_REDUCED=./s//CONFIG_DEBUG_INFO_REDUCED=y/
 	' .config
+	fi
+	if [ -n "$DO_PATCHES" ]; then
+            ls ../../$DO_PATCHES/*.patch
+	    for f in $(echo ../../$DO_PATCHES/*.patch); do
+                echo "Applying \$f"
+                git am --ignore-whitespace \$f || exit 1
+            done
 	fi
         make $LLVM rustavailable
         make $LLVM olddefconfig
